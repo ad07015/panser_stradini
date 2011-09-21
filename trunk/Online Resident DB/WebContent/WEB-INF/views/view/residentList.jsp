@@ -14,7 +14,7 @@ function viewResident(rID)
   document.viewResidentDetailsForm.residentID.value=rID
   document.viewResidentDetailsForm.submit()
 }
-</script>
+</script>	
 
 <title>Rezidentu saraksts</title>
 </head>
@@ -25,19 +25,17 @@ function viewResident(rID)
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
-<c:out value="${message}" escapeXml="false" />
-<!--  
-<hr>
-<c:if test="${message!=''}">
-	<c:choose>
-		<c:when test="${message=='Success'}">
-			Rezidents ir veiksmīgi nodzēsts!
-		</c:when>
-		<c:otherwise>
-			Neizdevās nodzēst rezidentu!
-		</c:otherwise>
-	</c:choose>
-</c:if>-->
+
+<c:choose>
+	<c:when test="${message == 'Success'}">
+		<hr>
+		<span>Rezidents veiksmīgi piereģistrēts!</span>
+	</c:when>
+	<c:when test="${message == 'Fail'}">
+		<hr>
+		<span class="error">Notika kļūda! Rezidents netika piereģistrēts!</span>
+	</c:when>
+</c:choose>
 
 <hr>
 

@@ -13,19 +13,10 @@
 </head>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
-<c:choose>
-	<c:when test="${message == 'Success'}">
-		<c:out value="Successfully" escapeXml="false" />
-	</c:when>
-	<c:when test="${message == 'Fail'}">
-		<c:out value="Unsuccessfully" escapeXml="false" />
-	</c:when>
-</c:choose>
 
 <hr>
 Ievadiet rezidenta informāciju
 <hr>
-
 
 <form:form commandName="resident" cssClass="bordless" method="post">
 <table class="bordless">

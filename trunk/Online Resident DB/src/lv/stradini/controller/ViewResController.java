@@ -2,6 +2,7 @@ package lv.stradini.controller;
 
 import java.util.List;
 
+import lv.stradini.constants.Constants;
 import lv.stradini.dataAccessObject.Doctor;
 import lv.stradini.dataAccessObject.Resident;
 import lv.stradini.interfaces.service.ResidentService;
@@ -85,15 +86,19 @@ public class ViewResController {
 		boolean result = residentService.deleteResidentByID(residentID);
 		
 		String message;
+		String status;
 		if(result) {
-			message = "Success";
+			message = Constants.MESSAGE_DELETE_SUCCESS;
+			status = "success";
 		} else {
-			message = "Fail";
+			message = Constants.MESSAGE_DELETE_FAIL;
+			status = "fail";
 		}
 		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("message", message);
+		mav.addObject("status", status);
 		mav.addObject("residentList", residentService.fetchAllResidents());
 		mav.setViewName("view/residentList");
 		return mav;

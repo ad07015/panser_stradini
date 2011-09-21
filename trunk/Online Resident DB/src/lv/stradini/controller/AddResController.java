@@ -5,6 +5,7 @@ package lv.stradini.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lv.stradini.constants.Constants;
 import lv.stradini.dataAccessObject.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.validation.ResidentFormValidator;
@@ -48,13 +49,17 @@ public class AddResController extends SimpleFormController {
 
 		boolean result = residentService.insertResident(resident);
 		String message;
+		String status;
 		if(result) {
-			message = "Success";
+			message = Constants.MESSAGE_ADD_SUCCESS;
+			status = "success";
 		} else {
-			message = "Fail";
+			message = Constants.MESSAGE_ADD_FAIL;
+			status = "fail";
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
+		mav.addObject("status", status);
 		mav.addObject("residentList", residentService.fetchAllResidents());
 		mav.addObject("message", message);
 		mav.setViewName(getSuccessView());

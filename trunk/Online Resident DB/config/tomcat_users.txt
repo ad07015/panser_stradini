@@ -1,0 +1,16 @@
+to login your tomcat_users.xml must look like this, 
+users from DB expected in next version.
+
+to do so:
+sudo gedit /etc/tomcat6/tomcat-users.xml
+
+<tomcat-users>
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <role rolename="manager"/>
+  <role rolename="dbuser"/>
+  <user username="tomcat" password="tomcat" roles="tomcat,manager"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="role1" password="tomcat" roles="role1"/>
+  <user username="user" password="pass" roles="dbuser"/>
+</tomcat-users>

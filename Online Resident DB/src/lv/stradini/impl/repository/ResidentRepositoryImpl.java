@@ -249,4 +249,29 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 		return false;
 	}
+
+	@Override
+	public int findResidentByPersonasKods(String personasKods) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		int count = 0;
+		String query = "SELECT * FROM resident WHERE PERSONAS_KODS = ? ";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.prepareStatement(query);
+			st.setString(1, personasKods);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				count++;
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return count;
+	}
 }

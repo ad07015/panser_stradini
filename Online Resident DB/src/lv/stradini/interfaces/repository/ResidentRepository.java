@@ -18,4 +18,6 @@ public interface ResidentRepository {
 	boolean insertResident(Resident resident);
 
 	boolean deleteResidentByID(long residentID);
+
+	int findResidentByPersonasKods(String personasKods);
 }

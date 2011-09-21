@@ -44,4 +44,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public boolean deleteResidentByID(long residentID) {
 		return repo.deleteResidentByID(residentID);
 	}
+
+	@Override
+	public int findResidentByPersonasKods(String personasKods) {
+		return repo.findResidentByPersonasKods(personasKods);
+	}
 }

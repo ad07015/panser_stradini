@@ -103,4 +103,19 @@ public class ViewResController {
 		mav.setViewName("view/residentList");
 		return mav;
 	}
+	
+	@RequestMapping(value="residentDetails.htm", params={"updateResidentID"})
+	public ModelAndView onUpdateResident(
+			@RequestParam("updateResidentID") long residentID) {
+		log.info("Updating resident");
+		log.info("Resident ID = " + residentID);
+		
+		Resident resident = residentService.findResidentByID(residentID);
+		log.info("Resident name is " + resident.getVards());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("resident", resident);
+		mav.setViewName("add/addResident");
+		return mav;
+	}
 }

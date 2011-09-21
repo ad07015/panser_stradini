@@ -14,6 +14,11 @@ function deleteResident(rID)
   document.deleteResidentForm.deleteResidentID.value=rID
   document.deleteResidentForm.submit()
 }
+function updateResident(rID)
+{
+  document.updateResidentForm.updateResidentID.value=rID
+  document.updateResidentForm.submit()
+}
 </script>
 
 <title>Rezidentu informācija</title>
@@ -22,6 +27,10 @@ function deleteResident(rID)
 
 <form name="deleteResidentForm" action="/resdb/view/residentList.htm" method="post">
 	<input type="hidden" name="deleteResidentID" >
+</form>
+
+<form name="updateResidentForm" action="/resdb/view/residentDetails.htm" method="post">
+	<input type="hidden" name="updateResidentID" >
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
@@ -82,7 +91,8 @@ function deleteResident(rID)
 	</tr>
 </table>
 
-<button class="belowTable" onClick="javascript:deleteResident(${resident.ID})">Nodzēst residentu</button>
+<button class="belowTable" onClick="javascript:deleteResident(${resident.ID})">Nodzēst rezidentu</button>
+<button class="belowTable" onClick="javascript:updateResident(${resident.ID})">Rediģēt rezidenta datus</button>
 
 </body>
 </html>

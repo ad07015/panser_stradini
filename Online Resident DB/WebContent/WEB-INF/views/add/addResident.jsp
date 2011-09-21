@@ -91,6 +91,6 @@ Ievadiet rezidenta informāciju
 
 <hr>
 
-<a href="/resdb/view/employees.htm">Atgriezties uz rezidentu sarakstu</a>
+<a href="/resdb/view/residentList.htm">Atgriezties uz rezidentu sarakstu</a>
 </body>
 </html>

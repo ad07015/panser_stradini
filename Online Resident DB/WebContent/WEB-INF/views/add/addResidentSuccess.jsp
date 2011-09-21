@@ -19,9 +19,16 @@
 <c:out value="${message}" escapeXml="false" />
 
 <head>
-<title>New Person Success</title>
+<title>Rezidents veiksmīgi piereģistrēts</title>
 </head>
 <body>
-	Laipni lūdzam, ${resident.vards} ${resident.uzvards}!
+	Rezidēnts ${resident.vards} ${resident.uzvards} ir veiksmīgi
+	piereģistrēts!
+
+
+	<hr>
+
+	<a href="/resdb/view/residentList.htm">Atgriezties uz rezidentu
+		sarakstu</a>
 </body>
 </html>

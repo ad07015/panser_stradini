@@ -79,7 +79,6 @@ public class AddResController extends SimpleFormController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
 		mav.addObject("message", message);
-		mav.setViewName(getFormView());
 		return mav;
 	}
 }

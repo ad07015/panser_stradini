@@ -7,47 +7,48 @@
 							http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 							http://www.springframework.org/schema/tx
 							http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-	
-	
-	
+
+
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${driverclass}" />
-		<property name="url" value="${url}"/>
-		<property name="username" value="${username}"/>
-		<property name="password" value="${password}"/>
-	</bean>
-	
-	<bean id="employeeRep" class="lv.stradini.impl.repository.EmployeeRepositoryImpl" >
-		<constructor-arg ref="dataSource"/>
-	</bean>
-	
-	<bean id="projectRep" class="lv.stradini.impl.repository.ProjectRepositoryImpl" >
-		<constructor-arg ref="dataSource"/>
-	</bean>
-			
-	<bean id="residentRepository" class="lv.stradini.impl.repository.ResidentRepositoryImpl">
-		<constructor-arg ref="dataSource"/>
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
 	</bean>
 
-	<bean id="projectService" class="lv.stradini.impl.service.ProjectServiceImpl" >
-		<constructor-arg ref="employeeRep"/>
-		<constructor-arg ref="projectRep"/>
+	<bean id="employeeRep" class="lv.stradini.impl.repository.EmployeeRepositoryImpl">
+		<constructor-arg ref="dataSource" />
 	</bean>
-	
+
+	<bean id="projectRep" class="lv.stradini.impl.repository.ProjectRepositoryImpl">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<bean id="residentRepository" class="lv.stradini.impl.repository.ResidentRepositoryImpl">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<bean id="projectService" class="lv.stradini.impl.service.ProjectServiceImpl">
+		<constructor-arg ref="employeeRep" />
+		<constructor-arg ref="projectRep" />
+	</bean>
+
 	<bean id="employeeService" class="lv.stradini.impl.service.EmployeeServiceImpl">
-		<constructor-arg ref="employeeRep"/>
-		<constructor-arg ref="projectRep"/>
+		<constructor-arg ref="employeeRep" />
+		<constructor-arg ref="projectRep" />
 	</bean>
-	
+
 	<bean id="residentService" class="lv.stradini.impl.service.ResidentServiceImpl">
-		<constructor-arg ref="residentRepository"/>
+		<constructor-arg ref="residentRepository" />
 	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-   		<property name="locations">
-        	<value>classpath:db.properties</value>
-    	</property>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>classpath:db.properties</value>
+		</property>
 	</bean>
-	
+
 </beans>

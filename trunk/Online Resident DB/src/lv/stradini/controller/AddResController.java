@@ -36,7 +36,7 @@ public class AddResController extends SimpleFormController {
 	protected ModelAndView processFormSubmission(HttpServletRequest request,
 			HttpServletResponse response, Object command, BindException errors)
 			throws Exception {
-		ResidentFormValidator validator = new ResidentFormValidator();
+		ResidentFormValidator validator = new ResidentFormValidator(residentService);
 		validator.validate(command, errors);
 		return super.processFormSubmission(request, response, command, errors);
 	}

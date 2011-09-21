@@ -11,6 +11,12 @@ import org.springframework.validation.Validator;
 
 public class ResidentFormValidator implements Validator {
 
+	private ResidentService residentService;
+	
+	public ResidentFormValidator(ResidentService residentService) {
+		this.residentService = residentService;
+	}
+
 	@Override
 	public boolean supports(Class aClass) {
 		return Resident.class.isAssignableFrom(aClass);
@@ -25,9 +31,9 @@ public class ResidentFormValidator implements Validator {
 			errors.rejectValue("personasKods", "resident.empty");			
 		} else if (!resident.getPersonasKods().matches("[0-9]{6}-[0-9]{5}")) {
 			errors.rejectValue("personasKods", "resident.personasKods.invalid");
-		}/* else if (residentService.findResidentByPersonasKods(resident.getPersonasKods()) > 0) {
+		} else if (residentService.findResidentByPersonasKods(resident.getPersonasKods()) > 0) {
 			errors.rejectValue("personasKods", "resident.personasKods.exists");
-		}*/
+		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "darbaLigums", "resident.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "universitate", "resident.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studijuGads", "resident.empty");

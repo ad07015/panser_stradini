@@ -25,18 +25,38 @@ function viewResident(rID)
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
-
 <c:choose>
-	<c:when test="${message == 'Success'}">
+	<c:when test="${status == 'success'}">
 		<hr>
-		<span>Rezidents veiksmīgi piereģistrēts!</span>
+		<span><c:out value="${message}"></c:out></span>
 	</c:when>
-	<c:when test="${message == 'Fail'}">
+	<c:when test="${status == 'fail'}">
 		<hr>
-		<span class="error">Notika kļūda! Rezidents netika piereģistrēts!</span>
+		<%-- <span class="error"><c:out value="${message}" escapeXml="false" /></span> --%>
+		<span class="error"><c:out value="${message}" escapeXml="false" /></span>
 	</c:when>
 </c:choose>
 
+<%-- 
+<c:choose>
+	<c:when test="${message == 'addSuccess'}">
+		<hr>
+		<span>Rezidents veiksmīgi piereģistrēts!</span>
+	</c:when>
+	<c:when test="${message == 'addFail'}">
+		<hr>
+		<span class="error">Notika kļūda! Rezidents netika piereģistrēts!</span>
+	</c:when>
+	<c:when test="${message == 'deleteSuccess'}">
+		<hr>
+		<span>Rezidents veiksmīgi nodzēsts!</span>
+	</c:when>
+	<c:when test="${message == 'deleteFail'}">
+		<hr>
+		<span class="error">Notika kļūda! Rezidents netika nodzēsts!</span>
+	</c:when>
+</c:choose>
+ --%>
 <hr>
 
 <h2>Rezidentu saraksts:</h2>

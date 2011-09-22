@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/add/*.htm")
+@RequestMapping(value={"/resident/add*.htm", "/resident/update*.htm"})
 public class AddController {
 
 	private static Logger log = Logger.getLogger(AddController.class);
@@ -82,6 +82,15 @@ public class AddController {
 	public ModelAndView onSubmitUpdateForm(Resident resident, Errors errors, String actionType, long residentID) {
 		log.info("AddNewResController: in processUpdateForm()");
 		ModelAndView mav = new ModelAndView();
+		
+		ResidentFormValidator validator = new ResidentFormValidator(residentService);
+		validator.validate(resident, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("resident", resident);
+			mav.setViewName("add/addResident");
+			return mav;
+		}
 		
 		resident.setID(residentID);
 		boolean result = residentService.updateResident(resident);

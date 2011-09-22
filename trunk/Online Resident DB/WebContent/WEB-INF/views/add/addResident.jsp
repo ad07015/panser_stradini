@@ -41,6 +41,12 @@ Ievadiet rezidenta informāciju
 			<td><form:errors path="uzvards" cssClass="error" /></td>
 		<tr>
 			<td>Personas kods</td>
+			<%-- 
+			<c:choose>
+				<c:when test="${actionType == 'add'}"><td><form:input path="personasKods" /></td></c:when>
+				<c:when test="${actionType == 'update'}"><td><c:out value="${resident.personasKods}"></c:out></td></c:when>
+			</c:choose>
+			 --%>
 			<td><form:input path="personasKods" /></td>
 			<td><form:errors path="personasKods" cssClass="error" /></td>
 		</tr>

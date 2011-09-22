@@ -82,7 +82,7 @@ function viewResident(rID)
 </c:forEach>
 </table>
 
-<button class="belowTable" onClick="location.href='/resdb/add/addResident.htm'">Piereģistrēt rezidentu</button>
+<button class="belowTable" onClick="location.href='/resdb/resident/addResident.htm'">Piereģistrēt rezidentu</button>
 
 </body>
 </html>

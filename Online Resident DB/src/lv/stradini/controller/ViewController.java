@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/view/*.htm")
-public class ViewResController {
+public class ViewController {
 
-	private static Logger log = Logger.getLogger(ViewResController.class);
+	private static Logger log = Logger.getLogger(ViewController.class);
 	@Autowired
 	private ResidentService residentService;
 

@@ -29,8 +29,7 @@ function updateResident(rID)
 	<input type="hidden" name="deleteResidentID" >
 </form>
 
-<!-- <form name="updateResidentForm" action="/resdb/view/updateResident.htm" method="post"> -->
-<form name="updateResidentForm" action="/resdb/add/addResident.htm" method="post">
+<form name="updateResidentForm" action="/resdb/resident/updateResident.htm" method="post">
 	<input type="hidden" name="updateResidentID" >
 </form>
 

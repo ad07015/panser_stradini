@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.repository.ResidentRepository;
 import lv.stradini.util.Utils;
@@ -40,8 +42,9 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 
+			Resident resident;
 			while (rs.next()) {
-				residentList.add(new Resident(rs.getInt("RESIDENT_PK"), rs
+				resident = new Resident(rs.getInt("RESIDENT_PK"), rs
 						.getString("VARDS"), rs.getString("UZVARDS"), rs
 						.getString("PERSONAS_KODS"), rs
 						.getString("DARBA_LIGUMS"), rs
@@ -49,7 +52,9 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 						.getString("UNIVERSITATE"), rs
 						.getString("STUDIJU_GADS"), rs.getString("ADRESE"), rs
 						.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
-						rs.getString("KOMENTARI")));
+						rs.getString("KOMENTARI"));
+				resident.setHeartList(fetchHeartsByResidentID(resident.getID()));
+				residentList.add(resident);
 			}
 
 		} catch (SQLException se) {
@@ -58,6 +63,35 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			closeConnection(rs, st, conn);
 		}
 		return residentList;
+	}
+	
+	private LinkedList<Heart> fetchHeartsByResidentID(long residentID) {
+		LinkedList<Heart> heartList = new LinkedList<Heart>();
+		
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM HEART WHERE RESIDENT_FK = ?; ";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+
+			while (rs.next()) {
+				heartList.add(new Heart(rs.getInt("HEART_PK"),
+						rs.getInt("RESIDENT_FK"),
+						rs.getString("TIPS"),
+						rs.getString("KOMENTARI")));
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		
+		return heartList;
 	}
 
 	@Override
@@ -105,6 +139,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			st.setLong(1, residentID);
 			rs = st.executeQuery();
 
+			
 			while (rs.next()) {
 				resident = new Resident(rs.getInt("RESIDENT_PK"),
 						rs.getString("VARDS"), rs.getString("UZVARDS"),
@@ -115,6 +150,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 						rs.getString("STUDIJU_GADS"), rs.getString("ADRESE"),
 						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
 						rs.getString("KOMENTARI"));
+				resident.setHeartList(fetchHeartsByResidentID(residentID));
 			}
 			
 			logger.info("Resident PK = " + resident.getID());

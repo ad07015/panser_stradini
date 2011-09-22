@@ -1,4 +1,4 @@
-package lv.stradini.dataAccessObject;
+package lv.stradini.domain.old;
 
 import java.util.Date;
 

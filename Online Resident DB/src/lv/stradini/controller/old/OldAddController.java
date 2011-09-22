@@ -2,7 +2,7 @@ package lv.stradini.controller.old;
 
 import java.util.List;
 
-import lv.stradini.domain.Employee;
+import lv.stradini.domain.old.Employee;
 import lv.stradini.impl.service.ValidatorServiceImpl;
 import lv.stradini.interfaces.service.EmployeeService;
 import lv.stradini.interfaces.service.ProjectService;

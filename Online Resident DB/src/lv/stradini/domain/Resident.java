@@ -1,4 +1,4 @@
-package lv.stradini.dataAccessObject;
+package lv.stradini.domain;
 
 public class Resident {
 	private long ID;

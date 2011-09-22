@@ -1,4 +1,4 @@
-package lv.stradini.dataAccessObject;
+package lv.stradini.domain.old;
 
 public class Name {
 	private String first;

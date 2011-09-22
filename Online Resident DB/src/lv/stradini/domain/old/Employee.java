@@ -1,4 +1,4 @@
-package lv.stradini.domain;
+package lv.stradini.domain.old;
 
 public class Employee {
 	

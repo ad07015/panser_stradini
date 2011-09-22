@@ -10,9 +10,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import lv.stradini.domain.EmployeeProjectDetail;
-import lv.stradini.domain.Project;
-import lv.stradini.domain.ProjectRole;
+import lv.stradini.domain.old.EmployeeProjectDetail;
+import lv.stradini.domain.old.Project;
+import lv.stradini.domain.old.ProjectRole;
 import lv.stradini.interfaces.repository.ProjectRepository;
 
 import org.apache.log4j.Logger;

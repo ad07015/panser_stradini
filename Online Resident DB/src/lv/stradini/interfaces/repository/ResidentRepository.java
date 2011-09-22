@@ -2,8 +2,8 @@ package lv.stradini.interfaces.repository;
 
 import java.util.List;
 
-import lv.stradini.dataAccessObject.Doctor;
-import lv.stradini.dataAccessObject.Resident;
+import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Resident;
 
 public interface ResidentRepository {
 	

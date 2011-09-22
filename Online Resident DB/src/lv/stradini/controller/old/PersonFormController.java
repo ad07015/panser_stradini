@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lv.stradini.dataAccessObject.Person;
+import lv.stradini.domain.old.Person;
 import lv.stradini.validation.PersonFormValidator;
 
 import org.apache.log4j.Logger;

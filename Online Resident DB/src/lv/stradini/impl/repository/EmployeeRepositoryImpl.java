@@ -10,10 +10,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import lv.stradini.domain.Employee;
-import lv.stradini.domain.EmployeeSkill;
-import lv.stradini.domain.ProjectRole;
-import lv.stradini.domain.Role;
+import lv.stradini.domain.old.Employee;
+import lv.stradini.domain.old.EmployeeSkill;
+import lv.stradini.domain.old.ProjectRole;
+import lv.stradini.domain.old.Role;
 import lv.stradini.interfaces.repository.EmployeeRepository;
 
 import org.apache.log4j.Logger;

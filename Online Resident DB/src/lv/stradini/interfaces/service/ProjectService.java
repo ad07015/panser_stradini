@@ -2,7 +2,7 @@ package lv.stradini.interfaces.service;
 
 import java.util.List;
 
-import lv.stradini.domain.Project;
+import lv.stradini.domain.old.Project;
 
 public interface ProjectService {
 

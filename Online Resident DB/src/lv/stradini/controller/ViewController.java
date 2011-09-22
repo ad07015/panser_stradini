@@ -3,8 +3,8 @@ package lv.stradini.controller;
 import java.util.List;
 
 import lv.stradini.constants.Constants;
-import lv.stradini.dataAccessObject.Doctor;
-import lv.stradini.dataAccessObject.Resident;
+import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 
 import org.apache.log4j.Logger;

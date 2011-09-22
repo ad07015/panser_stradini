@@ -2,11 +2,11 @@ package lv.stradini.interfaces.service;
 
 import java.util.List;
 
-import lv.stradini.domain.Employee;
-import lv.stradini.domain.EmployeeDetail;
-import lv.stradini.domain.EmployeeSkill;
-import lv.stradini.domain.ProjectRole;
-import lv.stradini.domain.Role;
+import lv.stradini.domain.old.Employee;
+import lv.stradini.domain.old.EmployeeDetail;
+import lv.stradini.domain.old.EmployeeSkill;
+import lv.stradini.domain.old.ProjectRole;
+import lv.stradini.domain.old.Role;
 
 public interface EmployeeService {
 

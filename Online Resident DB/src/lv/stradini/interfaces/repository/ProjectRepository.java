@@ -2,9 +2,9 @@ package lv.stradini.interfaces.repository;
 
 import java.util.List;
 
-import lv.stradini.domain.EmployeeProjectDetail;
-import lv.stradini.domain.Project;
-import lv.stradini.domain.ProjectRole;
+import lv.stradini.domain.old.EmployeeProjectDetail;
+import lv.stradini.domain.old.Project;
+import lv.stradini.domain.old.ProjectRole;
 
 public interface ProjectRepository {
 

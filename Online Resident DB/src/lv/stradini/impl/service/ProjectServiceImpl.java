@@ -3,7 +3,7 @@ package lv.stradini.impl.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import lv.stradini.domain.Project;
+import lv.stradini.domain.old.Project;
 import lv.stradini.interfaces.repository.EmployeeRepository;
 import lv.stradini.interfaces.repository.ProjectRepository;
 import lv.stradini.interfaces.service.ProjectService;

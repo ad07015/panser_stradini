@@ -1,9 +1,9 @@
 package lv.stradini.controller.old;
 
-import lv.stradini.domain.Employee;
-import lv.stradini.domain.EmployeeDetail;
-import lv.stradini.domain.EmployeeSkill;
-import lv.stradini.domain.Project;
+import lv.stradini.domain.old.Employee;
+import lv.stradini.domain.old.EmployeeDetail;
+import lv.stradini.domain.old.EmployeeSkill;
+import lv.stradini.domain.old.Project;
 import lv.stradini.interfaces.service.EmployeeService;
 import lv.stradini.interfaces.service.ProjectService;
 

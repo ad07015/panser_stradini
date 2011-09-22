@@ -1,6 +1,6 @@
 package lv.stradini.validation;
 
-import lv.stradini.dataAccessObject.Resident;
+import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 
 import org.springframework.beans.factory.annotation.Autowired;

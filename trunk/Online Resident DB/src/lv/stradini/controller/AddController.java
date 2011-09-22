@@ -3,7 +3,7 @@ package lv.stradini.controller;
 
 
 import lv.stradini.constants.Constants;
-import lv.stradini.dataAccessObject.Resident;
+import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.validation.ResidentFormValidator;
 

@@ -1,6 +1,6 @@
 package lv.stradini.validation;
 
-import lv.stradini.dataAccessObject.Resident;
+import lv.stradini.domain.Resident;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

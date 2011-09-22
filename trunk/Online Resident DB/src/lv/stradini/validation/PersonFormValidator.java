@@ -1,7 +1,7 @@
 package lv.stradini.validation;
 
-import lv.stradini.dataAccessObject.Person;
-import lv.stradini.dataAccessObject.Resident;
+import lv.stradini.domain.Resident;
+import lv.stradini.domain.old.Person;
 
 import org.apache.log4j.Logger;
 import org.springframework.validation.Errors;

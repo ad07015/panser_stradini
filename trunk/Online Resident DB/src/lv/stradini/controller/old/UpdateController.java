@@ -1,4 +1,4 @@
-package lv.stradini.controller;
+package lv.stradini.controller.old;
 
 import lv.stradini.domain.Employee;
 import lv.stradini.domain.EmployeeDetail;

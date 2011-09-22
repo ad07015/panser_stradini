@@ -35,9 +35,8 @@ public class AddResNewController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, params={"actionType=add"})
-	public ModelAndView onSubmitNewForm(Resident resident, Errors errors,
-			@RequestParam("actionType") String actionType) {
-		log.info("AddNewResController: in processForm()");
+	public ModelAndView onSubmitNewForm(Resident resident, Errors errors, String actionType) {
+		log.info("AddNewResController: in onSubmitNewForm()");
 		log.info("actionType is " + actionType);
 		ModelAndView mav = new ModelAndView();
 		ResidentFormValidator validator = new ResidentFormValidator(residentService);
@@ -80,9 +79,7 @@ public class AddResNewController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, params={"actionType=update"})
-	public ModelAndView onSubmitUpdateForm(Resident resident, Errors errors,
-			@RequestParam("actionType") String actionType,
-			@RequestParam("residentID") long residentID) {
+	public ModelAndView onSubmitUpdateForm(Resident resident, Errors errors, String actionType, long residentID) {
 		log.info("AddNewResController: in processUpdateForm()");
 		ModelAndView mav = new ModelAndView();
 		

@@ -1,4 +1,4 @@
-package lv.stradini.controller;
+package lv.stradini.controller.old;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

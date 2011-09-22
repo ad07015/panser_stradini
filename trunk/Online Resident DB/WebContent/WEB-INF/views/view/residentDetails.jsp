@@ -91,8 +91,40 @@ function updateResident(rID)
 	</tr>
 </table>
 
+
 <button class="belowTable" onClick="javascript:deleteResident(${resident.ID})">Nodzēst rezidentu</button>
 <button class="belowTable" onClick="javascript:updateResident(${resident.ID})">Rediģēt rezidenta datus</button>
+
+<hr>
+
+<c:choose>
+	<c:when test="${fn:length(resident.heartList) != 0}">
+		<h2>Sirsniņas:</h2>
+		<table class="narrow_table">
+			<tr>
+				<th width="20%">
+					Vārds
+				</th>
+				<th width="20%">
+					Uzvārds
+				</th>
+				<th width="20%">
+					Personas kods
+				</th>
+			</tr>
+			<c:forEach var="heart" items="${resident.heartList}">
+				<tr>
+					<td><c:out value="${heart.ID}" /></td>
+					<td><c:out value="${heart.residentFk}" /></td>
+					<td><c:out value="${heart.komentari}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:when>
+	<c:otherwise>
+		<c:out value="Šīm rezidentam nav piereģistrēto zaļo vai melno sirsniņu" />
+	</c:otherwise>
+</c:choose>
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 package lv.stradini.domain;
 
+import java.util.LinkedList;
+
 public class Resident {
 	private long ID;
 	private String vards;
@@ -13,9 +15,9 @@ public class Resident {
 	private String talrunaNumurs;
 	private String epasts;
 	private String komentari;
+	private LinkedList<Heart> heartList;
 	
 	public Resident() {
-		
 	}
 
 	public Resident(long iD, String vards, String uzvards,
@@ -154,5 +156,13 @@ public class Resident {
 
 	public void setKomentari(String komentari) {
 		this.komentari = komentari;
+	}
+
+	public LinkedList<Heart> getHeartList() {
+		return heartList;
+	}
+
+	public void setHeartList(LinkedList<Heart> heartList) {
+		this.heartList = heartList;
 	}
 }

@@ -18,9 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/add/addResident.htm")
-public class AddResNewController {
+public class AddController {
 
-	private static Logger log = Logger.getLogger(AddResNewController.class);
+	private static Logger log = Logger.getLogger(AddController.class);
 	@Autowired
 	private ResidentService residentService;
 	

@@ -2,6 +2,9 @@ package lv.stradini.controller;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 @Controller
-@RequestMapping("/add/addResident.htm")
+@RequestMapping("/addss/addResident.htm")
 public class AddResController extends SimpleFormController {
 
 	private static Logger log = Logger.getLogger(AddResController.class);
@@ -43,9 +46,16 @@ public class AddResController extends SimpleFormController {
 	}
 
 	@Override
+	protected Map<String, String> referenceData(HttpServletRequest request) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("actionType", Constants.ACTION_TYPE_NEW);
+		return map;
+	}
+
+	@Override
 	protected ModelAndView onSubmit(Object command) throws Exception {
 		Resident resident = (Resident) command;
-		log.info("Person submittest successfully! Name is " + resident.getVards() + " " + resident.getUzvards());
+		log.info("Person submitted successfully! Name is " + resident.getVards() + " " + resident.getUzvards());
 
 		boolean result = residentService.insertResident(resident);
 		String message;

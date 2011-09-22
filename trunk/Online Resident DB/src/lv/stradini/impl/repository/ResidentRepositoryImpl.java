@@ -19,7 +19,8 @@ import org.apache.log4j.Logger;
 
 public class ResidentRepositoryImpl implements ResidentRepository {
 
-	private static Logger logger = Logger.getLogger(ResidentRepositoryImpl.class);
+	private static Logger logger = Logger
+			.getLogger(ResidentRepositoryImpl.class);
 	private final DataSource dataSource;
 
 	public ResidentRepositoryImpl(DataSource dataSource) throws SQLException {
@@ -115,6 +116,8 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
 						rs.getString("KOMENTARI"));
 			}
+			
+			logger.info("Resident PK = " + resident.getID());
 
 		} catch (SQLException se) {
 			logger.error("SQLException has occured", se);
@@ -186,14 +189,13 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public boolean insertResident(Resident resident) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		
+
 		try {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
-			st = conn.prepareStatement("INSERT INTO RESIDENT VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-			
-			logger.info("Da�ko");
-			
+			st = conn
+					.prepareStatement("INSERT INTO RESIDENT VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+
 			st.setString(1, resident.getVards());
 			st.setString(2, resident.getUzvards());
 			st.setString(3, resident.getPersonasKods());
@@ -226,11 +228,12 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public boolean deleteResidentByID(long residentID) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		
+
 		try {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
-			st = conn.prepareStatement("DELETE FROM RESIDENT WHERE RESIDENT_PK = ?;");
+			st = conn
+					.prepareStatement("DELETE FROM RESIDENT WHERE RESIDENT_PK = ?;");
 			st.setLong(1, residentID);
 
 			if (st.executeUpdate() == 1) {
@@ -273,5 +276,48 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			closeConnection(rs, st, conn);
 		}
 		return count;
+	}
+
+	@Override
+	public boolean updateResident(Resident resident) {
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+			StringBuffer sb = new StringBuffer();
+			sb.append("UPDATE RESIDENT ");
+			sb.append("SET VARDS=?, UZVARDS=?, PERSONAS_KODS=?, DARBA_LIGUMS=?, SPECIALITATE=?, ");
+			sb.append("UNIVERSITATE=?, STUDIJU_GADS=?, ADRESE=?, TALRUNA_NUMURS=?, EPASTS=?, KOMENTARI=? ");
+			sb.append("WHERE RESIDENT_PK=? ");
+			st = conn.prepareStatement(sb.toString());
+			
+			st.setString(1, resident.getVards());
+			st.setString(2, resident.getUzvards());
+			st.setString(3, resident.getPersonasKods());
+			st.setString(4, resident.getDarbaLigums());
+			st.setString(5, resident.getSpecialitate());
+			st.setString(6, resident.getUniversitate());
+			st.setString(7, resident.getStudijuGads());
+			st.setString(8, resident.getAdrese());
+			st.setString(9, resident.getTalrunaNumurs());
+			st.setString(10, resident.getEpasts());
+			st.setString(11, resident.getKomentari());
+			st.setLong(12, resident.getID());
+
+			st.executeUpdate();
+
+			conn.commit();
+			return true;
+		} catch (SQLException e) {
+			Utils.rollback(conn);
+			logger.error("", e);
+		} finally {
+			Utils.setAutoCommit(conn, true);
+			closeConnection(st, conn);
+		}
+
+		return false;
 	}
 }

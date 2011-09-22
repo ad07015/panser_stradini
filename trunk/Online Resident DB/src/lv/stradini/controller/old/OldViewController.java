@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/views/*.htm") //FIXME: Incorrect, change to @RequestMapping("/view/*.htm")
-public class ViewController {
+public class OldViewController {
 
-	private static Logger log = Logger.getLogger(ViewController.class);
+	private static Logger log = Logger.getLogger(OldViewController.class);
 	@Autowired
 	private ProjectService projectService;
 	@Autowired

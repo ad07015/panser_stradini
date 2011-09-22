@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/adds/*.htm")
-public class AddController {
+public class OldAddController {
 
-	private static Logger log = Logger.getLogger(ViewController.class);
+	private static Logger log = Logger.getLogger(OldViewController.class);
 	@Autowired
 	private EmployeeService employeeService;
 	@Autowired

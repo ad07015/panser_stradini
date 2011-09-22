@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/update/*.htm")
 public class UpdateController {
 
-	private static Logger log = Logger.getLogger(ViewController.class);
+	private static Logger log = Logger.getLogger(OldViewController.class);
 	@Autowired
 	private EmployeeService employeeService;
 	@Autowired

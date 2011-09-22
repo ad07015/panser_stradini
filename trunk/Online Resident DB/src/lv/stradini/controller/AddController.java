@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/add/addResident.htm")
+@RequestMapping("/add/*.htm")
 public class AddController {
 
 	private static Logger log = Logger.getLogger(AddController.class);

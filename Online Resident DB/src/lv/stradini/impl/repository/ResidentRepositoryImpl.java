@@ -72,7 +72,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		Statement st = null;
 		ResultSet rs = null;
 
-		String query = "SELECT * FROM HEART WHERE RESIDENT_FK = ?; ";
+		String query = "SELECT * FROM HEART WHERE RESIDENT_FK = ? ";
 		try {
 			conn = dataSource.getConnection();
 			st = conn.createStatement();
@@ -128,7 +128,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public Resident findResidentByID(long residentID) {
-		Resident resident = new Resident();
+		Resident resident = null;
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -290,7 +290,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	}
 
 	@Override
-	public int findResidentByPersonasKods(String personasKods) {
+	public int getResidentCountByPersonasKods(String personasKods) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -355,5 +355,39 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 
 		return false;
+	}
+
+	@Override
+	public Resident findResidentByPersonasKods(String personasKods) {
+		Resident resident = null;
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM resident WHERE PERSONAS_KODS = ? ";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.prepareStatement(query);
+			st.setString(1, personasKods);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				resident = new Resident(rs.getInt("RESIDENT_PK"),
+						rs.getString("VARDS"), rs.getString("UZVARDS"),
+						rs.getString("PERSONAS_KODS"),
+						rs.getString("DARBA_LIGUMS"),
+						rs.getString("SPECIALITATE"),
+						rs.getString("UNIVERSITATE"),
+						rs.getString("STUDIJU_GADS"), rs.getString("ADRESE"),
+						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
+						rs.getString("KOMENTARI"));
+				resident.setHeartList(fetchHeartsByResidentID(resident.getID()));
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return resident;
 	}
 }

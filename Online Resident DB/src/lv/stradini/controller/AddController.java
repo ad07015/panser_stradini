@@ -5,7 +5,8 @@ package lv.stradini.controller;
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
-import lv.stradini.validation.ResidentFormValidator;
+import lv.stradini.validation.AddResidentFormValidator;
+import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AddController {
 		log.info("AddNewResController: in onSubmitNewForm()");
 		log.info("actionType is " + actionType);
 		ModelAndView mav = new ModelAndView();
-		ResidentFormValidator validator = new ResidentFormValidator(residentService);
+		AddResidentFormValidator validator = new AddResidentFormValidator(residentService);
 		validator.validate(resident, errors);
 		if (errors.hasErrors()) {
 			mav.addObject("actionType", actionType);
@@ -83,7 +84,8 @@ public class AddController {
 		log.info("AddNewResController: in processUpdateForm()");
 		ModelAndView mav = new ModelAndView();
 		
-		ResidentFormValidator validator = new ResidentFormValidator(residentService);
+		resident.setID(residentID);
+		UpdateResidentFormValidator validator = new UpdateResidentFormValidator(residentService);
 		validator.validate(resident, errors);
 		if (errors.hasErrors()) {
 			mav.addObject("actionType", actionType);
@@ -92,7 +94,6 @@ public class AddController {
 			return mav;
 		}
 		
-		resident.setID(residentID);
 		boolean result = residentService.updateResident(resident);
 		String message;
 		String status;

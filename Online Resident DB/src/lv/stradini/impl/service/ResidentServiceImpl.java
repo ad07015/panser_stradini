@@ -46,12 +46,17 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public int findResidentByPersonasKods(String personasKods) {
-		return repo.findResidentByPersonasKods(personasKods);
+	public int getResidentCountByPersonasKods(String personasKods) {
+		return repo.getResidentCountByPersonasKods(personasKods);
 	}
 
 	@Override
 	public boolean updateResident(Resident resident) {
 		return repo.updateResident(resident);
+	}
+
+	@Override
+	public Resident findResidentByPersonasKods(String personasKods) {
+		return repo.findResidentByPersonasKods(personasKods);
 	}
 }

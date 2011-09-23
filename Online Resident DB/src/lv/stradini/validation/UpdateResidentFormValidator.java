@@ -3,17 +3,17 @@ package lv.stradini.validation;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.apache.log4j.Logger;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-public class AddResidentFormValidator implements Validator {
+public class UpdateResidentFormValidator implements Validator {
 
+	private static Logger log = Logger.getLogger(UpdateResidentFormValidator.class);
 	private ResidentService residentService;
 	
-	public AddResidentFormValidator(ResidentService residentService) {
+	public UpdateResidentFormValidator(ResidentService residentService) {
 		this.residentService = residentService;
 	}
 
@@ -31,8 +31,17 @@ public class AddResidentFormValidator implements Validator {
 			errors.rejectValue("personasKods", "resident.empty");			
 		} else if (!resident.getPersonasKods().matches("[0-9]{6}-[0-9]{5}")) {
 			errors.rejectValue("personasKods", "resident.personasKods.invalid");
-		} else if (residentService.getResidentCountByPersonasKods(resident.getPersonasKods()) > 0) {
-			errors.rejectValue("personasKods", "resident.personasKods.exists");
+		} else {
+			log.info("Resident ID = " + resident.getID());
+			Resident oldResident = residentService.findResidentByID(resident.getID());
+			String newPersonasKods = resident.getPersonasKods();
+			String oldPersonasKods = oldResident.getPersonasKods();
+			int countFoundWithNewPersonasKods = residentService.getResidentCountByPersonasKods(newPersonasKods);
+			log.info("Resident personas kods = " + resident.getPersonasKods());
+			log.info("Found resident personas kods = " + oldResident.getPersonasKods());
+			if (countFoundWithNewPersonasKods > 0 && !newPersonasKods.equals(oldPersonasKods)) {
+				errors.rejectValue("personasKods", "resident.personasKods.exists");
+			}
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "darbaLigums", "resident.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "universitate", "resident.empty");

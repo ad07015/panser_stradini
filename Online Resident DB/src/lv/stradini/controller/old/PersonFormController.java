@@ -6,19 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import lv.stradini.domain.old.Person;
-import lv.stradini.validation.PersonFormValidator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -34,7 +29,7 @@ public class PersonFormController extends SimpleFormController {
 		setCommandClass(Person.class);
 		setFormView("add/newPerson");
 		setSuccessView("add/newPersonSuccess");
-		setValidator(new PersonFormValidator());
+//		setValidator(new PersonFormValidator());
 	}
 
 	@Override

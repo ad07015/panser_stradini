@@ -9,11 +9,11 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-public class ResidentFormValidator implements Validator {
+public class AddResidentFormValidator implements Validator {
 
 	private ResidentService residentService;
 	
-	public ResidentFormValidator(ResidentService residentService) {
+	public AddResidentFormValidator(ResidentService residentService) {
 		this.residentService = residentService;
 	}
 

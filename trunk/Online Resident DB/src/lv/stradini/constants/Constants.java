@@ -8,6 +8,6 @@ public class Constants {
 	public static final String MESSAGE_DELETE_FAIL = "Notika k\u013C\u016Bda! Rezidents netika nodz\u0113sts!";
 	public static final String ACTION_TYPE_UPDATE = "update";
 	public static final String ACTION_TYPE_NEW = "add";
-	public static final String MESSAGE_UPDATE_SUCCESS = "Rezidenta dati ir veiksmīgi rediģēti!";
+	public static final String MESSAGE_UPDATE_SUCCESS = "Rezidenta dati ir veiksm\u012Bgi redi\u0123\u0113ti!";
 	public static final String MESSAGE_UPDATE_FAIL = "Notika k\u013C\u016Bda! Rezidenta dati netika izmain\u012Bti!";
 }

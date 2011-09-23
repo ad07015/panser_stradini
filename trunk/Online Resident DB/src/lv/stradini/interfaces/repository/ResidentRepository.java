@@ -19,7 +19,9 @@ public interface ResidentRepository {
 
 	boolean deleteResidentByID(long residentID);
 
-	int findResidentByPersonasKods(String personasKods);
+	int getResidentCountByPersonasKods(String personasKods);
 
 	boolean updateResident(Resident resident);
+
+	Resident findResidentByPersonasKods(String personasKods);
 }

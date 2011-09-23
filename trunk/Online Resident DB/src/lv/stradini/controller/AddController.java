@@ -6,6 +6,7 @@ import lv.stradini.constants.Constants;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.validation.AddResidentFormValidator;
+import lv.stradini.validation.ResidentFormValidator;
 import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
@@ -40,7 +41,7 @@ public class AddController {
 		log.info("AddNewResController: in onSubmitNewForm()");
 		log.info("actionType is " + actionType);
 		ModelAndView mav = new ModelAndView();
-		AddResidentFormValidator validator = new AddResidentFormValidator(residentService);
+		ResidentFormValidator validator = new AddResidentFormValidator(residentService);
 		validator.validate(resident, errors);
 		if (errors.hasErrors()) {
 			mav.addObject("actionType", actionType);
@@ -85,7 +86,7 @@ public class AddController {
 		ModelAndView mav = new ModelAndView();
 		
 		resident.setID(residentID);
-		UpdateResidentFormValidator validator = new UpdateResidentFormValidator(residentService);
+		ResidentFormValidator validator = new UpdateResidentFormValidator(residentService);
 		validator.validate(resident, errors);
 		if (errors.hasErrors()) {
 			mav.addObject("actionType", actionType);

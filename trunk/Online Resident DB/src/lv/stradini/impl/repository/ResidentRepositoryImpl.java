@@ -69,14 +69,15 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		LinkedList<Heart> heartList = new LinkedList<Heart>();
 		
 		Connection conn = null;
-		Statement st = null;
+		PreparedStatement st = null;
 		ResultSet rs = null;
 
-		String query = "SELECT * FROM HEART WHERE RESIDENT_FK = ? ";
+		String query = "SELECT * FROM HEART WHERE RESIDENT_FK = ?;";
 		try {
 			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(query);
+			st = conn.prepareStatement(query);
+			st.setLong(1, residentID);
+			rs = st.executeQuery();
 
 			while (rs.next()) {
 				heartList.add(new Heart(rs.getInt("HEART_PK"),

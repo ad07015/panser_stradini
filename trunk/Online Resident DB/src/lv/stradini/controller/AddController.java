@@ -54,10 +54,10 @@ public class AddController {
 		String message;
 		String status;
 		if(result) {
-			message = Constants.MESSAGE_ADD_SUCCESS;
+			message = Constants.MESSAGE_RESIDENT_ADD_SUCCESS;
 			status = "success";
 		} else {
-			message = Constants.MESSAGE_ADD_FAIL;
+			message = Constants.MESSAGE_RESIDENT_ADD_FAIL;
 			status = "fail";
 		}
 		mav.addObject("status", status);
@@ -99,10 +99,10 @@ public class AddController {
 		String message;
 		String status;
 		if(result) {
-			message = Constants.MESSAGE_UPDATE_SUCCESS;
+			message = Constants.MESSAGE_RESIDENT_UPDATE_SUCCESS;
 			status = "success";
 		} else {
-			message = Constants.MESSAGE_UPDATE_FAIL;
+			message = Constants.MESSAGE_RESIDENT_UPDATE_FAIL;
 			status = "fail";
 		}
 		mav.addObject("status", status);

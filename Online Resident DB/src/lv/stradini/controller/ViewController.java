@@ -89,10 +89,10 @@ public class ViewController {
 		String message;
 		String status;
 		if(result) {
-			message = Constants.MESSAGE_DELETE_SUCCESS;
+			message = Constants.MESSAGE_RESIDENT_DELETE_SUCCESS;
 			status = "success";
 		} else {
-			message = Constants.MESSAGE_DELETE_FAIL;
+			message = Constants.MESSAGE_RESIDENT_DELETE_FAIL;
 			status = "fail";
 		}
 		
@@ -130,10 +130,10 @@ public class ViewController {
 		String message;
 		String status;
 		if(result) {	
-			message = Constants.MESSAGE_DELETE_SUCCESS;
+			message = Constants.MESSAGE_HEART_DELETE_SUCCESS;
 			status = "success";
 		} else {
-			message = Constants.MESSAGE_DELETE_FAIL;
+			message = Constants.MESSAGE_HEART_DELETE_FAIL;
 			status = "fail";
 		}
 		

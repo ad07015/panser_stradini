@@ -131,7 +131,7 @@ function updateHeart(heartID)
 		<h2>Sirsniņas:</h2>
 		<table>
 			<tr>
-				<th width="10%">
+				<th width="4%">
 					Tips
 				</th>
 				<th width="70%">
@@ -143,11 +143,19 @@ function updateHeart(heartID)
 			</tr>
 			<c:forEach var="heart" items="${resident.heartList}">
 				<tr>
-					<td><c:out value="${heart.tips}" /></td>
+					<td>
+						<c:choose>
+							<c:when test="${heart.tips == 'green'}">
+								<img src="pictures/green_heart.png" align="middle" width="48" height="48" alt="Green heart" />
+							</c:when>
+							<c:otherwise>
+								<img src="pictures/black_heart.png" align="middle" width="48" height="48" alt="Black heart" />
+							</c:otherwise>
+						</c:choose>
 					<td><c:out value="${heart.komentari}" /></td>
 					<td>
-						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID})">Rediģēt</button>
-						<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
+						<button class="belowTable" align="left" onClick="javascript:updateHeart(${heart.ID})">Rediģēt</button>
+						<button class="belowTable" align="right" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
 					</td>
 				</tr>
 			</c:forEach>

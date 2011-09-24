@@ -120,4 +120,15 @@ public class ViewController {
 		mav.setViewName("add/addResident");
 		return mav;
 	}
+	
+	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"deleteHeart"})
+	public ModelAndView onDeleteHeart(long heartID, long residentID) {
+		
+		
+		Resident resident;
+		
+		ModelAndView mav = new ModelAndView();
+		
+		return mav;
+	}
 }

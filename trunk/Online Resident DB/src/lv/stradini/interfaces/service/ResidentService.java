@@ -24,4 +24,6 @@ public interface ResidentService {
 	boolean updateResident(Resident resident);
 
 	Resident findResidentByPersonasKods(String personasKods);
+
+	boolean deleteHeartByID(long heartID);
 }

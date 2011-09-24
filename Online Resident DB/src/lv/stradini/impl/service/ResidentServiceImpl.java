@@ -59,4 +59,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public Resident findResidentByPersonasKods(String personasKods) {
 		return repo.findResidentByPersonasKods(personasKods);
 	}
+
+	@Override
+	public boolean deleteHeartByID(long heartID) {
+		return repo.deleteHeartByID(heartID);
+	}
 }

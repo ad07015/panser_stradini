@@ -269,10 +269,15 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		try {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
-			st = conn
-					.prepareStatement("DELETE FROM RESIDENT WHERE RESIDENT_PK = ?;");
+			st = conn.prepareStatement("DELETE FROM RESIDENT WHERE RESIDENT_PK = ?;");
 			st.setLong(1, residentID);
-
+			
+			LinkedList<Heart> heartList = fetchHeartsByResidentID(residentID);
+			for (Heart heart : heartList) {
+				deleteHeartByID(heart.getID());
+			}
+			
+			
 			if (st.executeUpdate() == 1) {
 				conn.commit();
 				logger.info("Resident successfully removed");
@@ -390,5 +395,33 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			closeConnection(rs, st, conn);
 		}
 		return resident;
+	}
+
+	@Override
+	public boolean deleteHeartByID(long heartID) {
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+			st = conn.prepareStatement("DELETE FROM HEART WHERE HEART_PK = ?;");
+			st.setLong(1, heartID);
+
+			if (st.executeUpdate() == 1) {
+				conn.commit();
+				logger.info("Heart successfully removed");
+				return true;
+			}
+			Utils.rollback(conn);
+		} catch (SQLException e) {
+			Utils.rollback(conn);
+			logger.error("", e);
+		} finally {
+			Utils.setAutoCommit(conn, true);
+			closeConnection(st, conn);
+		}
+
+		return false;
 	}
 }

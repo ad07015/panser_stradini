@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -124,11 +125,25 @@ public class ViewController {
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"deleteHeart"})
 	public ModelAndView onDeleteHeart(long heartID, long residentID) {
 		
+		boolean result = residentService.deleteHeartByID(heartID);
 		
-		Resident resident;
+		String message;
+		String status;
+		if(result) {	
+			message = Constants.MESSAGE_DELETE_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_DELETE_FAIL;
+			status = "fail";
+		}
+		
+		Resident resident = residentService.findResidentByID(residentID);
 		
 		ModelAndView mav = new ModelAndView();
-		
+		mav.addObject("resident", resident);
+		mav.addObject("message", message);
+		mav.addObject("status", status);
+		mav.setViewName("view/residentDetails");
 		return mav;
 	}
 }

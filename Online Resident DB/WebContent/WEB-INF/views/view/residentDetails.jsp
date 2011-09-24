@@ -11,8 +11,13 @@
 <script language="javascript" type="text/javascript">
 function deleteResident(rID)
 {
-  document.deleteResidentForm.deleteResidentID.value=rID
-  document.deleteResidentForm.submit()
+	var con
+	con = confirm('Vai Jūs tiešam gribāt nodzēst šo rezidentu?')
+	if (con)
+	{
+		document.deleteResidentForm.deleteResidentID.value=rID
+		document.deleteResidentForm.submit()
+	}
 }
 function updateResident(rID)
 {
@@ -22,7 +27,7 @@ function updateResident(rID)
 function deleteHeart(heartID)
 {
 	var con
-	con = confirm('Vai tiešam gribat nodzēst šo "Sirsniņu?')
+	con = confirm('Vai Jūs tiešam gribāt nodzēst šo "Sirsniņu?')
 	if (con)
 	{
   		document.deleteHeartForm.heartID.value=heartID
@@ -50,7 +55,7 @@ function updateHeart(heartID)
 <form name="deleteHeartForm" action="/resdb/view/residentDetails.htm" method="post">
 	<input type="hidden" name="deleteHeart" />
 	<input type="hidden" name="heartID" />
-	<input type="hidden" name="residentID" value="${resident.residentID}" />
+	<input type="hidden" name="residentID" value="${resident.ID}" />
 </form>
 <form name="updateHeartForm" action="/resdb/resident/updateHeart.htm" method="post">
 	<input type="hidden" name="heartID" />
@@ -116,23 +121,23 @@ function updateHeart(heartID)
 </table>
 
 
-<button class="belowTable" onClick="javascript:deleteResident(${resident.ID})">Nodzēst rezidentu</button>
 <button class="belowTable" onClick="javascript:updateResident(${resident.ID})">Rediģēt rezidenta datus</button>
+<button class="belowTable" onClick="javascript:deleteResident(${resident.ID})">Nodzēst rezidentu</button>
 
 <hr>
 
 <c:choose>
 	<c:when test="${fn:length(resident.heartList) != 0}">
 		<h2>Sirsniņas:</h2>
-		<table class="narrow_table">
+		<table>
 			<tr>
-				<th width="20%">
+				<th width="10%">
 					Tips
 				</th>
-				<th width="20%">
+				<th width="70%">
 					Komentāri
 				</th>
-				<th>
+				<th width="15%">
 					Darbība
 				</th>
 			</tr>
@@ -140,10 +145,9 @@ function updateHeart(heartID)
 				<tr>
 					<td><c:out value="${heart.tips}" /></td>
 					<td><c:out value="${heart.komentari}" /></td>
-					<td><c:out value="${heart.komentari}" /></td>
 					<td>
-						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID})">Rediģēt "Sirsniņas" informāciju</button>
-						<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst "Sirsniņu"</button>
+						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID})">Rediģēt</button>
+						<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
 					</td>
 				</tr>
 			</c:forEach>

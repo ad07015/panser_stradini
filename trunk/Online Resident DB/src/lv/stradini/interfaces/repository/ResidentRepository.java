@@ -3,6 +3,7 @@ package lv.stradini.interfaces.repository;
 import java.util.List;
 
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 
 public interface ResidentRepository {
@@ -26,4 +27,6 @@ public interface ResidentRepository {
 	Resident findResidentByPersonasKods(String personasKods);
 
 	boolean deleteHeartByID(long heartID);
+
+	Heart findHeartByID(long heartID);
 }

@@ -424,4 +424,32 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 		return false;
 	}
+
+	@Override
+	public Heart findHeartByID(long heartID) {
+		Heart doctor = new Heart();
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		String query = "SELECT * FROM HEART WHERE HEART_PK = ? ";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.prepareStatement(query);
+			st.setLong(1, heartID);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				doctor = new Heart(rs.getInt("HEART_PK"),
+						rs.getInt("RESIDENT_FK"),
+						rs.getString("TIPS"), 
+						rs.getString("KOMENTARI"));
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return doctor;
+	}
 }

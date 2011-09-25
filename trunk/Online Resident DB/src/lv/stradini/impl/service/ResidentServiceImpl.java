@@ -3,6 +3,7 @@ package lv.stradini.impl.service;
 import java.util.List;
 
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.repository.ResidentRepository;
 import lv.stradini.interfaces.service.ResidentService;
@@ -63,5 +64,10 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public boolean deleteHeartByID(long heartID) {
 		return repo.deleteHeartByID(heartID);
+	}
+
+	@Override
+	public Heart findHeartByID(long heartID) {
+		return repo.findHeartByID(heartID);
 	}
 }

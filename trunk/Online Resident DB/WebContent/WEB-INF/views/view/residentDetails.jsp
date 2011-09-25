@@ -152,10 +152,11 @@ function updateHeart(heartID)
 								<img src="pictures/black_heart.png" align="middle" width="48" height="48" alt="Black heart" />
 							</c:otherwise>
 						</c:choose>
+					</td>
 					<td><c:out value="${heart.komentari}" /></td>
 					<td>
-						<button class="belowTable" align="left" onClick="javascript:updateHeart(${heart.ID})">Rediģēt</button>
-						<button class="belowTable" align="right" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
+						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID})">Rediģēt</button>
+						<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
 					</td>
 				</tr>
 			</c:forEach>

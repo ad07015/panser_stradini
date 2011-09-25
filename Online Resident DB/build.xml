@@ -530,5 +530,11 @@ includeantruntime="false"
 
 	<target name="removeInstall" description="Remove and install" depends="remove,install">
 	</target>
+
+	
+<!-- ===================Clean + Remove + Install================================== -->	
+	
+	<target name="cleanRemoveInstall" description="Clean and Remove and install" depends="clean,remove,install">
+	</target>
 	
 </project>

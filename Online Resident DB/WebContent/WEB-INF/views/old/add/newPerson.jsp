@@ -42,11 +42,13 @@ Ievadiet rezidenta informāciju
 		</tr>
 		<tr>
 			<td>Favorite Programming Language:</td>
-			<td><select name="favoriteProgrammingLanguage">
+			<td>
+				<select name="favoriteProgrammingLanguage">
 					<c:forEach items="${languages}" var="language">
 						<option>${language}</option>
 					</c:forEach>
-			</select></td>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td />

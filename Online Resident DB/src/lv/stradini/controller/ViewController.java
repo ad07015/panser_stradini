@@ -219,6 +219,42 @@ public class ViewController {
 		mav.setViewName("view/residentList");
 		return mav;
 	}
+
+	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=addHeart"})
+	public ModelAndView onSubmitAddHeartForm(Heart heart, Errors errors, long residentID, String actionType) {
+		log.info("In onSubmitAddHeartForm() method");
+		heart.setResidentFK(residentID);
+		ModelAndView mav = new ModelAndView();
+		
+		HeartFormValidator validator = new HeartFormValidator(residentService);
+		validator.validate(heart, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("heart", heart);
+			mav.setViewName("add/addHeart");
+			return mav;
+		}
+		
+		boolean result = residentService.insertHeart(heart);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_HEART_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_HEART_ADD_FAIL;
+			status = "fail";
+		}
+		log.info("Status: " + status);
+		log.info("Message: " + message);
+		
+		Resident resident = residentService.findResidentByID(heart.getResidentFK());
+		mav.addObject("resident", resident);
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.setViewName("view/residentDetails");
+		return mav;
+	}
 	
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=updateHeart"})
 	public ModelAndView onSubmitUpdateHeartForm(Heart heart, Errors errors, long heartID, long residentID, String actionType) {

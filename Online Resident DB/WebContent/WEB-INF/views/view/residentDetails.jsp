@@ -52,14 +52,14 @@ function updateHeart(heartID)
 <body>
 
 <form name="deleteResidentForm" action="/resdb/view/residentList.htm" method="post">
-	<input type="hidden" name="deleteResidentID" >
+	<input type="hidden" name="deleteResidentID" />
 </form>
 <form name="updateResidentForm" action="/resdb/resident/updateResident.htm" method="post">
-	<input type="hidden" name="updateResidentID" >
+	<input type="hidden" name="updateResidentID" />
 </form>
 <form name="addHeartForm" action="/resdb/resident/addHeart.htm" method="post">
-	<input type="hidden" name="actionType" value="addHeart" >
-	<input type="hidden" name="residentFK" >
+	<input type="hidden" name="action" value="addHeart" />
+	<input type="hidden" name="residentFK" />
 </form>
 <form name="deleteHeartForm" action="/resdb/view/residentDetails.htm" method="post">
 	<input type="hidden" name="deleteHeart" />
@@ -182,10 +182,10 @@ function updateHeart(heartID)
 	</c:when>
 	<c:otherwise>
 		<c:out value="Šīm rezidentam nav piereģistrēto zaļo vai melno sirsniņu" />
+		<br>
 	</c:otherwise>
 </c:choose>
-
-<button class="belowTable" onClick="javascript:addHeart(${resident.ID}">Piereģistrēt sirsniņu</button>
+<button class="belowTable" onClick="javascript:addHeart(${resident.ID})">Piereģistrēt sirsniņu</button>
 
 </body>
 </html>

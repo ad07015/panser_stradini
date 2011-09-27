@@ -8,6 +8,7 @@ import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.validation.AddResidentFormValidator;
+import lv.stradini.validation.HeartFormValidator;
 import lv.stradini.validation.ResidentFormValidator;
 import lv.stradini.validation.UpdateResidentFormValidator;
 
@@ -220,10 +221,20 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=updateHeart"})
-	public ModelAndView onSubmitUpdateHeartForm(Heart heart, long heartID, long residentID) {
+	public ModelAndView onSubmitUpdateHeartForm(Heart heart, Errors errors, long heartID, long residentID, String actionType) {
 		log.info("In onSubmitUpdateHeartForm() method");
 		heart.setResidentFK(residentID);
 		heart.setID(heartID);
+		ModelAndView mav = new ModelAndView();
+		
+		HeartFormValidator validator = new HeartFormValidator(residentService);
+		validator.validate(heart, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("heart", heart);
+			mav.setViewName("add/addHeart");
+			return mav;
+		}
 		
 		boolean result = residentService.updateHeart(heart);
 		String message;
@@ -239,7 +250,6 @@ public class ViewController {
 		log.info("Message: " + message);
 		
 		Resident resident = residentService.findResidentByID(heart.getResidentFK());
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
 		mav.addObject("status", status);
 		mav.addObject("message", message);

@@ -5,21 +5,17 @@ package lv.stradini.controller;
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
-import lv.stradini.validation.AddResidentFormValidator;
-import lv.stradini.validation.ResidentFormValidator;
-import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/resident/add*.htm", "/resident/update*.htm"})
+@RequestMapping(value={"/resident/addResident.htm", "/resident/updateResident.htm"})
 public class AddController {
 
 	private static Logger log = Logger.getLogger(AddController.class);
@@ -36,39 +32,6 @@ public class AddController {
 		return mav;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, params={"actionType=add"})
-	public ModelAndView onSubmitNewForm(Resident resident, Errors errors, String actionType) {
-		log.info("AddNewResController: in onSubmitNewForm()");
-		log.info("actionType is " + actionType);
-		ModelAndView mav = new ModelAndView();
-		ResidentFormValidator validator = new AddResidentFormValidator(residentService);
-		validator.validate(resident, errors);
-		if (errors.hasErrors()) {
-			mav.addObject("actionType", actionType);
-			mav.addObject("resident", resident);
-			mav.setViewName("add/addResident");
-			return mav;
-		}
-		
-		boolean result = residentService.insertResident(resident);
-		String message;
-		String status;
-		if(result) {
-			message = Constants.MESSAGE_RESIDENT_ADD_SUCCESS;
-			status = "success";
-		} else {
-			message = Constants.MESSAGE_RESIDENT_ADD_FAIL;
-			status = "fail";
-		}
-		mav.addObject("status", status);
-		mav.addObject("message", message);
-		mav.addObject("actionType", actionType);
-		mav.addObject("resident", resident);
-		mav.addObject("residentList", residentService.fetchAllResidents());
-		mav.setViewName("view/residentList");
-		return mav;
-	}
-	
 	@RequestMapping(method = RequestMethod.POST, params={"updateResidentID"})
 	public ModelAndView showUpdateForm(@RequestParam("updateResidentID") long updateResidentID) {
 		log.info("AddNewResController: in showUpdate()");
@@ -77,40 +40,6 @@ public class AddController {
 		mav.addObject("resident", resident);
 		mav.addObject("actionType", Constants.ACTION_TYPE_UPDATE);
 		mav.setViewName("add/addResident");
-		return mav;
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, params={"actionType=update"})
-	public ModelAndView onSubmitUpdateForm(Resident resident, Errors errors, String actionType, long residentID) {
-		log.info("AddNewResController: in processUpdateForm()");
-		ModelAndView mav = new ModelAndView();
-		
-		resident.setID(residentID);
-		ResidentFormValidator validator = new UpdateResidentFormValidator(residentService);
-		validator.validate(resident, errors);
-		if (errors.hasErrors()) {
-			mav.addObject("actionType", actionType);
-			mav.addObject("resident", resident);
-			mav.setViewName("add/addResident");
-			return mav;
-		}
-		
-		boolean result = residentService.updateResident(resident);
-		String message;
-		String status;
-		if(result) {
-			message = Constants.MESSAGE_RESIDENT_UPDATE_SUCCESS;
-			status = "success";
-		} else {
-			message = Constants.MESSAGE_RESIDENT_UPDATE_FAIL;
-			status = "fail";
-		}
-		mav.addObject("status", status);
-		mav.addObject("message", message);
-		mav.addObject("actionType", actionType);
-		mav.addObject("resident", resident);
-		mav.addObject("residentList", residentService.fetchAllResidents());
-		mav.setViewName("view/residentList");
 		return mav;
 	}
 }

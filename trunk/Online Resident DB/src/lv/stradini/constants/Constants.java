@@ -11,6 +11,9 @@ public class Constants {
 	public static final String MESSAGE_RESIDENT_UPDATE_SUCCESS = "Rezidenta dati ir veiksm\u012Bgi redi\u0123\u0113ti!";
 	public static final String MESSAGE_RESIDENT_UPDATE_FAIL = MESSAGE_FAIL_PREFIX + "Rezidenta dati netika izmain\u012Bti!";
 	
+	public static final String MESSAGE_HEART_UPDATE_SUCCESS = "Sirsni\u0146as dati ir veiksm\u012Bgi redi\u0123\u0113ti!";
+	public static final String MESSAGE_HEART_UPDATE_FAIL = MESSAGE_FAIL_PREFIX + "Sirsni\u0146as dati netika izmain\u012Bti!";
+	
 	public static final String MESSAGE_HEART_DELETE_SUCCESS = "Sirsini\u0146a ir veiksm\u012Bgi nodz\u0113sta!";
 	public static final String MESSAGE_HEART_DELETE_FAIL = MESSAGE_FAIL_PREFIX + "Sirsni\u0146a netika nodz\u0113sta!";
 	

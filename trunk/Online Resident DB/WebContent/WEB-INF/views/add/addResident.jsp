@@ -28,7 +28,7 @@
 Ievadiet rezidenta informāciju
 <hr>
 
-<form:form commandName="resident" cssClass="bordless" method="post">
+<form:form commandName="resident" action="/resdb/view/residentList.htm" cssClass="bordless" method="post">
 	<table class="bordless">
 		<tr>
 			<td width="160px">Vārds</td>
@@ -88,14 +88,15 @@ Ievadiet rezidenta informāciju
 			<c:choose>
 				<c:when test="${actionType == 'add'}">
 					<td><input type="submit" value="Reģistrēt rezidentu" />
-					<td><input type="hidden" name="actionType" value="${actionType}"></td>
+					<td><input type="hidden" name="action" value="addResident"></td>
 				</c:when>
 				<c:otherwise>
 					<td><input type="submit" value="Saglabāt izmaiņas" />
-					<td><input type="hidden" name="actionType" value="${actionType}"></td>
+					<td><input type="hidden" name="action" value="updateResident"></td>
 					<td><input type="hidden" name="residentID" value="${resident.ID}"></td>
 				</c:otherwise>
 			</c:choose>
+			<td><input type="hidden" name="actionType" value="${actionType}"></td>
 		</tr>
 	</table>
 </form:form>

@@ -452,4 +452,68 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return doctor;
 	}
+
+	@Override
+	public boolean insertHeart(Heart heart) {
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+			st = conn
+					.prepareStatement("INSERT INTO HEART VALUES(null, ?, ?, ?);");
+
+			st.setLong(1, heart.getResidentFK());
+			st.setString(2, heart.getTips());
+			st.setString(3, heart.getKomentari());
+
+			if (st.executeUpdate() == 1) {
+				conn.commit();
+				return true;
+			}
+			Utils.rollback(conn);
+		} catch (SQLException e) {
+			Utils.rollback(conn);
+			logger.error("", e);
+		} finally {
+			Utils.setAutoCommit(conn, true);
+			closeConnection(st, conn);
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean updateHeart(Heart heart) {
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+			StringBuffer sb = new StringBuffer();
+			sb.append("UPDATE HEART ");
+			sb.append("SET TIPS=?, KOMENTARI=? ");
+			sb.append("WHERE HEART_PK=? ");
+			st = conn.prepareStatement(sb.toString());
+			
+			st.setString(1, heart.getTips());
+			st.setString(2, heart.getKomentari());
+			st.setLong(3, heart.getID());
+
+			st.executeUpdate();
+
+			conn.commit();
+			return true;
+		} catch (SQLException e) {
+			Utils.rollback(conn);
+			logger.error("", e);
+		} finally {
+			Utils.setAutoCommit(conn, true);
+			closeConnection(st, conn);
+		}
+
+		return false;
+	}
 }

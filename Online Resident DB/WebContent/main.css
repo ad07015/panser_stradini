@@ -27,7 +27,7 @@ table.narrow_table{
 
 form.bordless table tr td {
 	color: #000000;
-	border-width: 1px;
+	border-width: 0px;
 }
 
 table.bordless {

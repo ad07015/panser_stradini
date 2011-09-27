@@ -70,4 +70,14 @@ public class ResidentServiceImpl implements ResidentService {
 	public Heart findHeartByID(long heartID) {
 		return repo.findHeartByID(heartID);
 	}
+
+	@Override
+	public boolean insertHeart(Heart heart) {
+		return repo.insertHeart(heart);
+	}
+
+	@Override
+	public boolean updateHeart(Heart heart) {
+		return repo.updateHeart(heart);
+	}
 }

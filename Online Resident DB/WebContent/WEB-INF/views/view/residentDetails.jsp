@@ -24,6 +24,11 @@ function updateResident(rID)
   document.updateResidentForm.updateResidentID.value=rID
   document.updateResidentForm.submit()
 }
+function addHeart(residentFK)
+{
+	document.addHeartForm.residentFK.value=residentFK
+	document.addHeartForm.submit()
+}
 function deleteHeart(heartID)
 {
 	var con
@@ -52,6 +57,10 @@ function updateHeart(heartID)
 <form name="updateResidentForm" action="/resdb/resident/updateResident.htm" method="post">
 	<input type="hidden" name="updateResidentID" >
 </form>
+<form name="addHeartForm" action="/resdb/resident/addHeart.htm" method="post">
+	<input type="hidden" name="actionType" value="addHeart" >
+	<input type="hidden" name="residentFK" >
+</form>
 <form name="deleteHeartForm" action="/resdb/view/residentDetails.htm" method="post">
 	<input type="hidden" name="deleteHeart" />
 	<input type="hidden" name="heartID" />
@@ -63,8 +72,17 @@ function updateHeart(heartID)
 
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
-
-<c:out value="${message}" escapeXml="false" />
+<c:choose>
+	<c:when test="${status == 'success'}">
+		<hr>
+		<span><c:out value="${message}"></c:out></span>
+	</c:when>
+	<c:when test="${status == 'fail'}">
+		<hr>
+		<%-- <span class="error"><c:out value="${message}" escapeXml="false" /></span> --%>
+		<span class="error"><c:out value="${message}" escapeXml="false" /></span>
+	</c:when>
+</c:choose>
 
 <hr>
 
@@ -166,6 +184,8 @@ function updateHeart(heartID)
 		<c:out value="Šīm rezidentam nav piereģistrēto zaļo vai melno sirsniņu" />
 	</c:otherwise>
 </c:choose>
+
+<button class="belowTable" onClick="javascript:addHeart(${resident.ID}">Piereģistrēt sirsniņu</button>
 
 </body>
 </html>

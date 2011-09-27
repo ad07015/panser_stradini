@@ -4,12 +4,17 @@ import java.util.List;
 
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
+import lv.stradini.validation.AddResidentFormValidator;
+import lv.stradini.validation.ResidentFormValidator;
+import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -143,6 +148,101 @@ public class ViewController {
 		mav.addObject("resident", resident);
 		mav.addObject("message", message);
 		mav.addObject("status", status);
+		mav.setViewName("view/residentDetails");
+		return mav;
+	}
+	
+	@RequestMapping(value="residentList.htm", method = RequestMethod.POST, params={"action=addResident"})
+	public ModelAndView onSubmitNewResidentForm(Resident resident, Errors errors, String actionType) {
+		log.info("AddNewResController: in onSubmitNewResidentForm()");
+		log.info("actionType is " + actionType);
+		ModelAndView mav = new ModelAndView();
+		ResidentFormValidator validator = new AddResidentFormValidator(residentService);
+		validator.validate(resident, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("resident", resident);
+			mav.setViewName("add/addResident");
+			return mav;
+		}
+		
+		boolean result = residentService.insertResident(resident);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_RESIDENT_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_RESIDENT_ADD_FAIL;
+			status = "fail";
+		}
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.addObject("actionType", actionType);
+		mav.addObject("resident", resident);
+		mav.addObject("residentList", residentService.fetchAllResidents());
+		mav.setViewName("view/residentList");
+		return mav;
+	}
+	
+	@RequestMapping(value="residentList.htm", method = RequestMethod.POST, params={"action=updateResident"})
+	public ModelAndView onSubmitUpdateResidentForm(Resident resident, Errors errors, String actionType, long residentID) {
+		log.info("AddNewResController: in onSubmitUpdateResidentForm()");
+		ModelAndView mav = new ModelAndView();
+		
+		resident.setID(residentID);
+		ResidentFormValidator validator = new UpdateResidentFormValidator(residentService);
+		validator.validate(resident, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("resident", resident);
+			mav.setViewName("add/addResident");
+			return mav;
+		}
+		
+		boolean result = residentService.updateResident(resident);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_RESIDENT_UPDATE_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_RESIDENT_UPDATE_FAIL;
+			status = "fail";
+		}
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.addObject("actionType", actionType);
+		mav.addObject("resident", resident);
+		mav.addObject("residentList", residentService.fetchAllResidents());
+		mav.setViewName("view/residentList");
+		return mav;
+	}
+	
+	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=updateHeart"})
+	public ModelAndView onSubmitUpdateHeartForm(Heart heart, long heartID, long residentID) {
+		log.info("In onSubmitUpdateHeartForm() method");
+		heart.setResidentFK(residentID);
+		heart.setID(heartID);
+		
+		boolean result = residentService.updateHeart(heart);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_HEART_UPDATE_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_HEART_UPDATE_FAIL;
+			status = "fail";
+		}
+		log.info("Status: " + status);
+		log.info("Message: " + message);
+		
+		Resident resident = residentService.findResidentByID(heart.getResidentFK());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("resident", resident);
+		mav.addObject("status", status);
+		mav.addObject("message", message);
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}

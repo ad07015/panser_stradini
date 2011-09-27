@@ -29,4 +29,8 @@ public interface ResidentRepository {
 	boolean deleteHeartByID(long heartID);
 
 	Heart findHeartByID(long heartID);
+
+	boolean insertHeart(Heart heart);
+
+	boolean updateHeart(Heart heart);
 }

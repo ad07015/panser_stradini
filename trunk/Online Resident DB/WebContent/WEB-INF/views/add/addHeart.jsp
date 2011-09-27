@@ -32,51 +32,40 @@ Ievadiet sirsniņas informāciju
 	<table class="bordless">
 		<tr>
 			<td width="160px">Tips</td>
-			<td>
+			<td width="160px">
 				<form:select path="tips">
-					<form:option value="0" label="Select..." />
+					<form:option value="Select..." label="Select..." />
 					<form:option value="green" label="Green heart" />
 					<form:option value="black" label="Black heart" />
 <%-- 					<c:forEach items="${typeList}" var="tips">
 						<form:option value="${tips}" label="${tips}" />
 					</c:forEach> --%>
 				</form:select>
-			<%-- 
-				<select name="tips">
-					<c:forEach items="${typeList}" var="type">
-						<option>${type}</option>
-					</c:forEach>
-				</select>
-				 --%>
 			</td>
-			<!-- 
-			<td align="left">
-				<input type="radio" name="group1" value="green">
-				<img src="pictures/green_heart.png" align="middle" width="48" height="48" />
-				<input type="radio" name="group1" value="black">
-				<img src="pictures/black_heart.png" align="middle" width="48" height="48" />
-			</td>
-			 -->
 			<td><form:errors path="tips" cssClass="error" /></td>
 		</tr>
 		<tr>
 			<td>Komentāri</td>
 			<td><form:input path="komentari" /></td>
+			<td><form:errors path="komentari" cssClass="error" /></td>
 		</tr>
 		<tr>
 			<td></td>
 			<c:choose>
 				<c:when test="${actionType == 'add'}">
 					<td><input type="submit" value="Reģistrēt sirsniņu" />
-					<td><input type="hidden" name="action" value="addHeart" /></td>
+					<input type="hidden" name="action" value="addHeart" />
+					<input type="hidden" name="residentID" value="${heart.residentFK}" />
+					<input type="hidden" name="actionType" value="${actionType}" /></td>
 				</c:when>
 				<c:otherwise>
 					<td><input type="submit" value="Saglabāt izmaiņas" />
-					<td><input type="hidden" name="heartID" value="${heart.ID}" /></td>
-					<td><input type="hidden" name="action" value="updateHeart" /></td>
+					<input type="hidden" name="heartID" value="${heart.ID}" />
+					<input type="hidden" name="action" value="updateHeart" />
+					<input type="hidden" name="residentID" value="${heart.residentFK}" />
+					<input type="hidden" name="actionType" value="${actionType}" /></td>
 				</c:otherwise>
 			</c:choose>
-			<td><input type="hidden" name="residentID" value = "${heart.residentFK}" /></td>
 		</tr>
 	</table>
 </form:form>

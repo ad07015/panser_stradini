@@ -20,4 +20,7 @@ public class Constants {
 	
 	public static final String ACTION_TYPE_UPDATE = "update";
 	public static final String ACTION_TYPE_NEW = "add";
+
+	public static final String MESSAGE_CYCLE_ADD_SUCCESS = "Cycle added successfully";
+	public static final String MESSAGE_CYCLE_ADD_FAIL = "Fail";
 }

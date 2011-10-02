@@ -1,8 +1,12 @@
 package lv.stradini.interfaces.repository;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import lv.stradini.domain.Cycle;
+import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 
@@ -33,4 +37,10 @@ public interface ResidentRepository {
 	boolean insertHeart(Heart heart);
 
 	boolean updateHeart(Heart heart);
+
+	boolean insertCycle(Cycle cycle);
+
+	LinkedList<Facility> fetchAllFacilities();
+
+	LinkedList<Department> fetchAllDepartments();
 }

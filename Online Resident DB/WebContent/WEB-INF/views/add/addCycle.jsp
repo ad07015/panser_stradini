@@ -68,7 +68,7 @@ Ievadiet cikla informāciju
 				<c:otherwise>
 					<td><input type="submit" value="Saglabāt izmaiņas" />
 					<td><input type="hidden" name="action" value="updateCycle"></td>
-					<td><input type="hidden" name="residentID" value="${resident.ID}"></td>
+					<td><input type="hidden" name="residentID" value="${resident.residentPk}"></td>
 				</c:otherwise>
 			</c:choose>
 			<td><input type="hidden" name="actionType" value="${actionType}"></td>

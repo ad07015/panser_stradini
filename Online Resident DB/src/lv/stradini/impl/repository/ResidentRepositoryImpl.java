@@ -21,51 +21,34 @@ import lv.stradini.interfaces.repository.ResidentRepository;
 import lv.stradini.util.Utils;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ResidentRepositoryImpl implements ResidentRepository {
 
 	private static Logger logger = Logger
 			.getLogger(ResidentRepositoryImpl.class);
 	private final DataSource dataSource;
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	public ResidentRepositoryImpl(DataSource dataSource) throws SQLException {
 		this.dataSource = dataSource;
 	}
 
 	@Override
-	public List<Resident> fetchAllResidents() {
-		List<Resident> residentList = new ArrayList<Resident>();
-		Connection conn = null;
-		Statement st = null;
-		ResultSet rs = null;
-
-		String query = "SELECT * FROM resident;";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(query);
-
-			Resident resident;
-			while (rs.next()) {
-				resident = new Resident(rs.getInt("RESIDENT_PK"), rs
-						.getString("VARDS"), rs.getString("UZVARDS"), rs
-						.getString("PERSONAS_KODS"), rs
-						.getString("DARBA_LIGUMS"), rs
-						.getString("SPECIALITATE"), rs
-						.getString("UNIVERSITATE"), rs
-						.getString("STUDIJU_GADS"), rs.getString("ADRESE"), rs
-						.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
-						rs.getString("KOMENTARI"));
-				resident.setHeartList(fetchHeartsByResidentID(resident.getID()));
-				residentList.add(resident);
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
-		return residentList;
+	public List<Resident> fetchAllResidents() {	
+		Session session = sessionFactory.openSession();
+		Criteria crit = session.createCriteria(Resident.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Resident> resList = crit.list();
+		session.close();
+		return resList;
 	}
 	
 	private LinkedList<Heart> fetchHeartsByResidentID(long residentID) {
@@ -84,7 +67,6 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 			while (rs.next()) {
 				heartList.add(new Heart(rs.getInt("HEART_PK"),
-						rs.getInt("RESIDENT_FK"),
 						rs.getString("TIPS"),
 						rs.getString("KOMENTARI")));
 			}
@@ -157,7 +139,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 				resident.setHeartList(fetchHeartsByResidentID(residentID));
 			}
 			
-			logger.info("Resident PK = " + resident.getID());
+			logger.info("Resident PK = " + resident.getResidentPk());
 
 		} catch (SQLException se) {
 			logger.error("SQLException has occured", se);
@@ -349,7 +331,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			st.setString(9, resident.getTalrunaNumurs());
 			st.setString(10, resident.getEpasts());
 			st.setString(11, resident.getKomentari());
-			st.setLong(12, resident.getID());
+			st.setLong(12, resident.getResidentPk());
 
 			st.executeUpdate();
 
@@ -389,7 +371,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 						rs.getString("STUDIJU_GADS"), rs.getString("ADRESE"),
 						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
 						rs.getString("KOMENTARI"));
-				resident.setHeartList(fetchHeartsByResidentID(resident.getID()));
+				resident.setHeartList(fetchHeartsByResidentID(resident.getResidentPk()));
 			}
 
 		} catch (SQLException se) {
@@ -443,7 +425,6 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 			while (rs.next()) {
 				heart = new Heart(rs.getInt("HEART_PK"),
-						rs.getInt("RESIDENT_FK"),
 						rs.getString("TIPS"), 
 						rs.getString("KOMENTARI"));
 			}
@@ -465,11 +446,10 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
 			st = conn
-					.prepareStatement("INSERT INTO HEART VALUES(null, ?, ?, ?);");
+					.prepareStatement("INSERT INTO HEART VALUES(null, ?, ?);");
 
-			st.setLong(1, heart.getResidentFK());
-			st.setString(2, heart.getTips());
-			st.setString(3, heart.getKomentari());
+			st.setString(1, heart.getTips());
+			st.setString(2, heart.getKomentari());
 
 			if (st.executeUpdate() == 1) {
 				conn.commit();

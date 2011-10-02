@@ -1,20 +1,19 @@
-package lv.stradini.domain;
+package lv.stradini.hibernate.chapter1;
 
 import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lv.stradini.domain.Heart;
+
 @Entity
+@Table(name="RESIDENT_INFO")
 public class Resident {
-	private int residentPk;
+	private long ID;
 	private String vards;
 	private String uzvards;
 	private String personasKods;
@@ -27,17 +26,17 @@ public class Resident {
 	private String epasts;
 	private String komentari;
 	@Transient
-	private List<Heart> heartList = new LinkedList<Heart>();
+	private LinkedList<Heart> heartList;
 	
 	public Resident() {
 	}
 
-	public Resident(int iD, String vards, String uzvards,
+	public Resident(long iD, String vards, String uzvards,
 			String personasKods, String darbaLigums, String specialitate,
 			String universitate, String studijuGads, String adrese,
 			String talrunaNumurs, String epasts, String komentari) {
 		super();
-		residentPk = iD;
+		ID = iD;
 		this.vards = vards;
 		this.uzvards = uzvards;
 		this.personasKods = personasKods;
@@ -53,13 +52,13 @@ public class Resident {
 
 	@Id
 	@Column(name="RESIDENT_PK")
-	@GeneratedValue
-	public int getResidentPk() {
-		return residentPk;
+	public long getID() {
+		return ID;
 	}
 
-	public void setResidentPk(int residentPk) {
-		this.residentPk = residentPk;
+
+	public void setID(long iD) {
+		ID = iD;
 	}
 
 	public String getVards() {
@@ -81,7 +80,7 @@ public class Resident {
 		this.uzvards = uzvards;
 	}
 
-	@Column(name="PERSONAS_KODS")
+
 	public String getPersonasKods() {
 		return personasKods;
 	}
@@ -91,10 +90,11 @@ public class Resident {
 		this.personasKods = personasKods;
 	}
 
-	@Column(name="DARBA_LIGUMS")
+
 	public String getDarbaLigums() {
 		return darbaLigums;
 	}
+
 
 	public void setDarbaLigums(String darbaLigums) {
 		this.darbaLigums = darbaLigums;
@@ -120,7 +120,7 @@ public class Resident {
 		this.universitate = universitate;
 	}
 
-	@Column(name="STUDIJU_GADS")
+
 	public String getStudijuGads() {
 		return studijuGads;
 	}
@@ -140,7 +140,7 @@ public class Resident {
 		this.adrese = adrese;
 	}
 
-	@Column(name="TALRUNA_NUMURS")
+
 	public String getTalrunaNumurs() {
 		return talrunaNumurs;
 	}
@@ -170,13 +170,11 @@ public class Resident {
 		this.komentari = komentari;
 	}
 
-	@OneToMany(targetEntity=Heart.class, mappedBy="resident",
-			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public List<Heart> getHeartList() {
+	public LinkedList<Heart> getHeartList() {
 		return heartList;
 	}
 
-	public void setHeartList(List<Heart> heartList) {
+	public void setHeartList(LinkedList<Heart> heartList) {
 		this.heartList = heartList;
 	}
 }

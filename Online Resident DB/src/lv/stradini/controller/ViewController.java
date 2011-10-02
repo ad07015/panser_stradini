@@ -130,7 +130,7 @@ public class ViewController {
 		
 		Resident resident = residentService.findResidentByID(residentID);
 		log.info("Resident name is " + resident.getVards());
-		log.info("Resident PK = " + resident.getID());
+		log.info("Resident PK = " + resident.getResidentPk());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
@@ -202,7 +202,7 @@ public class ViewController {
 		log.info("AddNewResController: in onSubmitUpdateResidentForm()");
 		ModelAndView mav = new ModelAndView();
 		
-		resident.setID(residentID);
+		resident.setResidentPk((int) residentID);
 		ResidentFormValidator validator = new UpdateResidentFormValidator(residentService);
 		validator.validate(resident, errors);
 		if (errors.hasErrors()) {
@@ -234,7 +234,6 @@ public class ViewController {
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=addHeart"})
 	public ModelAndView onSubmitAddHeartForm(Heart heart, Errors errors, long residentID, String actionType) {
 		log.info("In onSubmitAddHeartForm() method");
-		heart.setResidentFK(residentID);
 		ModelAndView mav = new ModelAndView();
 		
 		HeartFormValidator validator = new HeartFormValidator(residentService);
@@ -259,7 +258,7 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
-		Resident resident = residentService.findResidentByID(heart.getResidentFK());
+		Resident resident = heart.getResident();
 		mav.addObject("resident", resident);
 		mav.addObject("status", status);
 		mav.addObject("message", message);
@@ -270,7 +269,6 @@ public class ViewController {
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=updateHeart"})
 	public ModelAndView onSubmitUpdateHeartForm(Heart heart, Errors errors, long heartID, long residentID, String actionType) {
 		log.info("In onSubmitUpdateHeartForm() method");
-		heart.setResidentFK(residentID);
 		heart.setID(heartID);
 		ModelAndView mav = new ModelAndView();
 		
@@ -296,7 +294,7 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
-		Resident resident = residentService.findResidentByID(heart.getResidentFK());
+		Resident resident = heart.getResident();
 		mav.addObject("resident", resident);
 		mav.addObject("status", status);
 		mav.addObject("message", message);

@@ -64,7 +64,7 @@ function updateHeart(heartID)
 <form name="deleteHeartForm" action="/resdb/view/residentDetails.htm" method="post">
 	<input type="hidden" name="deleteHeart" />
 	<input type="hidden" name="heartID" />
-	<input type="hidden" name="residentID" value="${resident.ID}" />
+	<input type="hidden" name="residentID" value="${resident.residentPk}" />
 </form>
 <form name="updateHeartForm" action="/resdb/resident/updateHeart.htm" method="post">
 	<input type="hidden" name="heartID" />
@@ -139,8 +139,8 @@ function updateHeart(heartID)
 </table>
 
 
-<button class="belowTable" onClick="javascript:updateResident(${resident.ID})">Rediģēt rezidenta datus</button>
-<button class="belowTable" onClick="javascript:deleteResident(${resident.ID})">Nodzēst rezidentu</button>
+<button class="belowTable" onClick="javascript:updateResident(${resident.residentPk})">Rediģēt rezidenta datus</button>
+<button class="belowTable" onClick="javascript:deleteResident(${resident.residentPk})">Nodzēst rezidentu</button>
 
 <hr>
 
@@ -185,7 +185,7 @@ function updateHeart(heartID)
 		<br>
 	</c:otherwise>
 </c:choose>
-<button class="belowTable" onClick="javascript:addHeart(${resident.ID})">Piereģistrēt sirsniņu</button>
+<button class="belowTable" onClick="javascript:addHeart(${resident.residentPk})">Piereģistrēt sirsniņu</button>
 
 </body>
 </html>

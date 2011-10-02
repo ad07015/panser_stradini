@@ -54,10 +54,8 @@ public class HeartController {
 	
 	@RequestMapping(value = "addHeart.htm", method = RequestMethod.POST)
 	public ModelAndView onSubmitNewHeartForm(Heart heart, long residentFK) {
-		heart.setResidentFK(residentFK);
 		
 		System.out.println(heart.getID());
-		System.out.println(heart.getResidentFK());
 		System.out.println(heart.getTips());
 		System.out.println(heart.getKomentari());
 		

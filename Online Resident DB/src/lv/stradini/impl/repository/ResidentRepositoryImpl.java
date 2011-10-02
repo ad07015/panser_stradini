@@ -11,7 +11,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import lv.stradini.domain.Cycle;
+import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.repository.ResidentRepository;
@@ -427,7 +430,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public Heart findHeartByID(long heartID) {
-		Heart doctor = new Heart();
+		Heart heart = new Heart();
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -439,7 +442,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			rs = st.executeQuery();
 
 			while (rs.next()) {
-				doctor = new Heart(rs.getInt("HEART_PK"),
+				heart = new Heart(rs.getInt("HEART_PK"),
 						rs.getInt("RESIDENT_FK"),
 						rs.getString("TIPS"), 
 						rs.getString("KOMENTARI"));
@@ -450,7 +453,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		} finally {
 			closeConnection(rs, st, conn);
 		}
-		return doctor;
+		return heart;
 	}
 
 	@Override
@@ -515,5 +518,141 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean insertCycle(Cycle cycle) {
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			conn = dataSource.getConnection();
+			conn.setAutoCommit(false);
+			st = conn.prepareStatement("INSERT INTO CYCLE VALUES(null, ?, ?, ?, ?);");
+
+			long facilityToDepartment = findFacilityToDepartmentByID(cycle.getFacilityFK(), cycle.getDepartmentFK());
+			
+			st.setLong(1, facilityToDepartment);
+			st.setLong(2, cycle.getVaditajs().getID());
+			st.setDate(3, new java.sql.Date(cycle.getSakumaDatums().getTime()));
+			st.setDate(4, new java.sql.Date(cycle.getBeiguDatums().getTime()));
+
+			if (st.executeUpdate() == 1) {
+				conn.commit();
+				return true;
+			}
+			Utils.rollback(conn);
+		} catch (SQLException e) {
+			Utils.rollback(conn);
+			logger.error("", e);
+		} finally {
+			Utils.setAutoCommit(conn, true);
+			closeConnection(st, conn);
+		}
+
+		return false;
+	}
+
+	private long findFacilityToDepartmentByID(long facilityID, long departmentID) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		String query = "SELECT FAC_TO_DEP_PK FROM FACILITY_TO_DEPARTMENT WHERE FACILITY_FK = ? and DEPARTMENT_FK = ? ";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.prepareStatement(query);
+			st.setLong(1, facilityID);
+			st.setLong(2, departmentID);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				return rs.getLong("FAC_TO_DEP_PK");
+			}
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return 0;
+	}
+
+	@Override
+	public LinkedList<Facility> fetchAllFacilities() {
+		LinkedList<Facility> facilityList = new LinkedList<Facility>();
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM FACILITY;";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			
+			Facility facility;
+			while (rs.next()) {
+				facility = new Facility(rs.getInt("FACILITY_PK"), rs.getString("NOSAUKUMS"));
+				facilityList.add(facility);
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return facilityList;
+	}
+
+	private LinkedList<Department> findDepartmentsByFacilityID(int facilityID) {
+		LinkedList<Department> departmentList = new LinkedList<Department>();
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM DEPARTMENT WHERE FACILITY_FK = ?;";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			
+			Department department;
+			while (rs.next()) {
+				department = new Department(rs.getInt("DEPARTMENT_PK"), rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"), rs.getString("NOSAUKUMS"));
+				departmentList.add(department);
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return departmentList;
+	}
+
+	@Override
+	public LinkedList<Department> fetchAllDepartments() {
+		LinkedList<Department> departmentList = new LinkedList<Department>();
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM DEPARTMENT;";
+		try {
+			conn = dataSource.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(query);
+			
+			Department department;
+			while (rs.next()) {
+				department = new Department(rs.getInt("DEPARTMENT_PK"), rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"), rs.getString("NOSAUKUMS"));
+				departmentList.add(department);
+			}
+
+		} catch (SQLException se) {
+			logger.error("SQLException has occured", se);
+		} finally {
+			closeConnection(rs, st, conn);
+		}
+		return departmentList;
 	}
 }

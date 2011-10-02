@@ -3,6 +3,7 @@ package lv.stradini.controller;
 import java.util.List;
 
 import lv.stradini.constants.Constants;
+import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
@@ -40,6 +41,16 @@ public class ViewController {
 
 		mav.addObject("residentList", residentList);
 		mav.setViewName("view/residentList");
+		return mav;
+	}
+	
+	@RequestMapping(value="cycleList.htm", method=RequestMethod.GET)
+	public ModelAndView showCycleList() {
+		log.info("Showing cycle list");
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("view/cycleList");
 		return mav;
 	}
 	
@@ -290,6 +301,32 @@ public class ViewController {
 		mav.addObject("status", status);
 		mav.addObject("message", message);
 		mav.setViewName("view/residentDetails");
+		return mav;
+		
+	}
+
+	@RequestMapping(value="cycleList.htm", method = RequestMethod.POST, params={"action=addCycle"})
+	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, long residentID, String actionType) {
+		log.info("In onSubmitAddHeartForm() method");
+		ModelAndView mav = new ModelAndView();
+		
+		boolean result = residentService.insertCycle(cycle);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_CYCLE_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_CYCLE_ADD_FAIL;
+			status = "fail";
+		}
+		log.info("Status: " + status);
+		log.info("Message: " + message);
+		
+//		mav.addObject("cycleList", cycleList);
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.setViewName("view/residentList");
 		return mav;
 	}
 }

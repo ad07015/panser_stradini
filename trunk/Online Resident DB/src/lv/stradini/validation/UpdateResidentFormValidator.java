@@ -20,8 +20,8 @@ public class UpdateResidentFormValidator extends ResidentFormValidator {
 		} else if (!resident.getPersonasKods().matches("[0-9]{6}-[0-9]{5}")) {
 			errors.rejectValue("personasKods", "resident.personasKods.invalid");
 		} else {
-			log.info("Resident ID = " + resident.getID());
-			Resident oldResident = residentService.findResidentByID(resident.getID());
+			log.info("Resident ID = " + resident.getResidentPk());
+			Resident oldResident = residentService.findResidentByID(resident.getResidentPk());
 			String newPersonasKods = resident.getPersonasKods();
 			String oldPersonasKods = oldResident.getPersonasKods();
 			int countFoundWithNewPersonasKods = residentService.getResidentCountByPersonasKods(newPersonasKods);

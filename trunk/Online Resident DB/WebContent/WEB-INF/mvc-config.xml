@@ -11,6 +11,16 @@
 	<context:component-scan base-package="lv.stradini.controller" />
 	<!-- <context:annotation-config/> -->
 
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configurationClass">
+		   <value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename">

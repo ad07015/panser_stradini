@@ -51,7 +51,6 @@ public class AddController {
 		ModelAndView mav = new ModelAndView();
 		
 		Heart heart = new Heart();
-		heart.setResidentFK(residentFK);
 		mav.addObject("heart", heart);
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addHeart");

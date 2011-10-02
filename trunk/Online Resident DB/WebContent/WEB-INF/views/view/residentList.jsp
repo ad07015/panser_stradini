@@ -68,7 +68,7 @@ function viewResident(rID)
 				<c:out value="${resident.uzvards}" /> 	
 			</td>
 			<td>
-				<a href="javascript:viewResident(${resident.ID})"> 	
+				<a href="javascript:viewResident(${resident.residentPk})"> 	
 					<c:out value="${resident.personasKods}" />
 				</a> 	
 			</td>

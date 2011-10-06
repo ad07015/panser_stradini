@@ -31,12 +31,12 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public Resident findResidentByID(long residentID) {
+	public Resident findResidentByID(int residentID) {
 		return repo.findResidentByID(residentID);
 	}
 
 	@Override
-	public Doctor findDoctorByID(long doctorID) {
+	public Doctor findDoctorByID(int doctorID) {
 		return repo.findDoctorByID(doctorID);
 	}
 
@@ -46,7 +46,7 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public boolean deleteResidentByID(long residentID) {
+	public boolean deleteResidentByID(int residentID) {
 		return repo.deleteResidentByID(residentID);
 	}
 
@@ -66,18 +66,18 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public boolean deleteHeartByID(long heartID) {
+	public boolean deleteHeartByID(int heartID) {
 		return repo.deleteHeartByID(heartID);
 	}
 
 	@Override
-	public Heart findHeartByID(long heartID) {
+	public Heart findHeartByID(int heartID) {
 		return repo.findHeartByID(heartID);
 	}
 
 	@Override
-	public boolean insertHeart(Heart heart) {
-		return repo.insertHeart(heart);
+	public boolean insertHeart(Heart heart, int residentFK) {
+		return repo.insertHeart(heart, residentFK);
 	}
 
 	@Override
@@ -98,5 +98,10 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public LinkedList<Department> fetchAllDepartments() {
 		return repo.fetchAllDepartments();
+	}
+
+	@Override
+	public boolean deleteHeart(Heart heart) {
+		return repo.deleteHeart(heart);
 	}
 }

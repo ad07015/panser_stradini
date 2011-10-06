@@ -32,7 +32,7 @@ Ievadiet rezidenta informāciju
 	<table class="bordless">
 		<tr>
 			<td width="160px">Vārds</td>
-			<td width="1px"><form:input path="vards" /></td>
+			<td width="160px"><form:input path="vards" /></td>
 			<td><form:errors path="vards" cssClass="error" /></td>
 		</tr>
 		<tr>

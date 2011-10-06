@@ -24,7 +24,7 @@ public class HeartController {
 	private String[] typeList = new String[] {"green", "black"};
 	
 	@RequestMapping(value="updateHeart.htm", method = RequestMethod.POST)
-	public ModelAndView showUpdateHeartForm(long heartID) {
+	public ModelAndView showUpdateHeartForm(int heartID, int residentFK) {
 		log.info("In showUpdateHeartForm() method");
 		ModelAndView mav = new ModelAndView();
 		
@@ -35,6 +35,7 @@ public class HeartController {
 		
 		
 		mav.addObject("heart", heart);
+		mav.addObject("residentFK", residentFK);
 		mav.addObject("typeList", typeList);
 		mav.addObject("actionType", Constants.ACTION_TYPE_UPDATE);
 		mav.setViewName("add/addHeart");
@@ -42,7 +43,7 @@ public class HeartController {
 	}
 	
 	@RequestMapping(value = "addHeart.htm", method = RequestMethod.POST, params={"actionType=addHeart"})
-	public ModelAndView showAddHeart(long residentFK) {
+	public ModelAndView showAddHeart(int residentFK) {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("heart", new Heart());
@@ -53,7 +54,7 @@ public class HeartController {
 	}
 	
 	@RequestMapping(value = "addHeart.htm", method = RequestMethod.POST)
-	public ModelAndView onSubmitNewHeartForm(Heart heart, long residentFK) {
+	public ModelAndView onSubmitNewHeartForm(Heart heart, int residentFK) {
 		
 		System.out.println(heart.getID());
 		System.out.println(heart.getTips());

@@ -16,13 +16,13 @@ public interface ResidentRepository {
 	
 	List<Doctor> fetchAllDoctors();
 
-	Resident findResidentByID(long residentID);
+	Resident findResidentByID(int residentID);
 
-	Doctor findDoctorByID(long doctorID);
+	Doctor findDoctorByID(int doctorID);
 
 	boolean insertResident(Resident resident);
 
-	boolean deleteResidentByID(long residentID);
+	boolean deleteResidentByID(int residentID);
 
 	int getResidentCountByPersonasKods(String personasKods);
 
@@ -30,11 +30,11 @@ public interface ResidentRepository {
 
 	Resident findResidentByPersonasKods(String personasKods);
 
-	boolean deleteHeartByID(long heartID);
+	boolean deleteHeartByID(int heartID);
 
-	Heart findHeartByID(long heartID);
+	Heart findHeartByID(int heartID);
 
-	boolean insertHeart(Heart heart);
+	boolean insertHeart(Heart heart, int residentFK);
 
 	boolean updateHeart(Heart heart);
 
@@ -43,4 +43,6 @@ public interface ResidentRepository {
 	LinkedList<Facility> fetchAllFacilities();
 
 	LinkedList<Department> fetchAllDepartments();
+
+	boolean deleteHeart(Heart heart);
 }

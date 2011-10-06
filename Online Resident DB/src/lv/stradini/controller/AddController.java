@@ -33,7 +33,7 @@ public class AddController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, params={"updateResidentID"})
-	public ModelAndView showUpdateResidentForm(long updateResidentID) {
+	public ModelAndView showUpdateResidentForm(int updateResidentID) {
 		log.info("AddNewResController: in showUpdate()");
 		ModelAndView mav = new ModelAndView();
 		Resident resident = residentService.findResidentByID(updateResidentID);
@@ -44,14 +44,14 @@ public class AddController {
 	}
 	
 	@RequestMapping(value="addHeart.htm", method = RequestMethod.POST)
-	public ModelAndView showAddHeartForm(long residentFK) {
+	public ModelAndView showAddHeartForm(int residentFK) {
 		log.info("AddNewResController: in showAddHeartForm()");
-		
-		
+			
 		ModelAndView mav = new ModelAndView();
 		
 		Heart heart = new Heart();
 		mav.addObject("heart", heart);
+		mav.addObject("residentFK", residentFK);
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addHeart");
 		return mav;

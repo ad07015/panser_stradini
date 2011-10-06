@@ -70,7 +70,7 @@ public class ViewController {
 	
 	@RequestMapping(value="residentDetails.htm")
 	public ModelAndView onResidentDetails(
-			@RequestParam("residentID") long residentID) throws Exception {
+			@RequestParam("residentID") int residentID) throws Exception {
 		log.info("Going to resident details page");
 		log.info("ResidentID = " + residentID);
 		Resident resident = residentService.findResidentByID(residentID);
@@ -84,7 +84,7 @@ public class ViewController {
 	
 	@RequestMapping(value="doctorDetails.htm")
 	public ModelAndView onDoctorDetails(
-			@RequestParam("doctorID") long doctorID) throws Exception {
+			@RequestParam("doctorID") int doctorID) throws Exception {
 		log.info("Going to doctor details page");
 		log.info("DoctorID = " + doctorID);
 		Doctor doctor = residentService.findDoctorByID(doctorID);
@@ -98,7 +98,7 @@ public class ViewController {
 	
 	@RequestMapping(value="residentList.htm", params={"deleteResidentID"})
 	public ModelAndView onDeleteResident(
-			@RequestParam("deleteResidentID") long residentID) {
+			@RequestParam("deleteResidentID") int residentID) {
 		log.info("Deleting resident");
 		
 		boolean result = residentService.deleteResidentByID(residentID);
@@ -124,7 +124,7 @@ public class ViewController {
 	
 	@RequestMapping(value="updateResident.htm", params={"updateResidentID"})
 	public ModelAndView onUpdateResident(
-			@RequestParam("updateResidentID") long residentID) {
+			@RequestParam("updateResidentID") int residentID) {
 		log.info("Updating resident");
 		log.info("Resident ID = " + residentID);
 		
@@ -140,9 +140,11 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"deleteHeart"})
-	public ModelAndView onDeleteHeart(long heartID, long residentID) {
+	public ModelAndView onDeleteHeart(int heartID, int residentID) {
 		
-		boolean result = residentService.deleteHeartByID(heartID);
+		Heart heart = residentService.findHeartByID(heartID);
+//		heart.setResident(residentService.findResidentByID(residentID));
+		boolean result = residentService.deleteHeart(heart);
 		
 		String message;
 		String status;
@@ -154,8 +156,8 @@ public class ViewController {
 			status = "fail";
 		}
 		
-		Resident resident = residentService.findResidentByID(residentID);
 		
+		Resident resident = residentService.findResidentByID(residentID);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
 		mav.addObject("message", message);
@@ -198,7 +200,7 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="residentList.htm", method = RequestMethod.POST, params={"action=updateResident"})
-	public ModelAndView onSubmitUpdateResidentForm(Resident resident, Errors errors, String actionType, long residentID) {
+	public ModelAndView onSubmitUpdateResidentForm(Resident resident, Errors errors, String actionType, int residentID) {
 		log.info("AddNewResController: in onSubmitUpdateResidentForm()");
 		ModelAndView mav = new ModelAndView();
 		
@@ -232,7 +234,7 @@ public class ViewController {
 	}
 
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=addHeart"})
-	public ModelAndView onSubmitAddHeartForm(Heart heart, Errors errors, long residentID, String actionType) {
+	public ModelAndView onSubmitAddHeartForm(Heart heart, Errors errors, int residentID, String actionType) {
 		log.info("In onSubmitAddHeartForm() method");
 		ModelAndView mav = new ModelAndView();
 		
@@ -240,12 +242,13 @@ public class ViewController {
 		validator.validate(heart, errors);
 		if (errors.hasErrors()) {
 			mav.addObject("actionType", actionType);
+			mav.addObject("residentFK", residentID);
 			mav.addObject("heart", heart);
 			mav.setViewName("add/addHeart");
 			return mav;
 		}
 		
-		boolean result = residentService.insertHeart(heart);
+		boolean result = residentService.insertHeart(heart, residentID);
 		String message;
 		String status;
 		if(result) {
@@ -258,7 +261,8 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
-		Resident resident = heart.getResident();
+		
+		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
 		mav.addObject("status", status);
 		mav.addObject("message", message);
@@ -267,7 +271,7 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=updateHeart"})
-	public ModelAndView onSubmitUpdateHeartForm(Heart heart, Errors errors, long heartID, long residentID, String actionType) {
+	public ModelAndView onSubmitUpdateHeartForm(Heart heart, Errors errors, int heartID, int residentID, String actionType) {
 		log.info("In onSubmitUpdateHeartForm() method");
 		heart.setID(heartID);
 		ModelAndView mav = new ModelAndView();
@@ -276,11 +280,12 @@ public class ViewController {
 		validator.validate(heart, errors);
 		if (errors.hasErrors()) {
 			mav.addObject("actionType", actionType);
+			mav.addObject("residentFK", residentID);
 			mav.addObject("heart", heart);
 			mav.setViewName("add/addHeart");
 			return mav;
 		}
-		
+		heart.setResident(residentService.findResidentByID(residentID));
 		boolean result = residentService.updateHeart(heart);
 		String message;
 		String status;
@@ -294,7 +299,7 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
-		Resident resident = heart.getResident();
+		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
 		mav.addObject("status", status);
 		mav.addObject("message", message);
@@ -304,7 +309,7 @@ public class ViewController {
 	}
 
 	@RequestMapping(value="cycleList.htm", method = RequestMethod.POST, params={"action=addCycle"})
-	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, long residentID, String actionType) {
+	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, int residentID, String actionType) {
 		log.info("In onSubmitAddHeartForm() method");
 		ModelAndView mav = new ModelAndView();
 		

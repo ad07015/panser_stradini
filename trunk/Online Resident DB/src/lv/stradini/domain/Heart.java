@@ -1,7 +1,9 @@
 package lv.stradini.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -10,7 +12,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Heart {
 	
-	private long ID;
+	private int ID;
 	private String tips;
 	private String komentari;
 	
@@ -19,7 +21,7 @@ public class Heart {
 	public Heart() {
 	}
 
-	public Heart(long iD, String tips, String komentari) {
+	public Heart(int iD, String tips, String komentari) {
 		super();
 		ID = iD;
 		this.tips = tips;
@@ -29,11 +31,11 @@ public class Heart {
 	@Id
 	@Column(name="HEART_PK")
 	@GeneratedValue
-	public long getID() {
+	public int getID() {
 		return ID;
 	}
 
-	public void setID(long iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 

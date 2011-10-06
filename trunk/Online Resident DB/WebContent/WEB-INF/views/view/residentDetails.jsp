@@ -40,9 +40,10 @@ function deleteHeart(heartID)
 	}
 }
 
-function updateHeart(heartID)
+function updateHeart(heartID, residentFK)
 {
 	document.updateHeartForm.heartID.value=heartID
+	document.updateHeartForm.residentFK.value=residentFK
 	document.updateHeartForm.submit()
 }
 </script>
@@ -68,6 +69,7 @@ function updateHeart(heartID)
 </form>
 <form name="updateHeartForm" action="/resdb/resident/updateHeart.htm" method="post">
 	<input type="hidden" name="heartID" />
+	<input type="hidden" name="residentFK" />
 </form>
 
 
@@ -173,7 +175,7 @@ function updateHeart(heartID)
 					</td>
 					<td><c:out value="${heart.komentari}" /></td>
 					<td>
-						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID})">Rediģēt</button>
+						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID}, ${resident.residentPk})">Rediģēt</button>
 						<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
 					</td>
 				</tr>

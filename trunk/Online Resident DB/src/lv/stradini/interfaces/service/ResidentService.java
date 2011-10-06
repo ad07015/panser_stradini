@@ -16,25 +16,27 @@ public interface ResidentService {
 	
 	List<Doctor> fetchAllDoctors();
 
-	Resident findResidentByID(long residentID);
+	Resident findResidentByID(int residentID);
 
-	Doctor findDoctorByID(long doctorID);
+	Doctor findDoctorByID(int doctorID);
 	
 	boolean insertResident(Resident resident);
 
-	boolean deleteResidentByID(long residentID);
+	boolean deleteResidentByID(int residentID);
 
 	int getResidentCountByPersonasKods(String personasKods);
 
 	boolean updateResident(Resident resident);
 
 	Resident findResidentByPersonasKods(String personasKods);
+	
+	boolean deleteHeart(Heart heart);
 
-	boolean deleteHeartByID(long heartID);
+	boolean deleteHeartByID(int heartID);
 
-	Heart findHeartByID(long heartID);
+	Heart findHeartByID(int heartID);
 
-	boolean insertHeart(Heart heart);
+	boolean insertHeart(Heart heart, int residentFK);
 
 	boolean updateHeart(Heart heart);
 

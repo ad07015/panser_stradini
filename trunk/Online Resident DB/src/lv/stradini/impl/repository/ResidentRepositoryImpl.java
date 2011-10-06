@@ -22,6 +22,7 @@ import lv.stradini.util.Utils;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -30,8 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ResidentRepositoryImpl implements ResidentRepository {
 
-	private static Logger logger = Logger
-			.getLogger(ResidentRepositoryImpl.class);
+	private static Logger logger = Logger.getLogger(ResidentRepositoryImpl.class);
 	private final DataSource dataSource;
 	
 	@Autowired
@@ -51,7 +51,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		return resList;
 	}
 	
-	private LinkedList<Heart> fetchHeartsByResidentID(long residentID) {
+	private LinkedList<Heart> fetchHeartsByResidentID(int residentID) {
 		LinkedList<Heart> heartList = new LinkedList<Heart>();
 		
 		Connection conn = null;
@@ -113,40 +113,11 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	}
 
 	@Override
-	public Resident findResidentByID(long residentID) {
-		Resident resident = null;
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM resident WHERE RESIDENT_PK = ? ";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.prepareStatement(query);
-			st.setLong(1, residentID);
-			rs = st.executeQuery();
-
-			
-			while (rs.next()) {
-				resident = new Resident(rs.getInt("RESIDENT_PK"),
-						rs.getString("VARDS"), rs.getString("UZVARDS"),
-						rs.getString("PERSONAS_KODS"),
-						rs.getString("DARBA_LIGUMS"),
-						rs.getString("SPECIALITATE"),
-						rs.getString("UNIVERSITATE"),
-						rs.getString("STUDIJU_GADS"), rs.getString("ADRESE"),
-						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
-						rs.getString("KOMENTARI"));
-				resident.setHeartList(fetchHeartsByResidentID(residentID));
-			}
-			
-			logger.info("Resident PK = " + resident.getResidentPk());
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
-		return resident;
+	public Resident findResidentByID(int residentID) {
+		Session session = sessionFactory.openSession();
+		Resident result = (Resident) session.get(Resident.class, residentID);
+		session.close();
+		return result;
 	}
 
 	private void closeConnection(ResultSet rs, Statement st, Connection conn) {
@@ -176,7 +147,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	}
 
 	@Override
-	public Doctor findDoctorByID(long doctorID) {
+	public Doctor findDoctorByID(int doctorID) {
 		Doctor doctor = new Doctor();
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -209,74 +180,34 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public boolean insertResident(Resident resident) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+		logger.info("In insertResident(resident)");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			st = conn
-					.prepareStatement("INSERT INTO RESIDENT VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-
-			st.setString(1, resident.getVards());
-			st.setString(2, resident.getUzvards());
-			st.setString(3, resident.getPersonasKods());
-			st.setString(4, resident.getDarbaLigums());
-			st.setString(5, resident.getSpecialitate());
-			st.setString(6, resident.getUniversitate());
-			st.setString(7, resident.getStudijuGads());
-			st.setString(8, resident.getAdrese());
-			st.setString(9, resident.getTalrunaNumurs());
-			st.setString(10, resident.getEpasts());
-			st.setString(11, resident.getKomentari());
-
-			if (st.executeUpdate() == 1) {
-				conn.commit();
-				return true;
-			}
-			Utils.rollback(conn);
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(resident);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
 		return false;
 	}
 
 	@Override
-	public boolean deleteResidentByID(long residentID) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+	public boolean deleteResidentByID(int residentID) {
+		logger.info("In deleteResidentByID(residentID)");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			st = conn.prepareStatement("DELETE FROM RESIDENT WHERE RESIDENT_PK = ?;");
-			st.setLong(1, residentID);
-			
-			LinkedList<Heart> heartList = fetchHeartsByResidentID(residentID);
-			for (Heart heart : heartList) {
-				deleteHeartByID(heart.getID());
-			}
-			
-			
-			if (st.executeUpdate() == 1) {
-				conn.commit();
-				logger.info("Resident successfully removed");
-				return true;
-			}
-			Utils.rollback(conn);
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Resident resident = findResidentByID(residentID);
+			session.delete(resident);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
 		return false;
 	}
 
@@ -307,45 +238,18 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public boolean updateResident(Resident resident) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+		logger.info("In updateResident(resident)");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			StringBuffer sb = new StringBuffer();
-			sb.append("UPDATE RESIDENT ");
-			sb.append("SET VARDS=?, UZVARDS=?, PERSONAS_KODS=?, DARBA_LIGUMS=?, SPECIALITATE=?, ");
-			sb.append("UNIVERSITATE=?, STUDIJU_GADS=?, ADRESE=?, TALRUNA_NUMURS=?, EPASTS=?, KOMENTARI=? ");
-			sb.append("WHERE RESIDENT_PK=? ");
-			st = conn.prepareStatement(sb.toString());
-			
-			st.setString(1, resident.getVards());
-			st.setString(2, resident.getUzvards());
-			st.setString(3, resident.getPersonasKods());
-			st.setString(4, resident.getDarbaLigums());
-			st.setString(5, resident.getSpecialitate());
-			st.setString(6, resident.getUniversitate());
-			st.setString(7, resident.getStudijuGads());
-			st.setString(8, resident.getAdrese());
-			st.setString(9, resident.getTalrunaNumurs());
-			st.setString(10, resident.getEpasts());
-			st.setString(11, resident.getKomentari());
-			st.setLong(12, resident.getResidentPk());
-
-			st.executeUpdate();
-
-			conn.commit();
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.update(resident);
+			session.getTransaction().commit();
+			session.close();
 			return true;
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
-		return false;
+		return false;	
 	}
 
 	@Override
@@ -383,120 +287,62 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	}
 
 	@Override
-	public boolean deleteHeartByID(long heartID) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+	public boolean deleteHeartByID(int heartID) {
+		logger.info("In deleteResidentByID(residentID)");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			st = conn.prepareStatement("DELETE FROM HEART WHERE HEART_PK = ?;");
-			st.setLong(1, heartID);
-
-			if (st.executeUpdate() == 1) {
-				conn.commit();
-				logger.info("Heart successfully removed");
-				return true;
-			}
-			Utils.rollback(conn);
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Heart heart = findHeartByID(heartID);
+			session.delete(heart);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
 		return false;
 	}
 
 	@Override
-	public Heart findHeartByID(long heartID) {
-		Heart heart = new Heart();
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM HEART WHERE HEART_PK = ? ";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.prepareStatement(query);
-			st.setLong(1, heartID);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				heart = new Heart(rs.getInt("HEART_PK"),
-						rs.getString("TIPS"), 
-						rs.getString("KOMENTARI"));
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
+	public Heart findHeartByID(int heartID) {
+		Session session = sessionFactory.openSession();
+		Heart heart = (Heart) session.get(Heart.class, heartID);
+		session.close();
 		return heart;
 	}
 
 	@Override
-	public boolean insertHeart(Heart heart) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+	public boolean insertHeart(Heart heart, int residentFK) {
+		logger.info("In insertResident(resident)");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			st = conn
-					.prepareStatement("INSERT INTO HEART VALUES(null, ?, ?);");
-
-			st.setString(1, heart.getTips());
-			st.setString(2, heart.getKomentari());
-
-			if (st.executeUpdate() == 1) {
-				conn.commit();
-				return true;
-			}
-			Utils.rollback(conn);
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Resident res = findResidentByID(residentFK);
+			heart.setResident(res);
+			res.getHeartList().add(heart);
+			session.update(res);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
 		return false;
 	}
 
 	@Override
 	public boolean updateHeart(Heart heart) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+		logger.info("In updateResident(resident)");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			StringBuffer sb = new StringBuffer();
-			sb.append("UPDATE HEART ");
-			sb.append("SET TIPS=?, KOMENTARI=? ");
-			sb.append("WHERE HEART_PK=? ");
-			st = conn.prepareStatement(sb.toString());
-			
-			st.setString(1, heart.getTips());
-			st.setString(2, heart.getKomentari());
-			st.setLong(3, heart.getID());
-
-			st.executeUpdate();
-
-			conn.commit();
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.update(heart);
+			session.getTransaction().commit();
+			session.close();
 			return true;
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
 		return false;
 	}
 
@@ -634,5 +480,21 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			closeConnection(rs, st, conn);
 		}
 		return departmentList;
+	}
+
+	@Override
+	public boolean deleteHeart(Heart heart) {
+		logger.info("In deleteHeart(heart)");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.delete(heart);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
 	}
 }

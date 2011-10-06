@@ -55,14 +55,14 @@ Ievadiet sirsniņas informāciju
 				<c:when test="${actionType == 'add'}">
 					<td><input type="submit" value="Reģistrēt sirsniņu" />
 					<input type="hidden" name="action" value="addHeart" />
-					<input type="hidden" name="residentID" value="${heart.residentFK}" />
+					<input type="hidden" name="residentID" value="${residentFK}" />
 					<input type="hidden" name="actionType" value="${actionType}" /></td>
 				</c:when>
 				<c:otherwise>
 					<td><input type="submit" value="Saglabāt izmaiņas" />
 					<input type="hidden" name="heartID" value="${heart.ID}" />
 					<input type="hidden" name="action" value="updateHeart" />
-					<input type="hidden" name="residentID" value="${heart.residentFK}" />
+					<input type="hidden" name="residentID" value="${residentFK}" />
 					<input type="hidden" name="actionType" value="${actionType}" /></td>
 				</c:otherwise>
 			</c:choose>

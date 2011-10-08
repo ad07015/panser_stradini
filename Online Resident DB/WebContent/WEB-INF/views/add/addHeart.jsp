@@ -34,9 +34,9 @@ Ievadiet sirsniņas informāciju
 			<td width="160px">Tips</td>
 			<td width="160px">
 				<form:select path="tips">
-					<form:option value="Select..." label="Select..." />
-					<form:option value="green" label="Green heart" />
-					<form:option value="black" label="Black heart" />
+					<form:option value="Select..." label="" />
+					<form:option value="green" label="Zaļā sirsniņa" />
+					<form:option value="black" label="Melnā sirsniņa" />
 <%-- 					<c:forEach items="${typeList}" var="tips">
 						<form:option value="${tips}" label="${tips}" />
 					</c:forEach> --%>

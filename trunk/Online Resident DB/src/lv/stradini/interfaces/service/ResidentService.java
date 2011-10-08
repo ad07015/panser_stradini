@@ -23,6 +23,8 @@ public interface ResidentService {
 	boolean insertResident(Resident resident);
 
 	boolean deleteResidentByID(int residentID);
+	
+	boolean deleteResident(Resident resident);
 
 	int getResidentCountByPersonasKods(String personasKods);
 

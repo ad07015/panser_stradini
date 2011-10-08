@@ -36,9 +36,12 @@
         <mapping resource="org/hibernate/tutorial/domain/Event.hbm.xml"/>
         <mapping resource="org/hibernate/tutorial/domain/Person.hbm.xml"/>
         
+        
         -->
+        
         <mapping class="lv.stradini.domain.Resident"/>
         <mapping class="lv.stradini.domain.Heart"/>
+        
 
     </session-factory>
 

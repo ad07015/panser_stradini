@@ -24,9 +24,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.SessionFactory;	
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ResidentRepositoryImpl implements ResidentRepository {
@@ -116,6 +114,8 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public Resident findResidentByID(int residentID) {
 		Session session = sessionFactory.openSession();
 		Resident result = (Resident) session.get(Resident.class, residentID);
+		logger.error("Heart list size = " + result.getHeartList().size());
+		System.out.println("Heart list size = " + result.getHeartList().size());
 		session.close();
 		return result;
 	}
@@ -200,7 +200,14 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
+			
 			Resident resident = findResidentByID(residentID);
+			System.out.println("Heart list size = " + resident.getHeartList().size());
+			for(Heart heart : resident.getHeartList()) {
+				resident.removeHeart(heart);
+				session.delete(heart);
+			}
+			
 			session.delete(resident);
 			session.getTransaction().commit();
 			session.close();
@@ -313,14 +320,14 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public boolean insertHeart(Heart heart, int residentFK) {
+		Resident res = findResidentByID(residentFK);
 		logger.info("In insertResident(resident)");
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			Resident res = findResidentByID(residentFK);
-			heart.setResident(res);
-			res.getHeartList().add(heart);
-			session.update(res);
+			res.addHeart(heart);
+			session.saveOrUpdate(res);
+			session.save(heart);
 			session.getTransaction().commit();
 			session.close();
 			return true;
@@ -489,6 +496,34 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			session.delete(heart);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteResident(Resident resident) {
+		logger.info("In deleteResident(resident)");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			
+			System.out.println("Heart list size = " + resident.getHeartList().size());
+			// This for some reason throws ConcurentModificationException
+//			for(Heart heart : resident.getHeartList()) {
+//				resident.removeHeart(heart);
+//			}
+			List<Heart> heartList = resident.getHeartList();
+			int size = resident.getHeartList().size();
+			for(int i = 0; i < size; i++) {
+				resident.removeHeart(heartList.get(0));
+			}
+			
+			session.delete(resident);
 			session.getTransaction().commit();
 			session.close();
 			return true;

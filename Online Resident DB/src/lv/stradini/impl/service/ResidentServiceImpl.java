@@ -104,4 +104,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public boolean deleteHeart(Heart heart) {
 		return repo.deleteHeart(heart);
 	}
+
+	@Override
+	public boolean deleteResident(Resident resident) {
+		return repo.deleteResident(resident);
+	}
 }

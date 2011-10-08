@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 @Entity
 public class Resident {
@@ -26,7 +26,6 @@ public class Resident {
 	private String talrunaNumurs;
 	private String epasts;
 	private String komentari;
-	@Transient
 	private List<Heart> heartList = new LinkedList<Heart>();
 	
 	public Resident() {
@@ -60,6 +59,17 @@ public class Resident {
 
 	public void setResidentPk(int residentPk) {
 		this.residentPk = residentPk;
+	}
+
+	@OneToMany(targetEntity=Heart.class, mappedBy="resident",
+			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	public List<Heart> getHeartList() {
+		return heartList;
+	}
+
+	public void setHeartList(List<Heart> heartList) {
+		this.heartList = heartList;
 	}
 
 	public String getVards() {
@@ -169,14 +179,16 @@ public class Resident {
 	public void setKomentari(String komentari) {
 		this.komentari = komentari;
 	}
-
-	@OneToMany(targetEntity=Heart.class, mappedBy="resident",
-			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public List<Heart> getHeartList() {
-		return heartList;
+	
+	public void removeHeart(Heart heart) {
+//		if (heartList.contains(heart)) {
+//			heart.setResident(null);
+			this.heartList.remove(heart);
+//		}
 	}
-
-	public void setHeartList(List<Heart> heartList) {
-		this.heartList = heartList;
+	
+	public void addHeart(Heart heart) {
+		heart.setResident(this);
+		this.heartList.add(heart);
 	}
 }

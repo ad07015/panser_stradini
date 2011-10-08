@@ -101,7 +101,8 @@ public class ViewController {
 			@RequestParam("deleteResidentID") int residentID) {
 		log.info("Deleting resident");
 		
-		boolean result = residentService.deleteResidentByID(residentID);
+		Resident resident = residentService.findResidentByID(residentID);
+		boolean result = residentService.deleteResident(resident);
 		
 		String message;
 		String status;

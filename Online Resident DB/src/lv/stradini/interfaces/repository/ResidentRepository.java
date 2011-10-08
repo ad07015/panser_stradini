@@ -45,4 +45,6 @@ public interface ResidentRepository {
 	LinkedList<Department> fetchAllDepartments();
 
 	boolean deleteHeart(Heart heart);
+
+	boolean deleteResident(Resident resident);
 }

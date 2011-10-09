@@ -30,12 +30,12 @@ public class Resident {
 	public Resident() {
 	}
 
-	public Resident(int iD, String vards, String uzvards,
+	public Resident(int residentPk, String vards, String uzvards,
 			String personasKods, String darbaLigums, String specialitate,
 			String universitate, String studijuGads, String adrese,
 			String talrunaNumurs, String epasts, String komentari) {
 		super();
-		residentPk = iD;
+		this.residentPk = residentPk;
 		this.vards = vards;
 		this.uzvards = uzvards;
 		this.personasKods = personasKods;

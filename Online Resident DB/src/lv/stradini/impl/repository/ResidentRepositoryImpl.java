@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,15 +23,17 @@ import lv.stradini.util.Utils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;	
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ResidentRepositoryImpl implements ResidentRepository {
 
-	private static Logger logger = Logger.getLogger(LoggerUtils.getClassName(ResidentRepositoryImpl.class));
+	private static Logger logger = Logger.getLogger(LoggerUtils
+			.getClassName(ResidentRepositoryImpl.class));
 	private final DataSource dataSource;
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -41,7 +42,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	}
 
 	@Override
-	public List<Resident> fetchAllResidents() {	
+	public List<Resident> fetchAllResidents() {
 		Session session = sessionFactory.openSession();
 		Criteria crit = session.createCriteria(Resident.class);
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -49,10 +50,10 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		session.close();
 		return resList;
 	}
-	
+
 	private LinkedList<Heart> fetchHeartsByResidentID(int residentID) {
 		LinkedList<Heart> heartList = new LinkedList<Heart>();
-		
+
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -65,9 +66,8 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			rs = st.executeQuery();
 
 			while (rs.next()) {
-				heartList.add(new Heart(rs.getInt("HEART_PK"),
-						rs.getString("TIPS"),
-						rs.getString("KOMENTARI")));
+				heartList.add(new Heart(rs.getInt("HEART_PK"), rs
+						.getString("TIPS"), rs.getString("KOMENTARI")));
 			}
 
 		} catch (SQLException se) {
@@ -75,39 +75,17 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		} finally {
 			closeConnection(rs, st, conn);
 		}
-		
+
 		return heartList;
 	}
 
 	@Override
 	public List<Doctor> fetchAllDoctors() {
-		List<Doctor> doctorList = new ArrayList<Doctor>();
-		Connection conn = null;
-		Statement st = null;
-		ResultSet rs = null;
-
-		String query = "SELECT * FROM doctor;";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(query);
-
-			while (rs.next()) {
-				doctorList.add(new Doctor(rs.getInt("DOCTOR_PK"), rs
-						.getString("VARDS"), rs.getString("UZVARDS"), rs
-						.getString("PERSONAS_KODS"), rs
-						.getString("AKADEMISKAIS_GRADS"), rs
-						.getString("DARBA_VIETA"),
-						rs.getString("SPECIALITATE"), rs.getString("ADRESE"),
-						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
-						rs.getString("KOMENTARI")));
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
+		Session session = sessionFactory.openSession();
+		Criteria crit = session.createCriteria(Doctor.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Doctor> doctorList = crit.list();
+		session.close();
 		return doctorList;
 	}
 
@@ -115,8 +93,6 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public Resident findResidentByID(int residentID) {
 		Session session = sessionFactory.openSession();
 		Resident result = (Resident) session.get(Resident.class, residentID);
-		logger.error("Heart list size = " + result.getHeartList().size());
-		System.out.println("Heart list size = " + result.getHeartList().size());
 		session.close();
 		return result;
 	}
@@ -201,14 +177,15 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			
+
 			Resident resident = findResidentByID(residentID);
-			System.out.println("Heart list size = " + resident.getHeartList().size());
-			for(Heart heart : resident.getHeartList()) {
+			System.out.println("Heart list size = "
+					+ resident.getHeartList().size());
+			for (Heart heart : resident.getHeartList()) {
 				resident.removeHeart(heart);
 				session.delete(heart);
 			}
-			
+
 			session.delete(resident);
 			session.getTransaction().commit();
 			session.close();
@@ -221,6 +198,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public int getResidentCountByPersonasKods(String personasKods) {
+		logger.info("Location");
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -243,6 +221,22 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return count;
 	}
+	
+	@Override
+	public int getDoctorCountByPersonasKods(String newPersonasKods) {
+		logger.info("Location");
+		int result = -1;
+		try {
+			Session session = sessionFactory.openSession();
+			Query query = session.getNamedQuery("getDoctorCountByPersonasKods").setString("personasKods", newPersonasKods);
+			List resultList = query.list();
+			result = resultList.size();
+			session.close();
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return result;
+	}
 
 	@Override
 	public boolean updateResident(Resident resident) {
@@ -257,7 +251,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		} catch (HibernateException he) {
 			logger.error("", he);
 		}
-		return false;	
+		return false;
 	}
 
 	@Override
@@ -283,7 +277,8 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 						rs.getString("STUDIJU_GADS"), rs.getString("ADRESE"),
 						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
 						rs.getString("KOMENTARI"));
-				resident.setHeartList(fetchHeartsByResidentID(resident.getResidentPk()));
+				resident.setHeartList(fetchHeartsByResidentID(resident
+						.getResidentPk()));
 			}
 
 		} catch (SQLException se) {
@@ -362,12 +357,14 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		try {
 			conn = dataSource.getConnection();
 			conn.setAutoCommit(false);
-			st = conn.prepareStatement("INSERT INTO CYCLE VALUES(null, ?, ?, ?, ?);");
+			st = conn
+					.prepareStatement("INSERT INTO CYCLE VALUES(null, ?, ?, ?, ?);");
 
-			long facilityToDepartment = findFacilityToDepartmentByID(cycle.getFacilityFK(), cycle.getDepartmentFK());
-			
+			long facilityToDepartment = findFacilityToDepartmentByID(
+					cycle.getFacilityFK(), cycle.getDepartmentFK());
+
 			st.setLong(1, facilityToDepartment);
-			st.setLong(2, cycle.getVaditajs().getID());
+			st.setLong(2, cycle.getVaditajs().getDoctorPk());
 			st.setDate(3, new java.sql.Date(cycle.getSakumaDatums().getTime()));
 			st.setDate(4, new java.sql.Date(cycle.getBeiguDatums().getTime()));
 
@@ -422,10 +419,11 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			conn = dataSource.getConnection();
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
-			
+
 			Facility facility;
 			while (rs.next()) {
-				facility = new Facility(rs.getInt("FACILITY_PK"), rs.getString("NOSAUKUMS"));
+				facility = new Facility(rs.getInt("FACILITY_PK"),
+						rs.getString("NOSAUKUMS"));
 				facilityList.add(facility);
 			}
 
@@ -448,10 +446,12 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			conn = dataSource.getConnection();
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
-			
+
 			Department department;
 			while (rs.next()) {
-				department = new Department(rs.getInt("DEPARTMENT_PK"), rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"), rs.getString("NOSAUKUMS"));
+				department = new Department(rs.getInt("DEPARTMENT_PK"),
+						rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"),
+						rs.getString("NOSAUKUMS"));
 				departmentList.add(department);
 			}
 
@@ -475,10 +475,12 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			conn = dataSource.getConnection();
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
-			
+
 			Department department;
 			while (rs.next()) {
-				department = new Department(rs.getInt("DEPARTMENT_PK"), rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"), rs.getString("NOSAUKUMS"));
+				department = new Department(rs.getInt("DEPARTMENT_PK"),
+						rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"),
+						rs.getString("NOSAUKUMS"));
 				departmentList.add(department);
 			}
 
@@ -512,19 +514,52 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			
-			System.out.println("Heart list size = " + resident.getHeartList().size());
+
+			System.out.println("Heart list size = "
+					+ resident.getHeartList().size());
 			// This for some reason throws ConcurentModificationException
-//			for(Heart heart : resident.getHeartList()) {
-//				resident.removeHeart(heart);
-//			}
+			// for(Heart heart : resident.getHeartList()) {
+			// resident.removeHeart(heart);
+			// }
 			List<Heart> heartList = resident.getHeartList();
 			int size = resident.getHeartList().size();
-			for(int i = 0; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				resident.removeHeart(heartList.get(0));
 			}
-			
+
 			session.delete(resident);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean insertDoctor(Doctor doctor) {
+		logger.info("Location");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(doctor);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateDoctor(Doctor doctor) {
+		logger.info("In updateResident(resident)");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.update(doctor);
 			session.getTransaction().commit();
 			session.close();
 			return true;

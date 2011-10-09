@@ -26,8 +26,6 @@ public interface ResidentService {
 	
 	boolean deleteResident(Resident resident);
 
-	int getResidentCountByPersonasKods(String personasKods);
-
 	boolean updateResident(Resident resident);
 
 	Resident findResidentByPersonasKods(String personasKods);
@@ -47,4 +45,10 @@ public interface ResidentService {
 	LinkedList<Facility> fetchAllFacilities();
 
 	LinkedList<Department> fetchAllDepartments();
+
+	boolean insertDoctor(Doctor doctor);
+
+	boolean updateDoctor(Doctor doctor);
+	
+	int getPersonCountByPersonasKods(String personasKods);
 }

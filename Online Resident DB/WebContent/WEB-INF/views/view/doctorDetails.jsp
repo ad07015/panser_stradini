@@ -8,9 +8,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type='text/css' rel='stylesheet' href='/resdb/main.css' />
 
+<script language="javascript" type="text/javascript">
+function deleteDoctor(dID)
+{
+	var con
+	con = confirm('Vai Jūs tiešam gribāt nodzēst šo rezidentu?')
+	if (con)
+	{
+		document.deleteDoctorForm.deleteDoctorID.value=dID
+		document.deleteDoctorForm.submit()
+	}
+}
+function updateDoctor(dID)
+{
+  document.updateDoctorForm.updateDoctorID.value=dID
+  document.updateDoctorForm.submit()
+}
+</script>
+
 <title>Rezidentu informācija</title>
 </head>
 <body>
+
+<form name="deleteDoctorForm" action="/resdb/view/doctorList.htm" method="post">
+	<input type="hidden" name="deleteDoctorID" />
+</form>
+<form name="updateDoctorForm" action="/resdb/doctor/updateDoctor.htm" method="post">
+	<input type="hidden" name="updateDoctorID" />
+</form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
 <c:out value="${message}" escapeXml="false" />
@@ -108,5 +133,13 @@
 		</td>
 	</tr>
 </table>
+
+<button class="belowTable" onClick="javascript:updateDoctor(${doctor.doctorPk})">Rediģēt ārsta datus</button>
+<button class="belowTable" onClick="javascript:deleteDoctor(${doctor.doctorPk})">Nodzēst ārstu</button>
+
+<hr>
+
+<a href="/resdb/view/doctorList.htm">Atgriezties uz ārstu sarakstu</a>
+
 </body>
 </html>

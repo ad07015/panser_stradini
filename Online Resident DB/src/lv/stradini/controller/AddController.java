@@ -1,12 +1,11 @@
 package lv.stradini.controller;
 
-
-
 import java.util.LinkedList;
 
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Department;
+import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/resident/add*.htm", "/cycle/add*.htm", "/resident/updateResident.htm"}) //TODO: remove update resident mapping
+@RequestMapping(value={"/resident/add*.htm", "/cycle/add*.htm", "/doctor/add*.htm"})
 public class AddController {
 
 	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(AddController.class));
@@ -44,8 +43,7 @@ public class AddController {
 			
 		ModelAndView mav = new ModelAndView();
 		
-		Heart heart = new Heart();
-		mav.addObject("heart", heart);
+		mav.addObject("heart", new Heart());
 		mav.addObject("residentFK", residentFK);
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addHeart");
@@ -54,8 +52,14 @@ public class AddController {
 	
 	@RequestMapping(value="addDoctor.htm", method=RequestMethod.GET)
 	public ModelAndView showAddDoctorForm() {
-//		log.info()
-		return new ModelAndView();
+		log.info("Location");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("doctor", new Doctor());
+		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
+		mav.setViewName("add/addDoctor");
+		return mav;
 	}
 	
 	@RequestMapping(value="addCycle.htm", method = RequestMethod.GET)
@@ -71,17 +75,6 @@ public class AddController {
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addCycle");
-		return mav;
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, params={"updateResidentID"})
-	public ModelAndView showUpdateResidentForm(int updateResidentID) {
-		log.info("AddNewResController: in showUpdate()");
-		ModelAndView mav = new ModelAndView();
-		Resident resident = residentService.findResidentByID(updateResidentID);
-		mav.addObject("resident", resident);
-		mav.addObject("actionType", Constants.ACTION_TYPE_UPDATE);
-		mav.setViewName("add/addResident");
 		return mav;
 	}
 }

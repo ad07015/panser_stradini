@@ -90,7 +90,7 @@ Ievadiet ārsta informāciju
 					<c:otherwise>
 						<input type="submit" value="Saglabāt izmaiņas" />
 						<input type="hidden" name="action" value="updateDoctor" />
-						<input type="hidden" name="residentID" value="${doctor.doctorPk}" />
+						<input type="hidden" name="doctorID" value="${doctor.doctorPk}" />
 						<input type="hidden" name="actionType" value="${actionType}" />
 					</c:otherwise>
 				</c:choose>
@@ -101,6 +101,6 @@ Ievadiet ārsta informāciju
 
 <hr>
 
-<a href="/resdb/view/residentList.htm">Atgriezties uz ārstu sarakstu</a>
+<a href="/resdb/view/doctorList.htm">Atgriezties uz ārstu sarakstu</a>
 </body>
 </html>

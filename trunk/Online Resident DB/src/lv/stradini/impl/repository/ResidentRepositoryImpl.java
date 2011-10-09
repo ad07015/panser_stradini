@@ -568,4 +568,20 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean deleteDoctor(Doctor doctor) {
+		logger.info("In deleteResident(resident)");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.delete(doctor);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
+	}
 }

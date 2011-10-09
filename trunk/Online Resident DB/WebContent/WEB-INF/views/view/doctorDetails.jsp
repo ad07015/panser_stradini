@@ -12,10 +12,10 @@
 function deleteDoctor(dID)
 {
 	var con
-	con = confirm('Vai Jūs tiešam gribāt nodzēst šo rezidentu?')
+	con = confirm('Vai Jūs tiešam gribāt nodzēst šo ārstu?')
 	if (con)
 	{
-		document.deleteDoctorForm.deleteDoctorID.value=dID
+		document.deleteDoctorForm.doctorID.value=dID
 		document.deleteDoctorForm.submit()
 	}
 }
@@ -31,9 +31,11 @@ function updateDoctor(dID)
 <body>
 
 <form name="deleteDoctorForm" action="/resdb/view/doctorList.htm" method="post">
-	<input type="hidden" name="deleteDoctorID" />
+	<input type="hidden" name="action" value="deleteDoctor" />
+	<input type="hidden" name="doctorID" />
 </form>
 <form name="updateDoctorForm" action="/resdb/doctor/updateDoctor.htm" method="post">
+	<input type="hidden" name="action" value="updateDoctor" />
 	<input type="hidden" name="updateDoctorID" />
 </form>
 

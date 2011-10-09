@@ -27,7 +27,8 @@ public class Constants {
 
 	public static final String MESSAGE_DOCTOR_ADD_SUCCESS = "\u0100rsts veiksm\u012Bgi piere\u0123istr\u0113ts!";
 	public static final String MESSAGE_DOCTOR_ADD_FAIL = MESSAGE_FAIL_PREFIX + "\u0100rsts netika piere\u0123istr\u0113ts!";
-
+	public static final String MESSAGE_DOCTOR_DELETE_SUCCESS = "\u0100rsts veiksm\u012Bgi nodz\u0113sts!";
+	public static final String MESSAGE_DOCTOR_DELETE_FAIL = MESSAGE_FAIL_PREFIX + "\u0100rsts netika nodz\u0113sts!";
 	public static final String MESSAGE_DOCTOR_UPDATE_SUCCESS = "\u0100rsta dati ir veiksm\u012Bgi redi\u0123\u0113ti!";
 	public static final String MESSAGE_DOCTOR_UPDATE_FAIL = MESSAGE_FAIL_PREFIX + "\u0100rsta dati netika izmain\u012Bti!";
 }

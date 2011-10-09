@@ -53,4 +53,6 @@ public interface ResidentRepository {
 	boolean updateDoctor(Doctor doctor);
 
 	int getDoctorCountByPersonasKods(String newPersonasKods);
+
+	boolean deleteDoctor(Doctor doctor);
 }

@@ -127,4 +127,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public int getPersonCountByPersonasKods(String personasKods) {
 		return repo.getDoctorCountByPersonasKods(personasKods) + repo.getResidentCountByPersonasKods(personasKods);
 	}
+
+	@Override
+	public boolean deleteDoctor(Doctor doctor) {
+		return repo.deleteDoctor(doctor);
+	}
 }

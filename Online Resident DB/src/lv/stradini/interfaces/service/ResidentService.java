@@ -51,4 +51,6 @@ public interface ResidentService {
 	boolean updateDoctor(Doctor doctor);
 	
 	int getPersonCountByPersonasKods(String personasKods);
+
+	boolean deleteDoctor(Doctor doctor);
 }

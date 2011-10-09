@@ -35,7 +35,7 @@ public class ViewController {
 	private ResidentService residentService;
 
 	@RequestMapping(value="residentList.htm")
-	public ModelAndView onInitialSearchFormState() {
+	public ModelAndView showResidentList() {
 		log.info("Entering search form in its initial state");
 
 		List<Resident> residentList = residentService.fetchAllResidents();
@@ -48,18 +48,8 @@ public class ViewController {
 		return mav;
 	}
 	
-	@RequestMapping(value="cycleList.htm", method=RequestMethod.GET)
-	public ModelAndView showCycleList() {
-		log.info("Showing cycle list");
-
-		ModelAndView mav = new ModelAndView();
-
-		mav.setViewName("view/cycleList");
-		return mav;
-	}
-	
-	@RequestMapping(value="doctorList.htm")
-	public ModelAndView onDoctorList() {
+	@RequestMapping(value="doctorList.htm", method=RequestMethod.GET)
+	public ModelAndView showDoctorList() {
 		log.info("Entering search form in its initial state");
 
 		List<Doctor> doctorList = residentService.fetchAllDoctors();
@@ -69,6 +59,16 @@ public class ViewController {
 
 		mav.addObject("doctorList", doctorList);
 		mav.setViewName("view/doctorList");
+		return mav;
+	}
+	
+	@RequestMapping(value="cycleList.htm", method=RequestMethod.GET)
+	public ModelAndView showCycleList() {
+		log.info("Showing cycle list");
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("view/cycleList");
 		return mav;
 	}
 	
@@ -124,6 +124,32 @@ public class ViewController {
 		mav.addObject("status", status);
 		mav.addObject("residentList", residentService.fetchAllResidents());
 		mav.setViewName("view/residentList");
+		return mav;
+	}
+	
+	@RequestMapping(value="doctorList.htm",  method = RequestMethod.POST, params={"action=deleteDoctor"})
+	public ModelAndView onDeleteDoctor(int doctorID) {
+		log.info("Location");
+		
+		Doctor doctor = residentService.findDoctorByID(doctorID);
+		boolean result = residentService.deleteDoctor(doctor);
+		
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_DOCTOR_DELETE_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_DOCTOR_DELETE_FAIL;
+			status = "fail";
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("message", message);
+		mav.addObject("status", status);
+		mav.addObject("doctorList", residentService.fetchAllDoctors());
+		mav.setViewName("view/doctorList");
 		return mav;
 	}
 	

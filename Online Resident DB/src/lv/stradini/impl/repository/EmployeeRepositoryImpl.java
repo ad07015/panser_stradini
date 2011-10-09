@@ -15,6 +15,7 @@ import lv.stradini.domain.old.EmployeeSkill;
 import lv.stradini.domain.old.ProjectRole;
 import lv.stradini.domain.old.Role;
 import lv.stradini.interfaces.repository.EmployeeRepository;
+import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	//Tip: create member variables in this class that will contain the objects
 	//passed by the Spring framework so that other methods can access the objects.
 
-	private static Logger log = Logger.getLogger(EmployeeRepositoryImpl.class);
+	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(EmployeeRepositoryImpl.class));
 	private final DataSource dataSource;
 
 	public EmployeeRepositoryImpl(DataSource dataSource) throws SQLException {

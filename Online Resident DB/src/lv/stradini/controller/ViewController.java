@@ -8,6 +8,7 @@ import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
+import lv.stradini.util.LoggerUtils;
 import lv.stradini.validation.AddResidentFormValidator;
 import lv.stradini.validation.HeartFormValidator;
 import lv.stradini.validation.ResidentFormValidator;
@@ -26,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/view/*.htm")
 public class ViewController {
 
-	private static Logger log = Logger.getLogger(ViewController.class);
+	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(ViewController.class));
 	@Autowired
 	private ResidentService residentService;
 

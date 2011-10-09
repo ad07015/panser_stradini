@@ -9,6 +9,7 @@ import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Department;
 import lv.stradini.domain.Facility;
 import lv.stradini.interfaces.service.ResidentService;
+import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/cycle/addCycle.htm"})
+@RequestMapping(value={"/cycle/blablabla.htm"})
 public class AddCycleController {
 
-	private static Logger log = Logger.getLogger(AddCycleController.class);
+	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(AddCycleController.class));
 	@Autowired
 	private ResidentService residentService;
 	

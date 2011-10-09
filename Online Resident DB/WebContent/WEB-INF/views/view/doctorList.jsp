@@ -71,5 +71,8 @@ function viewDoctor(dID)
 		</tr>
 </c:forEach>
 </table>
+
+<button class="belowTable" onClick="location.href='/resdb/doctor/addDoctor.htm'">Piereģistrēt rezidentu</button>
+
 </body>
 </html>

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 public class Utils {
-	private static Logger logger = Logger.getLogger(Utils.class);
+	private static Logger logger = Logger.getLogger(LoggerUtils.getClassName(Utils.class));
 	
 	public static void setAutoCommit(Connection conn, boolean value) {
 		try {

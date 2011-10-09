@@ -2,6 +2,7 @@ package lv.stradini.validation;
 
 import lv.stradini.domain.Heart;
 import lv.stradini.interfaces.service.ResidentService;
+import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 import org.springframework.validation.Errors;
@@ -10,7 +11,7 @@ import org.springframework.validation.Validator;
 
 public class HeartFormValidator implements Validator {
 
-	protected static Logger log = Logger.getLogger(UpdateResidentFormValidator.class);
+	protected static Logger log = Logger.getLogger(LoggerUtils.getClassName(UpdateResidentFormValidator.class));
 	protected ResidentService residentService;
 
 	public HeartFormValidator(ResidentService residentService) {

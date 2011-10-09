@@ -7,6 +7,7 @@ import lv.stradini.domain.old.Project;
 import lv.stradini.interfaces.repository.EmployeeRepository;
 import lv.stradini.interfaces.repository.ProjectRepository;
 import lv.stradini.interfaces.service.ProjectService;
+import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +16,7 @@ public class ProjectServiceImpl implements ProjectService {
 	//Tip: create member variables in this class that will contain the objects
 	//passed by the Spring framework so that other methods can access the objects.
 
-	private static Logger log = Logger.getLogger(ProjectServiceImpl.class);
+	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(ProjectServiceImpl.class));
 	private final EmployeeRepository employeeRepo;
 	private final ProjectRepository projectRepo;
 

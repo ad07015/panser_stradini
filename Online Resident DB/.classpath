@@ -2,29 +2,31 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/commons-dbcp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/commons-pool.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/jstl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/junit-4.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/mysql-connector-java-5.1.6-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/spring.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/spring-webmvc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/standard.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/cglib-2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/hibernate3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/javassist-3.9.0.GA.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/log4j.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/slf4j-api-1.5.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/andrejs.dasko/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/slf4j-log4j12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/commons-pool.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/junit-4.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/mysql-connector-java-5.1.6-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/mysql-connector-java-5.1.17-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/spring.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/spring-webmvc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/spring-webmvc-2.5.5-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/standard.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/hibernate3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/javassist-3.9.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/log4j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/slf4j-log4j12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/root/workspaces/resdb/Online Resident DB/lib/Hibernate3.0/javax.persistence-2.0.0.jar"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>

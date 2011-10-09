@@ -85,18 +85,21 @@ Ievadiet rezidenta informāciju
 		</tr>
 		<tr>
 			<td></td>
-			<c:choose>
-				<c:when test="${actionType == 'add'}">
-					<td><input type="submit" value="Reģistrēt rezidentu" />
-					<td><input type="hidden" name="action" value="addResident"></td>
-				</c:when>
-				<c:otherwise>
-					<td><input type="submit" value="Saglabāt izmaiņas" />
-					<td><input type="hidden" name="action" value="updateResident"></td>
-					<td><input type="hidden" name="residentID" value="${resident.residentPk}"></td>
-				</c:otherwise>
-			</c:choose>
-			<td><input type="hidden" name="actionType" value="${actionType}"></td>
+			<td>
+				<c:choose>
+					<c:when test="${actionType == 'add'}">
+						<input type="submit" value="Reģistrēt rezidentu" />
+						<input type="hidden" name="action" value="addResident" />
+						<input type="hidden" name="actionType" value="${actionType}" />
+					</c:when>
+					<c:otherwise>
+						<input type="submit" value="Saglabāt izmaiņas" />
+						<input type="hidden" name="action" value="updateResident" />
+						<input type="hidden" name="residentID" value="${resident.residentPk}" />
+						<input type="hidden" name="actionType" value="${actionType}" />
+					</c:otherwise>
+				</c:choose>
+			</td>
 		</tr>
 	</table>
 </form:form>

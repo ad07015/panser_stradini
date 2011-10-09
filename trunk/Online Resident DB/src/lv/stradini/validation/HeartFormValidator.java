@@ -25,13 +25,13 @@ public class HeartFormValidator implements Validator {
 
 	@Override
 	public void validate(Object obj, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "komentari", "heart.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "komentari", "error.emptyField");
 		Heart heart = (Heart) obj;
 		log.info(heart.getID());
 		log.info(heart.getTips());
 		log.info(heart.getKomentari());
 		if (heart.getTips().equals("Select...")) {
-			errors.rejectValue("tips", "heart.default_dropbox");
+			errors.rejectValue("tips", "error.heart.default_dropbox");
 		}
 	}
 

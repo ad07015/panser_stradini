@@ -19,11 +19,14 @@ public class AddResidentFormValidator extends ResidentFormValidator {
 		super.validate(obj, errors);
 		Resident resident = (Resident) obj;
 		if (resident.getPersonasKods() == null || resident.getPersonasKods().equals("")) {
-			errors.rejectValue("personasKods", "resident.empty");			
+			errors.rejectValue("personasKods", "error.emptyField");			
 		} else if (!resident.getPersonasKods().matches("[0-9]{6}-[0-9]{5}")) {
-			errors.rejectValue("personasKods", "resident.personasKods.invalid");
-		} else if (residentService.getResidentCountByPersonasKods(resident.getPersonasKods()) > 0) {
-			errors.rejectValue("personasKods", "resident.personasKods.exists");
+			errors.rejectValue("personasKods", "error.personasKods.invalid");
+		} else  {
+			int personCountWithNewPersonasKods = residentService.getPersonCountByPersonasKods(resident.getPersonasKods());
+			if (personCountWithNewPersonasKods > 0) {
+				errors.rejectValue("personasKods", "error.personasKods.exists");
+			}
 		}
 	}
 }

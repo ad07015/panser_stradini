@@ -1,7 +1,22 @@
 package lv.stradini.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(
+	name = "getDoctorCountByPersonasKods",
+	query = "from Doctor d where d.personasKods = :personasKods"
+	)
+})
+
+@Entity
 public class Doctor {
-	private long ID;
+	private int doctorPk;
 	private String vards;
 	private String uzvards;
 	private String personasKods;
@@ -14,15 +29,14 @@ public class Doctor {
 	private String komentari;
 	
 	public Doctor() {
-		
 	}
 
-	public Doctor(long iD, String vards, String uzvards,
+	public Doctor(int doctorPk, String vards, String uzvards,
 			String personasKods, String akademiskaisAmats, String darbaVieta,
 			String specialitate, String adrese, String talrunaNumurs,
 			String epasts, String komentari) {
 		super();
-		ID = iD;
+		this.doctorPk = doctorPk;
 		this.vards = vards;
 		this.uzvards = uzvards;
 		this.personasKods = personasKods;
@@ -34,13 +48,16 @@ public class Doctor {
 		this.epasts = epasts;
 		this.komentari = komentari;
 	}
-
-	public long getID() {
-		return ID;
+	
+	@Id
+	@Column(name="DOCTOR_PK")
+	@GeneratedValue
+	public int getDoctorPk() {
+		return doctorPk;
 	}
 
-	public void setID(long iD) {
-		ID = iD;
+	public void setDoctorPk(int doctorPk) {
+		this.doctorPk = doctorPk;
 	}
 
 	public String getVards() {
@@ -59,6 +76,7 @@ public class Doctor {
 		this.uzvards = uzvards;
 	}
 
+	@Column(name="PERSONAS_KODS")
 	public String getPersonasKods() {
 		return personasKods;
 	}
@@ -67,6 +85,7 @@ public class Doctor {
 		this.personasKods = personasKods;
 	}
 
+	@Column(name="AKADEMISKAIS_GRADS")
 	public String getAkademiskaisGrads() {
 		return akademiskaisGrads;
 	}
@@ -75,6 +94,7 @@ public class Doctor {
 		this.akademiskaisGrads = akademiskaisAmats;
 	}
 
+	@Column(name="DARBA_VIETA")
 	public String getDarbaVieta() {
 		return darbaVieta;
 	}
@@ -99,6 +119,7 @@ public class Doctor {
 		this.adrese = adrese;
 	}
 
+	@Column(name="TALRUNA_NUMURS")
 	public String getTalrunaNumurs() {
 		return talrunaNumurs;
 	}

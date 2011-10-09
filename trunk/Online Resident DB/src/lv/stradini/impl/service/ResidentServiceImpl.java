@@ -50,8 +50,7 @@ public class ResidentServiceImpl implements ResidentService {
 		return repo.deleteResidentByID(residentID);
 	}
 
-	@Override
-	public int getResidentCountByPersonasKods(String personasKods) {
+	private int getResidentCountByPersonasKods(String personasKods) {
 		return repo.getResidentCountByPersonasKods(personasKods);
 	}
 
@@ -108,5 +107,24 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public boolean deleteResident(Resident resident) {
 		return repo.deleteResident(resident);
+	}
+
+	@Override
+	public boolean insertDoctor(Doctor doctor) {
+		return repo.insertDoctor(doctor);
+	}
+
+	@Override
+	public boolean updateDoctor(Doctor doctor) {
+		return repo.updateDoctor(doctor);
+	}
+
+	private int getDoctorCountByPersonasKods(String newPersonasKods) {
+		return repo.getDoctorCountByPersonasKods(newPersonasKods);
+	}
+
+	@Override
+	public int getPersonCountByPersonasKods(String personasKods) {
+		return repo.getDoctorCountByPersonasKods(personasKods) + repo.getResidentCountByPersonasKods(personasKods);
 	}
 }

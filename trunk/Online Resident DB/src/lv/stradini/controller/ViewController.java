@@ -9,9 +9,12 @@ import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.util.LoggerUtils;
+import lv.stradini.validation.AddDoctorFormValidator;
 import lv.stradini.validation.AddResidentFormValidator;
+import lv.stradini.validation.DoctorFormValidator;
 import lv.stradini.validation.HeartFormValidator;
 import lv.stradini.validation.ResidentFormValidator;
+import lv.stradini.validation.UpdateDoctorFormValidator;
 import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
@@ -170,8 +173,7 @@ public class ViewController {
 	
 	@RequestMapping(value="residentList.htm", method = RequestMethod.POST, params={"action=addResident"})
 	public ModelAndView onSubmitNewResidentForm(Resident resident, Errors errors, String actionType) {
-		log.info("AddNewResController: in onSubmitNewResidentForm()");
-		log.info("actionType is " + actionType);
+		log.info("Location");
 		ModelAndView mav = new ModelAndView();
 		ResidentFormValidator validator = new AddResidentFormValidator(residentService);
 		validator.validate(resident, errors);
@@ -201,9 +203,44 @@ public class ViewController {
 		return mav;
 	}
 	
+	@RequestMapping(value="doctorList.htm", method=RequestMethod.POST, params={"action=addDoctor"})
+	public ModelAndView onSubmitAddDoctorForm(Doctor doctor, Errors errors, String actionType) {
+		log.info("Location");
+		ModelAndView mav = new ModelAndView();
+		
+		DoctorFormValidator validator = new AddDoctorFormValidator(residentService);
+		validator.validate(doctor, errors);
+		log.debug("Error has errors: " + errors.hasErrors());
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("doctor", doctor);
+			mav.setViewName("add/addDoctor");
+			return mav;
+		}
+		
+		boolean result = residentService.insertDoctor(doctor);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_DOCTOR_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_DOCTOR_ADD_FAIL;
+			status = "fail";
+		}
+		
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.addObject("actionType", actionType);
+		mav.addObject("doctor", doctor);
+		mav.addObject("doctorList", residentService.fetchAllDoctors());
+		mav.setViewName("view/doctorList");
+		return mav;
+	}
+	
 	@RequestMapping(value="residentList.htm", method = RequestMethod.POST, params={"action=updateResident"})
 	public ModelAndView onSubmitUpdateResidentForm(Resident resident, Errors errors, String actionType, int residentID) {
-		log.info("AddNewResController: in onSubmitUpdateResidentForm()");
+		log.info("Location");
 		ModelAndView mav = new ModelAndView();
 		
 		resident.setResidentPk((int) residentID);
@@ -232,6 +269,41 @@ public class ViewController {
 		mav.addObject("resident", resident);
 		mav.addObject("residentList", residentService.fetchAllResidents());
 		mav.setViewName("view/residentList");
+		return mav;
+	}
+	
+	@RequestMapping(value="doctorList.htm", method = RequestMethod.POST, params={"action=updateDoctor"})
+	public ModelAndView onSubmitUpdateDoctorForm(Doctor doctor, Errors errors, String actionType, int doctorID) {
+		log.info("Location");
+		ModelAndView mav = new ModelAndView();
+		
+		doctor.setDoctorPk(doctorID);
+		DoctorFormValidator validator = new UpdateDoctorFormValidator(residentService);
+		validator.validate(doctor, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("actionType", actionType);
+			mav.addObject("doctor", doctor);
+			mav.setViewName("add/addDoctor");
+			return mav;
+		}
+		
+		boolean result = residentService.updateDoctor(doctor);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_DOCTOR_UPDATE_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_DOCTOR_UPDATE_FAIL;
+			status = "fail";
+		}
+		
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.addObject("actionType", actionType);
+		mav.addObject("doctor", doctor);
+		mav.addObject("doctorList", residentService.fetchAllDoctors());
+		mav.setViewName("view/doctorList");
 		return mav;
 	}
 

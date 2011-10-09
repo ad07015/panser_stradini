@@ -58,7 +58,7 @@ function viewDoctor(dID)
 				<c:out value="${doctor.uzvards}" /> 	
 			</td>
 			<td>
-				<a href="javascript:viewDoctor(${doctor.ID})"> 	
+				<a href="javascript:viewDoctor(${doctor.doctorPk})"> 	
 					<c:out value="${doctor.personasKods}" />
 				</a>
 			</td>
@@ -72,7 +72,6 @@ function viewDoctor(dID)
 </c:forEach>
 </table>
 
-<button class="belowTable" onClick="location.href='/resdb/doctor/addDoctor.htm'">Piereģistrēt rezidentu</button>
-
+<button class="belowTable" onClick="location.href='/resdb/doctor/addDoctor.htm'">Piereģistrēt ārstu</button>
 </body>
 </html>

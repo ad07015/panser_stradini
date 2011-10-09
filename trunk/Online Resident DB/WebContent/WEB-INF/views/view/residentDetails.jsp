@@ -189,5 +189,8 @@ function updateHeart(heartID, residentFK)
 </c:choose>
 <button class="belowTable" onClick="javascript:addHeart(${resident.residentPk})">Piereģistrēt sirsniņu</button>
 
+<hr>
+
+<a href="/resdb/view/residentList.htm">Atgriezties uz rezidentu sarakstu</a>
 </body>
 </html>

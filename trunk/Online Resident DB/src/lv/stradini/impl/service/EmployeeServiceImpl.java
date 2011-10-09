@@ -11,12 +11,13 @@ import lv.stradini.domain.old.Role;
 import lv.stradini.interfaces.repository.EmployeeRepository;
 import lv.stradini.interfaces.repository.ProjectRepository;
 import lv.stradini.interfaces.service.EmployeeService;
+import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
-	private static Logger log = Logger.getLogger(EmployeeServiceImpl.class);
+	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(EmployeeServiceImpl.class));
 	private final EmployeeRepository employeeRepo;
 	private final ProjectRepository projectRepo;
 

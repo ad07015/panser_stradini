@@ -2,6 +2,7 @@ package lv.stradini.validation;
 
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
+import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.validation.Validator;
 
 public abstract class ResidentFormValidator implements Validator {
 
-	protected static Logger log = Logger.getLogger(UpdateResidentFormValidator.class);
+	protected static Logger log = Logger.getLogger(LoggerUtils.getClassName(UpdateResidentFormValidator.class));
 	protected ResidentService residentService;
 
 	public ResidentFormValidator() {

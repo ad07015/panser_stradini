@@ -3,6 +3,8 @@ package lv.stradini.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lv.stradini.util.LoggerUtils;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/login/*.htm")
 public class LoginController {
-	private static final Logger log = Logger.getLogger(LoginController.class);
+	private static final Logger log = Logger.getLogger(LoggerUtils.getClassName(LoginController.class));
 	
 	@RequestMapping(value="login.htm")
 	public ModelAndView onRequestLogin() {

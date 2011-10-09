@@ -18,6 +18,7 @@ import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.repository.ResidentRepository;
+import lv.stradini.util.LoggerUtils;
 import lv.stradini.util.Utils;
 
 import org.apache.log4j.Logger;
@@ -29,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ResidentRepositoryImpl implements ResidentRepository {
 
-	private static Logger logger = Logger.getLogger(ResidentRepositoryImpl.class);
+	private static Logger logger = Logger.getLogger(LoggerUtils.getClassName(ResidentRepositoryImpl.class));
 	private final DataSource dataSource;
 	
 	@Autowired

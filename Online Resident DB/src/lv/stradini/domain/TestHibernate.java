@@ -12,11 +12,56 @@ public class TestHibernate {
 	 */
 	public static void main(String[] args) {
 		AnnotationConfiguration config = new AnnotationConfiguration();
-		config.addAnnotatedClass(Heart.class);
-		config.addAnnotatedClass(Resident.class);
+//		config.addAnnotatedClass(Heart.class);
+//		config.addAnnotatedClass(Resident.class);
 		config.configure(); //reads hibernate.cfg.xml
 		
 		new SchemaExport(config).create(true, true);
+
+		SessionFactory factory = config.buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		Facility fac1 = new Facility();
+		fac1.setNosaukums("Stradina slimnica");
+		Facility fac2 = new Facility();
+		fac2.setNosaukums("1. Rigas slimnica");
+		Facility fac3 = new Facility();
+		fac3.setNosaukums("Gailezera slimnica");
+		
+		Department dep1 = new Department();
+		dep1.setNosaukums("Urologijas nodala");
+		Department dep2 = new Department();
+		dep2.setNosaukums("Asinsrites nodala");
+		Department dep3 = new Department();
+		dep3.setNosaukums("Traumotologijas nodala");
+		Department dep4 = new Department();
+		dep4.setNosaukums("Neirokirurgijas nodala");
+		Department dep5 = new Department();
+		dep5.setNosaukums("Kirurgijas nodala");
+		
+		fac1.getDepartmentList().add(dep1);
+		fac1.getDepartmentList().add(dep2);
+		fac1.getDepartmentList().add(dep3);
+		
+		fac2.getDepartmentList().add(dep1);
+		fac2.getDepartmentList().add(dep4);
+		fac2.getDepartmentList().add(dep5);
+		
+		fac3.getDepartmentList().add(dep1);
+		fac3.getDepartmentList().add(dep3);
+		
+		session.save(fac1);
+		session.save(fac2);
+		session.save(fac3);
+		session.save(dep1);
+		session.save(dep2);
+		session.save(dep3);
+		session.save(dep4);
+		session.save(dep5);
+		
+		session.getTransaction().commit();
+//		session.close();
 		
 //		SessionFactory factory = config.buildSessionFactory();
 //		Session session = factory.getCurrentSession();
@@ -106,5 +151,7 @@ public class TestHibernate {
 //		System.out.println(johnFromPersistance.getVards());
 //		System.out.println(johnFromPersistance.getUzvards());
 //		System.out.println("Size = " + johnFromPersistance.getHeartList().size());
+		
+		System.out.println("Completed!!!");
 	}
 }

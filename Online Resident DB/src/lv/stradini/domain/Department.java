@@ -1,47 +1,54 @@
 package lv.stradini.domain;
 
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Department {
 	
-	private long ID;
-	private long facilityFK;
-	private long doctorFK;
+	private int departmentPk;
 	private String nosaukums;
 	
+	private List<Facility> facultyList = new LinkedList<Facility>();
+	
 	public Department() {
-		super();
 	}
 
-	public Department(long iD, long facilityFK, long doctorFK, String nosaukums) {
+	public Department(int departmentPk, String nosaukums) {
 		super();
-		ID = iD;
-		this.facilityFK = facilityFK;
-		this.doctorFK = doctorFK;
+		this.departmentPk = departmentPk;
 		this.nosaukums = nosaukums;
 	}
-
-	public long getID() {
-		return ID;
+	
+	@Id
+	@Column(name="DEPARTMENT_PK")
+	@GeneratedValue	
+	public int getDepartmentPk() {
+		return departmentPk;
 	}
 
-	public void setID(long iD) {
-		ID = iD;
+	public void setDepartmentPk(int departmentPk) {
+		this.departmentPk = departmentPk;
 	}
 
-	public long getFacilityFK() {
-		return facilityFK;
+	@ManyToMany
+	@JoinTable(name="JOIN_DEPARTMENT_FACILITY",
+			joinColumns={@JoinColumn(name="departmentPk")},
+			inverseJoinColumns={@JoinColumn(name="facilityPk")})
+	public List<Facility> getFacultyList() {
+		return facultyList;
 	}
 
-	public void setFacilityFK(long facilityFK) {
-		this.facilityFK = facilityFK;
-	}
-
-	public long getDoctorFK() {
-		return doctorFK;
-	}
-
-	public void setDoctorFK(long doctorFK) {
-		this.doctorFK = doctorFK;
+	public void setFacultyList(List<Facility> facultyList) {
+		this.facultyList = facultyList;
 	}
 
 	public String getNosaukums() {

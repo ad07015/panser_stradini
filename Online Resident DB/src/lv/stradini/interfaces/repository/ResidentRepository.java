@@ -42,7 +42,7 @@ public interface ResidentRepository {
 
 	LinkedList<Facility> fetchAllFacilities();
 
-	LinkedList<Department> fetchAllDepartments();
+//	LinkedList<Department> fetchAllDepartments();
 
 	boolean deleteHeart(Heart heart);
 

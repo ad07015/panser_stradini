@@ -434,7 +434,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return facilityList;
 	}
-
+/*
 	private LinkedList<Department> findDepartmentsByFacilityID(int facilityID) {
 		LinkedList<Department> departmentList = new LinkedList<Department>();
 		Connection conn = null;
@@ -491,7 +491,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return departmentList;
 	}
-
+*/
 	@Override
 	public boolean deleteHeart(Heart heart) {
 		logger.info("In deleteHeart(heart)");

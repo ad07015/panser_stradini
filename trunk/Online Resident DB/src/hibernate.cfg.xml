@@ -42,6 +42,8 @@
         <mapping class="lv.stradini.domain.Resident" />
         <mapping class="lv.stradini.domain.Heart" />
         <mapping class="lv.stradini.domain.Doctor" />
+        <mapping class="lv.stradini.domain.Facility" />
+        <mapping class="lv.stradini.domain.Department" />
         
 
     </session-factory>

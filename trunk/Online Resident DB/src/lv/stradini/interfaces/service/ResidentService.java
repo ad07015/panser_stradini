@@ -44,7 +44,7 @@ public interface ResidentService {
 
 	LinkedList<Facility> fetchAllFacilities();
 
-	LinkedList<Department> fetchAllDepartments();
+//	LinkedList<Department> fetchAllDepartments();
 
 	boolean insertDoctor(Doctor doctor);
 

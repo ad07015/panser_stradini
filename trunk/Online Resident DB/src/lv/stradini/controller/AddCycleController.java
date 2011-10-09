@@ -31,11 +31,11 @@ public class AddCycleController {
 		log.info("AddNewResController: in show()");
 		
 		LinkedList<Facility> facilityList = residentService.fetchAllFacilities();
-		LinkedList<Department> departmentList = residentService.fetchAllDepartments();
+//		LinkedList<Department> departmentList = residentService.fetchAllDepartments();
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("facilityList", facilityList);
-		mav.addObject("departmentList", departmentList);
+//		mav.addObject("departmentList", departmentList);
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addCycle");

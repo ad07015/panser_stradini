@@ -1,22 +1,53 @@
 package lv.stradini.domain;
 
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Facility {
 	
-	private long ID;
+	private int facilityPk;
 	private String nosaukums;
 	
-	public Facility(long iD, String nosaukums) {
-		ID = iD;
+	private List<Department> departmentList = new LinkedList<Department>();
+	
+	public Facility() {
+	}
+	
+	public Facility(int facilityPk, String nosaukums) {
+		this.facilityPk = facilityPk;
 		this.nosaukums = nosaukums;
 	}
-
-	public long getID() {
-		return ID;
+	
+	@Id
+	@Column(name="FACILITY_PK")
+	@GeneratedValue()
+	public int getFacilityPk() {
+		return facilityPk;
 	}
 
-	public void setID(long iD) {
-		ID = iD;
+	public void setFacilityPk(int facilityPk) {
+		this.facilityPk = facilityPk;
+	}
+
+	@ManyToMany
+	@JoinTable(name="JOIN_DEPARTMENT_FACILITY",
+			joinColumns={@JoinColumn(name="facilityPk")},
+			inverseJoinColumns={@JoinColumn(name="departmentPk")})
+	public List<Department> getDepartmentList() {
+		return departmentList;
+	}
+
+	public void setDepartmentList(List<Department> departmentList) {
+		this.departmentList = departmentList;
 	}
 
 	public String getNosaukums() {

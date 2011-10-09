@@ -94,10 +94,10 @@ public class ResidentServiceImpl implements ResidentService {
 		return repo.fetchAllFacilities();
 	}
 
-	@Override
-	public LinkedList<Department> fetchAllDepartments() {
-		return repo.fetchAllDepartments();
-	}
+//	@Override
+//	public LinkedList<Department> fetchAllDepartments() {
+//		return repo.fetchAllDepartments();
+//	}
 
 	@Override
 	public boolean deleteHeart(Heart heart) {

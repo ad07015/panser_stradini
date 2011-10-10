@@ -28,6 +28,41 @@
 
 <hr>
 
+<h2>Ciklu saraksts:</h2>
+<table border="1" width="90%">
+	<tr>
+		<th width="20%">
+			Iestāde un nodaļa
+		</th>
+		<th width="20%">
+			Pasniedzējs
+		</th>
+		<th width="20%">
+			Sakuma datums
+		</th>
+		<th width="20%">
+			Beigu datums
+		</th>
+	</tr>
+	
+<c:forEach var="cycle" items="${cycleList}">
+		<tr>
+			<td>
+				<c:out value="${cycle.department.label}" />
+			</td>
+			<td>	
+				<c:out value="${cycle.pasniedzejs.label}" /> 	
+			</td>
+			<td>
+				<c:out value="${cycle.sakumaDatums}" />
+			</td>
+			<td>	
+				<c:out value="${cycle.beiguDatums}" /> 	
+			</td>
+		</tr>
+</c:forEach>
+</table>
+
 <button class="belowTable" onClick="location.href='/resdb/cycle/addCycle.htm'">Piereģistrēt ciklu</button>
 
 </body>

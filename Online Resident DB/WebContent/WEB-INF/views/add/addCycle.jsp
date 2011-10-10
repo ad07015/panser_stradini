@@ -30,24 +30,47 @@ Ievadiet cikla informāciju
 
 <form:form commandName="cycle" action="/resdb/view/cycleList.htm" cssClass="bordless" method="post">
 	<table class="bordless">
-		<tr>
-			<td width="160px">Iestāde</td>
-			<td width="160px">
-				<form:select path="facilityFk">
-					<form:option value="Select..." label="Select..." />
-					<form:options items="${facilityList}" itemLabel="nosaukums" itemValue="facilityPk" />
+  		<tr>
+			<td>Nodaļa</td>
+			<td>
+				<form:select path="departmentFk">
+					<form:option value="0" label="Select..." />
+					<form:options items="${departmentList}" itemLabel="label" itemValue="departmentPk" />
 				</form:select>
 			</td>
 		</tr>
-		<tr>
+  		<tr>
+			<td>Pasniedzējs</td>
+			<td>
+				<form:select path="pasniedzejsFk">
+					<form:option value="0" label="Select..." />
+					<form:options items="${doctorList}" itemLabel="label" itemValue="doctorPk" />
+				</form:select>
+			</td>
+		</tr>
+
+<%-- 		<tr>
+			<td>Nodaļa</td>
+			<td>
+				<form:select path="department">
+					<form:option value="Select..." label="Select..." />
+					<c:forEach items="${departmentList}" var="department">
+						<form:option value="${department}" label="${department.facility.nosaukums} - ${department.nosaukums}" />
+					</c:forEach>
+				</form:select>
+			</td>
+		</tr> --%>
+<%-- 		<tr>
 			<td>Nodaļa</td>
 			<td>
 				<form:select path="departmentFk">
 					<form:option value="Select..." label="Select..." />
-					<form:options items="${departmentList}" itemLabel="nosaukums" itemValue="departmentPk" />
+					<c:forEach items="${departmentList}" var="department">
+						<form:option value="department.departmentPk" label="${department.facility.nosaukums} - ${department.nosaukums}" />
+					</c:forEach>
 				</form:select>
 			</td>
-		</tr>
+		</tr> --%>
 		<tr>
 			<td>Sākuma datums</td>
 			<td><form:input path="sakumaDatums" /></td>

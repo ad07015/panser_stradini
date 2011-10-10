@@ -1,5 +1,7 @@
 package lv.stradini.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import lv.stradini.constants.Constants;
@@ -19,8 +21,11 @@ import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +38,13 @@ public class ViewController {
 	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(ViewController.class));
 	@Autowired
 	private ResidentService residentService;
+	
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
 
 	@RequestMapping(value="residentList.htm")
 	public ModelAndView showResidentList() {
@@ -66,8 +78,10 @@ public class ViewController {
 	public ModelAndView showCycleList() {
 		log.info("Showing cycle list");
 
-		ModelAndView mav = new ModelAndView();
+		List<Cycle> cycleList = residentService.fetchAllCycles();
 
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("cycleList", cycleList);
 		mav.setViewName("view/cycleList");
 		return mav;
 	}
@@ -410,8 +424,10 @@ public class ViewController {
 
 	@RequestMapping(value="cycleList.htm", method = RequestMethod.POST, params={"action=addCycle"})
 	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, String actionType) {
-		log.info("In onSubmitAddHeartForm() method");
+		log.info("Location");
 		ModelAndView mav = new ModelAndView();
+		cycle.setDepartment(residentService.findDepartmentByID(cycle.getDepartmentFk()));
+		cycle.setPasniedzejs(residentService.findDoctorByID(cycle.getPasniedzejsFk()));
 		
 		boolean result = residentService.insertCycle(cycle);
 		String message;
@@ -426,10 +442,12 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
-//		mav.addObject("cycleList", cycleList);
+		List<Cycle> cycleList = residentService.fetchAllCycles();
+		
+		mav.addObject("cycleList", cycleList);
 		mav.addObject("status", status);
 		mav.addObject("message", message);
-		mav.setViewName("view/residentList");
+		mav.setViewName("view/cycleList");
 		return mav;
 	}
 }

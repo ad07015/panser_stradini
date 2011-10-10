@@ -53,4 +53,8 @@ public interface ResidentService {
 	int getPersonCountByPersonasKods(String personasKods);
 
 	boolean deleteDoctor(Doctor doctor);
+
+	Department findDepartmentByID(int departmentFk);
+
+	List<Cycle> fetchAllCycles();
 }

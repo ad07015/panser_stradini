@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 public class Cycle {
 
 	private int cyclePk;
+	private int pasniedzejsFk;
 	private int departmentFk;
 	private Date sakumaDatums;
 	private Date beiguDatums;
@@ -64,6 +65,15 @@ public class Cycle {
 
 	public void setDepartmentFk(int departmentFk) {
 		this.departmentFk = departmentFk;
+	}
+
+	@Transient
+	public int getPasniedzejsFk() {
+		return pasniedzejsFk;
+	}
+
+	public void setPasniedzejsFk(int pasniedzejsFk) {
+		this.pasniedzejsFk = pasniedzejsFk;
 	}
 
 	public Date getSakumaDatums() {

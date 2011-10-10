@@ -131,4 +131,14 @@ public class ResidentServiceImpl implements ResidentService {
 	public boolean deleteDoctor(Doctor doctor) {
 		return repo.deleteDoctor(doctor);
 	}
+
+	@Override
+	public Department findDepartmentByID(int departmentFk) {
+		return repo.findDepartmentByID(departmentFk);
+	}
+
+	@Override
+	public List<Cycle> fetchAllCycles() {
+		return repo.fetchAllCycles();
+	}
 }

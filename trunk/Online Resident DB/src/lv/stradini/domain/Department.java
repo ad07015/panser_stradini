@@ -14,7 +14,7 @@ public class Department {
 	private String nosaukums;
 	
 	private Facility facility;
-	private Doctor doctor;
+	private Doctor vaditajs;
 	
 	public Department() {
 	}
@@ -50,11 +50,11 @@ public class Department {
 
 	@ManyToOne(targetEntity=Doctor.class)
 	@JoinColumn(name="DOCTOR_FK", nullable=false)
-	public Doctor getDoctor() {
-		return doctor;
+	public Doctor getVaditajs() {
+		return vaditajs;
 	}
 
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
+	public void setVaditajs(Doctor vaditajs) {
+		this.vaditajs = vaditajs;
 	}
 }

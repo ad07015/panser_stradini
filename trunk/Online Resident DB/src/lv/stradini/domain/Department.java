@@ -1,15 +1,11 @@
 package lv.stradini.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Department {
@@ -17,20 +13,15 @@ public class Department {
 	private int departmentPk;
 	private String nosaukums;
 	
-	private List<Facility> facultyList = new LinkedList<Facility>();
+	private Facility facility;
+	private Doctor vaditajs;
 	
 	public Department() {
 	}
 
-	public Department(int departmentPk, String nosaukums) {
-		super();
-		this.departmentPk = departmentPk;
-		this.nosaukums = nosaukums;
-	}
-	
 	@Id
 	@Column(name="DEPARTMENT_PK")
-	@GeneratedValue	
+	@GeneratedValue()
 	public int getDepartmentPk() {
 		return departmentPk;
 	}
@@ -39,23 +30,31 @@ public class Department {
 		this.departmentPk = departmentPk;
 	}
 
-	@ManyToMany
-	@JoinTable(name="JOIN_DEPARTMENT_FACILITY",
-			joinColumns={@JoinColumn(name="departmentPk")},
-			inverseJoinColumns={@JoinColumn(name="facilityPk")})
-	public List<Facility> getFacultyList() {
-		return facultyList;
-	}
-
-	public void setFacultyList(List<Facility> facultyList) {
-		this.facultyList = facultyList;
-	}
-
 	public String getNosaukums() {
 		return nosaukums;
 	}
 
 	public void setNosaukums(String nosaukums) {
 		this.nosaukums = nosaukums;
+	}
+
+	@ManyToOne(targetEntity=Facility.class)
+	@JoinColumn(name="FACILITY_FK", nullable=false)
+	public Facility getFacility() {
+		return facility;
+	}
+
+	public void setFacility(Facility facility) {
+		this.facility = facility;
+	}
+
+	@ManyToOne(targetEntity=Doctor.class)
+	@JoinColumn(name="DOCTOR_FK", nullable=false)
+	public Doctor getVaditajs() {
+		return vaditajs;
+	}
+
+	public void setVaditajs(Doctor vaditajs) {
+		this.vaditajs = vaditajs;
 	}
 }

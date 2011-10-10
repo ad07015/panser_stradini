@@ -40,16 +40,7 @@ public class TestHibernate {
 		Department dep5 = new Department();
 		dep5.setNosaukums("Kirurgijas nodala");
 		
-		fac1.getDepartmentList().add(dep1);
-		fac1.getDepartmentList().add(dep2);
-		fac1.getDepartmentList().add(dep3);
 		
-		fac2.getDepartmentList().add(dep1);
-		fac2.getDepartmentList().add(dep4);
-		fac2.getDepartmentList().add(dep5);
-		
-		fac3.getDepartmentList().add(dep1);
-		fac3.getDepartmentList().add(dep3);
 		
 		session.save(fac1);
 		session.save(fac2);

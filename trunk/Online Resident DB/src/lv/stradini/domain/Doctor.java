@@ -1,11 +1,17 @@
 package lv.stradini.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @NamedQueries({
 	@NamedQuery(
@@ -27,6 +33,8 @@ public class Doctor {
 	private String talrunaNumurs;
 	private String epasts;
 	private String komentari;
+	
+	private List<Department> departmentList = new LinkedList<Department>(); 
 	
 	public Doctor() {
 	}
@@ -58,6 +66,16 @@ public class Doctor {
 
 	public void setDoctorPk(int doctorPk) {
 		this.doctorPk = doctorPk;
+	}
+
+	@OneToMany(targetEntity=Heart.class, mappedBy="resident",
+			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	public List<Department> getDepartmentList() {
+		return departmentList;
+	}
+
+	public void setDepartmentList(List<Department> departmentList) {
+		this.departmentList = departmentList;
 	}
 
 	public String getVards() {

@@ -6,18 +6,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Department {
 	
 	private int departmentPk;
 	private String nosaukums;
+	private String label;
 	
 	private Facility facility;
 	private Doctor vaditajs;
@@ -74,5 +75,16 @@ public class Department {
 
 	public void setNosaukums(String nosaukums) {
 		this.nosaukums = nosaukums;
+	}
+	
+	@Transient
+	public String getLabel() {
+		if (this.label == null)
+			this.label = this.getFacility().getNosaukums() + " - " + this.getNosaukums();
+		return this.label;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

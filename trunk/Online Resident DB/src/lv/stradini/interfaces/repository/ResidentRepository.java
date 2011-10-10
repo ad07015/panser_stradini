@@ -55,4 +55,8 @@ public interface ResidentRepository {
 	int getDoctorCountByPersonasKods(String newPersonasKods);
 
 	boolean deleteDoctor(Doctor doctor);
+
+	Department findDepartmentByID(int departmentFk);
+
+	List<Cycle> fetchAllCycles();
 }

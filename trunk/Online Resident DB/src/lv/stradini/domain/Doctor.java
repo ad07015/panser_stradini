@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @NamedQueries({
 	@NamedQuery(
@@ -33,6 +34,8 @@ public class Doctor {
 	private String talrunaNumurs;
 	private String epasts;
 	private String komentari;
+	
+	private String label;
 	
 	private List<Department> departmentList = new LinkedList<Department>();
 	private List<Cycle> cycleList = new LinkedList<Cycle>();
@@ -171,5 +174,17 @@ public class Doctor {
 
 	public void setKomentari(String komentari) {
 		this.komentari = komentari;
+	}
+
+	@Transient
+	public String getLabel() {
+		if (this.label == null) {
+			this.label = new StringBuffer().append(this.uzvards).append(", ").append(this.vards).append(" - ").append(this.personasKods).toString();
+		}
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

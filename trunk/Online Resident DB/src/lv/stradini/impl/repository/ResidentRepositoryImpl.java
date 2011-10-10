@@ -528,4 +528,22 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return false;
 	}
+
+	@Override
+	public Department findDepartmentByID(int departmentFk) {
+		Session session = sessionFactory.openSession();
+		Department result = (Department) session.get(Department.class, departmentFk);
+		session.close();
+		return result;
+	}
+
+	@Override
+	public List<Cycle> fetchAllCycles() {
+		Session session = sessionFactory.openSession();
+		Criteria crit = session.createCriteria(Cycle.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Cycle> cycleList = crit.list();
+		session.close();
+		return cycleList;
+	}
 }

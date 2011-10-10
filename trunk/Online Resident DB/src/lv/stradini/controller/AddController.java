@@ -1,12 +1,13 @@
 package lv.stradini.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
-import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
@@ -14,7 +15,10 @@ import lv.stradini.util.LoggerUtils;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +30,13 @@ public class AddController {
 	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(AddController.class));
 	@Autowired
 	private ResidentService residentService;
+	
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
 	
 	@RequestMapping(value="addResident.htm", method = RequestMethod.GET)
 	public ModelAndView showAddResidentForm() {
@@ -66,12 +77,12 @@ public class AddController {
 	public ModelAndView showAddCycleForm() {
 		log.info("Location");
 		
-		List<Facility> facilityList = residentService.fetchAllFacilities();
 		List<Department> departmentList = residentService.fetchAllDepartments();
+		List<Doctor> doctorList = residentService.fetchAllDoctors();
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("facilityList", facilityList);
 		mav.addObject("departmentList", departmentList);
+		mav.addObject("doctorList", doctorList);
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addCycle");

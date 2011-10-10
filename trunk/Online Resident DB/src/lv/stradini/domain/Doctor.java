@@ -34,7 +34,8 @@ public class Doctor {
 	private String epasts;
 	private String komentari;
 	
-	private List<Department> departmentList = new LinkedList<Department>(); 
+	private List<Department> departmentList = new LinkedList<Department>();
+	private List<Cycle> cycleList = new LinkedList<Cycle>();
 	
 	public Doctor() {
 	}
@@ -76,6 +77,16 @@ public class Doctor {
 
 	public void setDepartmentList(List<Department> departmentList) {
 		this.departmentList = departmentList;
+	}
+
+	@OneToMany(targetEntity=Cycle.class, mappedBy="pasniedzejs",
+			cascade=CascadeType.ALL)
+	public List<Cycle> getCycleList() {
+		return cycleList;
+	}
+
+	public void setCycleList(List<Cycle> cycleList) {
+		this.cycleList = cycleList;
 	}
 
 	public String getVards() {

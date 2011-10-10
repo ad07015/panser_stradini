@@ -44,8 +44,7 @@
         <mapping class="lv.stradini.domain.Doctor" />
         <mapping class="lv.stradini.domain.Facility" />
         <mapping class="lv.stradini.domain.Department" />
-        
-
+        <mapping class="lv.stradini.domain.Cycle" />
     </session-factory>
 
 </hibernate-configuration>

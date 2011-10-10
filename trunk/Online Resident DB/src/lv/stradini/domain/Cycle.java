@@ -3,58 +3,61 @@ package lv.stradini.domain;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+@Entity
 public class Cycle {
 
-	private long ID;
-	private Doctor vaditajs;
-//	private Facility facility;
-//	private Department department;
-	private int facilityFk;
+	private int cyclePk;
 	private int departmentFk;
 	private Date sakumaDatums;
 	private Date beiguDatums;
+	
+	private Doctor pasniedzejs;
+	private Department department;
 	private LinkedList<Resident> residentList;
 	
 	public Cycle() {
 	}
 
-	public Cycle(long iD, Doctor vaditajs, int facilityFk, int departmentFk,
-			Date sakumaDatums, Date beiguDatums,
-			LinkedList<Resident> residentList) {
-		super();
-		ID = iD;
-		this.vaditajs = vaditajs;
-		this.facilityFk = facilityFk;
-		this.departmentFk = departmentFk;
-		this.sakumaDatums = sakumaDatums;
-		this.beiguDatums = beiguDatums;
-		this.residentList = residentList;
+	@Id
+	@Column(name="CYCLE_PK")
+	@GeneratedValue
+	public int getCyclePk() {
+		return cyclePk;
 	}
 
-	public long getID() {
-		return ID;
+	public void setCyclePk(int cyclePk) {
+		this.cyclePk = cyclePk;
 	}
 
-	public void setID(long iD) {
-		ID = iD;
+	@ManyToOne(targetEntity=Doctor.class)
+	@JoinColumn(name="DOCTOR_FK", nullable=false)
+	public Doctor getPasniedzejs() {
+		return pasniedzejs;
 	}
 
-	public Doctor getVaditajs() {
-		return vaditajs;
+	public void setPasniedzejs(Doctor pasniedzejs) {
+		this.pasniedzejs = pasniedzejs;
+	}
+	
+	@ManyToOne(targetEntity=Department.class)
+	@JoinColumn(name="DEPARTMENT_FK", nullable=false)
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setVaditajs(Doctor vaditajs) {
-		this.vaditajs = vaditajs;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
-	public int getFacilityFk() {
-		return facilityFk;
-	}
-
-	public void setFacilityFk(int facilityFk) {
-		this.facilityFk = facilityFk;
-	}
-
+	@Transient
 	public int getDepartmentFk() {
 		return departmentFk;
 	}

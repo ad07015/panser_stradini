@@ -26,19 +26,19 @@ public class AddCycleController {
 	@Autowired
 	private ResidentService residentService;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showAddCycleForm() {
-		log.info("AddNewResController: in show()");
-		
-		LinkedList<Facility> facilityList = residentService.fetchAllFacilities();
-//		LinkedList<Department> departmentList = residentService.fetchAllDepartments();
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("facilityList", facilityList);
-//		mav.addObject("departmentList", departmentList);
-		mav.addObject("cycle", new Cycle());
-		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
-		mav.setViewName("add/addCycle");
-		return mav;
-	}
+//	@RequestMapping(method = RequestMethod.GET)
+//	public ModelAndView showAddCycleForm() {
+//		log.info("AddNewResController: in show()");
+//		
+//		LinkedList<Facility> facilityList = residentService.fetchAllFacilities();
+////		LinkedList<Department> departmentList = residentService.fetchAllDepartments();
+//		
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("facilityList", facilityList);
+////		mav.addObject("departmentList", departmentList);
+//		mav.addObject("cycle", new Cycle());
+//		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
+//		mav.setViewName("add/addCycle");
+//		return mav;
+//	}
 }

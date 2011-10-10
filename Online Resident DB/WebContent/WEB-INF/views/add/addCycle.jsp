@@ -33,18 +33,18 @@ Ievadiet cikla informāciju
 		<tr>
 			<td width="160px">Iestāde</td>
 			<td width="160px">
-				<form:select path="facilityFK">
+				<form:select path="facilityFk">
 					<form:option value="Select..." label="Select..." />
-					<form:options items="${facilityList}" itemLabel="nosaukums" itemValue="ID" />
+					<form:options items="${facilityList}" itemLabel="nosaukums" itemValue="facilityPk" />
 				</form:select>
 			</td>
 		</tr>
 		<tr>
 			<td>Nodaļa</td>
 			<td>
-				<form:select path="departmentFK">
+				<form:select path="departmentFk">
 					<form:option value="Select..." label="Select..." />
-					<form:options items="${departmentList}" itemLabel="nosaukums" itemValue="ID" />
+					<form:options items="${departmentList}" itemLabel="nosaukums" itemValue="departmentPk" />
 				</form:select>
 			</td>
 		</tr>
@@ -60,18 +60,20 @@ Ievadiet cikla informāciju
 		</tr>
 		<tr>
 			<td></td>
-			<c:choose>
-				<c:when test="${actionType == 'add'}">
-					<td><input type="submit" value="Reģistrēt ciklu" />
-					<td><input type="hidden" name="action" value="addCycle"></td>
-				</c:when>
-				<c:otherwise>
-					<td><input type="submit" value="Saglabāt izmaiņas" />
-					<td><input type="hidden" name="action" value="updateCycle"></td>
-					<td><input type="hidden" name="residentID" value="${resident.residentPk}"></td>
-				</c:otherwise>
-			</c:choose>
-			<td><input type="hidden" name="actionType" value="${actionType}"></td>
+			<td>
+				<c:choose>
+					<c:when test="${actionType == 'add'}">
+						<input type="submit" value="Reģistrēt ciklu" />
+						<input type="hidden" name="action" value="addCycle">
+					</c:when>
+					<c:otherwise>
+						<input type="submit" value="Saglabāt izmaiņas" />
+						<input type="hidden" name="action" value="updateCycle">
+						<input type="hidden" name="residentID" value="${resident.residentPk}">
+					</c:otherwise>
+				</c:choose>
+				<input type="hidden" name="actionType" value="${actionType}">
+			</td>
 		</tr>
 	</table>
 </form:form>

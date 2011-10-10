@@ -409,7 +409,7 @@ public class ViewController {
 	}
 
 	@RequestMapping(value="cycleList.htm", method = RequestMethod.POST, params={"action=addCycle"})
-	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, int residentID, String actionType) {
+	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, String actionType) {
 		log.info("In onSubmitAddHeartForm() method");
 		ModelAndView mav = new ModelAndView();
 		

@@ -351,36 +351,17 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public boolean insertCycle(Cycle cycle) {
-		Connection conn = null;
-		PreparedStatement st = null;
-
+		logger.info("Location");
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(false);
-			st = conn
-					.prepareStatement("INSERT INTO CYCLE VALUES(null, ?, ?, ?, ?);");
-
-			long facilityToDepartment = findFacilityToDepartmentByID(
-					cycle.getFacilityFK(), cycle.getDepartmentFK());
-
-			st.setLong(1, facilityToDepartment);
-			st.setLong(2, cycle.getVaditajs().getDoctorPk());
-			st.setDate(3, new java.sql.Date(cycle.getSakumaDatums().getTime()));
-			st.setDate(4, new java.sql.Date(cycle.getBeiguDatums().getTime()));
-
-			if (st.executeUpdate() == 1) {
-				conn.commit();
-				return true;
-			}
-			Utils.rollback(conn);
-		} catch (SQLException e) {
-			Utils.rollback(conn);
-			logger.error("", e);
-		} finally {
-			Utils.setAutoCommit(conn, true);
-			closeConnection(st, conn);
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(cycle);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
 		}
-
 		return false;
 	}
 
@@ -408,30 +389,12 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	}
 
 	@Override
-	public LinkedList<Facility> fetchAllFacilities() {
-		LinkedList<Facility> facilityList = new LinkedList<Facility>();
-		Connection conn = null;
-		Statement st = null;
-		ResultSet rs = null;
-
-		String query = "SELECT * FROM FACILITY;";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(query);
-
-			Facility facility;
-			while (rs.next()) {
-				facility = new Facility(rs.getInt("FACILITY_PK"),
-						rs.getString("NOSAUKUMS"));
-				facilityList.add(facility);
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
+	public List<Facility> fetchAllFacilities() {
+		Session session = sessionFactory.openSession();
+		Criteria crit = session.createCriteria(Facility.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Facility> facilityList = crit.list();
+		session.close();
 		return facilityList;
 	}
 /*
@@ -462,36 +425,17 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return departmentList;
 	}
-
+*/
 	@Override
-	public LinkedList<Department> fetchAllDepartments() {
-		LinkedList<Department> departmentList = new LinkedList<Department>();
-		Connection conn = null;
-		Statement st = null;
-		ResultSet rs = null;
-
-		String query = "SELECT * FROM DEPARTMENT;";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(query);
-
-			Department department;
-			while (rs.next()) {
-				department = new Department(rs.getInt("DEPARTMENT_PK"),
-						rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"),
-						rs.getString("NOSAUKUMS"));
-				departmentList.add(department);
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
+	public List<Department> fetchAllDepartments() {
+		Session session = sessionFactory.openSession();
+		Criteria crit = session.createCriteria(Department.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Department> departmentList = crit.list();
+		session.close();
 		return departmentList;
 	}
-*/
+
 	@Override
 	public boolean deleteHeart(Heart heart) {
 		logger.info("In deleteHeart(heart)");

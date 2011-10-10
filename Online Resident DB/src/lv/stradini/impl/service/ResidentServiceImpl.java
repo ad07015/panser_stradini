@@ -1,6 +1,5 @@
 package lv.stradini.impl.service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import lv.stradini.domain.Cycle;
@@ -90,14 +89,14 @@ public class ResidentServiceImpl implements ResidentService {
 	}
 
 	@Override
-	public LinkedList<Facility> fetchAllFacilities() {
+	public List<Facility> fetchAllFacilities() {
 		return repo.fetchAllFacilities();
 	}
 
-//	@Override
-//	public LinkedList<Department> fetchAllDepartments() {
-//		return repo.fetchAllDepartments();
-//	}
+	@Override
+	public List<Department> fetchAllDepartments() {
+		return repo.fetchAllDepartments();
+	}
 
 	@Override
 	public boolean deleteHeart(Heart heart) {

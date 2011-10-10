@@ -18,6 +18,40 @@ public class TestHibernate {
 		
 		new SchemaExport(config).create(true, true);
 
+		/*
+		SessionFactory factory = config.buildSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		Facility fac1 = new Facility();
+		fac1.setNosaukums("Stradina slimnica");
+		
+		Doctor doc1 = new Doctor();
+		doc1.setVards("Pe4enko");
+		doc1.setUzvards("Ivanovno");
+		doc1.setPersonasKods("030303-12121");
+		doc1.setAdrese("Derevnja pe4enkino");
+		doc1.setAkademiskaisGrads("Doctors");
+		doc1.setDarbaVieta("Kolhoz n2");
+		doc1.setEpasts("a@a.com");
+		doc1.setTalrunaNumurs("23423432");
+		doc1.setSpecialitate("Pekarj");
+		
+		Department dep1 = new Department();
+		dep1.setNosaukums("Urologijas nodala");
+		
+		dep1.setDoctor(doc1);
+		dep1.setFacility(fac1);
+		fac1.getDepartmentList().add(dep1);
+		doc1.getDepartmentList().add(dep1);
+		
+		session.save(doc1);
+		session.save(fac1);
+		session.save(dep1);
+		session.getTransaction().commit();
+		*/
+		
+		
 		SessionFactory factory = config.buildSessionFactory();
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
@@ -29,29 +63,44 @@ public class TestHibernate {
 		Facility fac3 = new Facility();
 		fac3.setNosaukums("Gailezera slimnica");
 		
+		Doctor doc1 = new Doctor();
+		doc1.setVards("Pe4enko");
+		doc1.setUzvards("Ivanovno");
+		doc1.setPersonasKods("030303-12121");
+		doc1.setAdrese("Derevnja pe4enkino");
+		doc1.setAkademiskaisGrads("Doctors");
+		doc1.setDarbaVieta("Kolhoz n2");
+		doc1.setEpasts("a@a.com");
+		doc1.setTalrunaNumurs("23423432");
+		doc1.setSpecialitate("Pekarj");
+		
+		session.save(doc1);
+		session.save(fac1);
+		session.save(fac2);
+		session.save(fac3);
+		
 		Department dep1 = new Department();
 		dep1.setNosaukums("Urologijas nodala");
 		Department dep2 = new Department();
 		dep2.setNosaukums("Asinsrites nodala");
-		Department dep3 = new Department();
-		dep3.setNosaukums("Traumotologijas nodala");
-		Department dep4 = new Department();
-		dep4.setNosaukums("Neirokirurgijas nodala");
-		Department dep5 = new Department();
-		dep5.setNosaukums("Kirurgijas nodala");
 		
+		doc1.getDepartmentList().add(dep1);
+		doc1.getDepartmentList().add(dep2);
 		
+		fac1.getDepartmentList().add(dep1);
+		fac1.getDepartmentList().add(dep2);
 		
-		session.save(fac1);
-		session.save(fac2);
-		session.save(fac3);
+		dep1.setDoctor(doc1);
+		dep2.setDoctor(doc1);
+		
+		dep1.setFacility(fac1);
+		dep2.setFacility(fac1);
+		
 		session.save(dep1);
 		session.save(dep2);
-		session.save(dep3);
-		session.save(dep4);
-		session.save(dep5);
 		
 		session.getTransaction().commit();
+		
 //		session.close();
 		
 //		SessionFactory factory = config.buildSessionFactory();

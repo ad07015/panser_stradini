@@ -15,7 +15,7 @@ public class Heart {
 	private String tips;
 	private String komentari;
 	
-	@Transient
+//	@Transient
 	private Resident resident;
 	
 	public Heart() {

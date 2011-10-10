@@ -1,6 +1,6 @@
 package lv.stradini.controller;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
@@ -64,14 +64,14 @@ public class AddController {
 	
 	@RequestMapping(value="addCycle.htm", method = RequestMethod.GET)
 	public ModelAndView showAddCycleForm() {
-		log.info("AddNewResController: in show()");
+		log.info("Location");
 		
-		LinkedList<Facility> facilityList = residentService.fetchAllFacilities();
-//		LinkedList<Department> departmentList = residentService.fetchAllDepartments();
+		List<Facility> facilityList = residentService.fetchAllFacilities();
+		List<Department> departmentList = residentService.fetchAllDepartments();
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("facilityList", facilityList);
-//		mav.addObject("departmentList", departmentList);
+		mav.addObject("departmentList", departmentList);
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addCycle");

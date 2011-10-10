@@ -7,8 +7,10 @@ public class Cycle {
 
 	private long ID;
 	private Doctor vaditajs;
-	private long facilityFK;
-	private long departmentFK;
+//	private Facility facility;
+//	private Department department;
+	private int facilityFk;
+	private int departmentFk;
 	private Date sakumaDatums;
 	private Date beiguDatums;
 	private LinkedList<Resident> residentList;
@@ -16,14 +18,14 @@ public class Cycle {
 	public Cycle() {
 	}
 
-	public Cycle(long iD, Doctor vaditajs, long facilityFK, long departmentFK,
+	public Cycle(long iD, Doctor vaditajs, int facilityFk, int departmentFk,
 			Date sakumaDatums, Date beiguDatums,
 			LinkedList<Resident> residentList) {
 		super();
 		ID = iD;
 		this.vaditajs = vaditajs;
-		this.facilityFK = facilityFK;
-		this.departmentFK = departmentFK;
+		this.facilityFk = facilityFk;
+		this.departmentFk = departmentFk;
 		this.sakumaDatums = sakumaDatums;
 		this.beiguDatums = beiguDatums;
 		this.residentList = residentList;
@@ -45,20 +47,20 @@ public class Cycle {
 		this.vaditajs = vaditajs;
 	}
 
-	public long getFacilityFK() {
-		return facilityFK;
+	public int getFacilityFk() {
+		return facilityFk;
 	}
 
-	public void setFacilityFK(long facilityFK) {
-		this.facilityFK = facilityFK;
+	public void setFacilityFk(int facilityFk) {
+		this.facilityFk = facilityFk;
 	}
 
-	public long getDepartmentFK() {
-		return departmentFK;
+	public int getDepartmentFk() {
+		return departmentFk;
 	}
 
-	public void setDepartmentFK(long departmentFK) {
-		this.departmentFK = departmentFK;
+	public void setDepartmentFk(int departmentFk) {
+		this.departmentFk = departmentFk;
 	}
 
 	public Date getSakumaDatums() {

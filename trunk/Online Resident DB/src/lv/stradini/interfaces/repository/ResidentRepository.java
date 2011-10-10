@@ -40,9 +40,9 @@ public interface ResidentRepository {
 
 	boolean insertCycle(Cycle cycle);
 
-	LinkedList<Facility> fetchAllFacilities();
+	List<Facility> fetchAllFacilities();
 
-//	LinkedList<Department> fetchAllDepartments();
+	List<Department> fetchAllDepartments();
 
 	boolean deleteHeart(Heart heart);
 

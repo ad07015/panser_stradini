@@ -3,13 +3,16 @@ package lv.stradini.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Facility {
@@ -38,10 +41,9 @@ public class Facility {
 		this.facilityPk = facilityPk;
 	}
 
-	@ManyToMany
-	@JoinTable(name="JOIN_DEPARTMENT_FACILITY",
-			joinColumns={@JoinColumn(name="facilityPk")},
-			inverseJoinColumns={@JoinColumn(name="departmentPk")})
+	@OneToMany(targetEntity=Department.class, mappedBy="facility",
+			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	public List<Department> getDepartmentList() {
 		return departmentList;
 	}

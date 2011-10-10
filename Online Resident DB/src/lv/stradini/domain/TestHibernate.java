@@ -1,5 +1,7 @@
 package lv.stradini.domain;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -15,9 +17,13 @@ public class TestHibernate {
 		config.configure(); //reads hibernate.cfg.xml
 		
 		new SchemaExport(config).create(true, true);
-
 		SessionFactory factory = config.buildSessionFactory();
 		Session session = factory.getCurrentSession();
+		createDepartmentsAndFacilities(session);
+
+	}
+	
+	private static void createDepartmentsAndFacilities(Session session) {
 		session.beginTransaction();
 		
 		Facility fac1 = new Facility();
@@ -62,6 +68,15 @@ public class TestHibernate {
 		
 		session.save(dep1);
 		session.save(dep2);
+		
+		Cycle cycle = new Cycle();
+		cycle.setDepartment(dep1);
+		cycle.setDepartmentFk(dep1.getDepartmentPk());
+		cycle.setSakumaDatums(new Date());
+		cycle.setBeiguDatums(new Date());
+		cycle.setPasniedzejs(doc1);
+		
+		session.save(cycle);
 		
 		session.getTransaction().commit();
 		

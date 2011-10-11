@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Resident {
@@ -200,5 +201,21 @@ public class Resident {
 	public void addHeart(Heart heart) {
 		heart.setResident(this);
 		this.heartList.add(heart);
+	}
+	
+	@Transient
+	public String getLabel() {
+		return new StringBuffer().append(this.uzvards).append(", ").append(this.vards).append(" - ").append(this.personasKods).toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Resident) {
+			Resident otherRes = (Resident)obj;
+			if (this.residentPk == otherRes.residentPk) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

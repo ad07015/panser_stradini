@@ -96,6 +96,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public Resident findResidentByID(int residentID) {
 		Session session = sessionFactory.openSession();
 		Resident result = (Resident) session.get(Resident.class, residentID);
+		Hibernate.initialize(result.getResidentCycleList());
 		session.close();
 		return result;
 	}
@@ -533,6 +534,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public Cycle findCycleByID(int i) {
 		Session session = sessionFactory.openSession();
 		Cycle result = (Cycle) session.get(Cycle.class, i);
+		Hibernate.initialize(result.getResidentCycleList());
 		session.close();
 		return result;
 	}
@@ -543,5 +545,31 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		ResidentCycle result = (ResidentCycle) session.get(ResidentCycle.class, resCycId);
 		session.close();
 		return result;
+	}
+
+	@Override
+	public boolean insertResidentCycle(Resident resident, Cycle cycle) {
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			
+			ResidentCycle resCyc = new ResidentCycle();
+			resCyc.setResident(resident);
+			resCyc.setCycle(cycle);
+			
+			resident.getResidentCycleList().add(resCyc);
+			cycle.getResidentCycleList().add(resCyc);
+			
+			session.save(resCyc);
+			session.update(resident);
+			session.update(cycle);
+			
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
 	}
 }

@@ -9,8 +9,6 @@ import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
-import lv.stradini.domain.ResidentCycle;
-import lv.stradini.domain.ResidentCycleId;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.util.LoggerUtils;
 import lv.stradini.validation.AddDoctorFormValidator;
@@ -120,6 +118,27 @@ public class ViewController {
 		
 		mav.addObject("doctor", doctor);
 		mav.setViewName("view/doctorDetails");
+		return mav;
+	}
+	
+	@RequestMapping(value="cycleDetails.htm")
+	public ModelAndView onCycleDetails(int cyclePk) {
+		log.info("Going to cycle details page");
+		Cycle cycle = residentService.findCycleByID(cyclePk);
+		
+		ModelAndView mav = new ModelAndView();
+		List<Resident> residentList = residentService.fetchAllResidents();
+		List<Resident> apmekletaji = cycle.getResidentList();
+		for (Resident res : apmekletaji) {
+			if (residentList.contains(res)) {
+				residentList.remove(res);
+			}
+		}
+		
+		mav.addObject("residentList", residentList);
+		mav.addObject("resident", new Resident());
+		mav.addObject("cycle", cycle);
+		mav.setViewName("view/cycleDetails");
 		return mav;
 	}
 	
@@ -457,6 +476,42 @@ public class ViewController {
 		mav.addObject("status", status);
 		mav.addObject("message", message);
 		mav.setViewName("view/cycleList");
+		return mav;
+	}
+	
+
+	@RequestMapping(value="cycleDetails.htm", method = RequestMethod.POST, params={"action=addResidentToCycle"})
+	public ModelAndView onSubmitAddResidentToCycleForm(Resident resident, int cycleID) {
+		log.info("Location");
+		ModelAndView mav = new ModelAndView();
+		resident = residentService.findResidentByID(resident.getResidentPk());
+		Cycle cycle = residentService.findCycleByID(cycleID);
+	
+		boolean result = residentService.insertResidentCycle(resident, cycle);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_FAIL;
+			status = "fail";
+		}
+		log.info("Status: " + status);
+		log.info("Message: " + message);
+		
+		List<Resident> residentList = residentService.fetchAllResidents();
+		List<Resident> apmekletaji = cycle.getResidentList();
+		for (Resident res : apmekletaji) {
+			if (residentList.contains(res)) {
+				residentList.remove(res);
+			}
+		}
+		
+		mav.addObject("residentList", residentList);
+		mav.addObject("resident", new Resident());
+		mav.addObject("cycle", residentService.findCycleByID(cycleID));
+		mav.setViewName("view/cycleDetails");
 		return mav;
 	}
 }

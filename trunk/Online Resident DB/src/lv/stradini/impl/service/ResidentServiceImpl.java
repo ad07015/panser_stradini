@@ -159,4 +159,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public boolean insertResidentCycle(Resident resident, Cycle cycle) {
 		return repo.insertResidentCycle(resident, cycle);
 	}
+
+	@Override
+	public <T> void update(T t) {
+		repo.update(t);
+	}
 }

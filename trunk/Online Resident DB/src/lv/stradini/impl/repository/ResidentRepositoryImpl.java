@@ -572,4 +572,19 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return false;
 	}
+	
+	@Override
+	public <T> void update(T t) {
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			
+			session.update(t);
+			
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+	}
 }

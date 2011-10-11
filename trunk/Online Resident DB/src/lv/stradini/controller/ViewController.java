@@ -9,6 +9,8 @@ import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
+import lv.stradini.domain.ResidentCycle;
+import lv.stradini.domain.ResidentCycleId;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.util.LoggerUtils;
 import lv.stradini.validation.AddDoctorFormValidator;
@@ -135,6 +137,7 @@ public class ViewController {
 			}
 		}
 		
+		mav.addObject("residentCycle", new ResidentCycle());
 		mav.addObject("residentList", residentList);
 		mav.addObject("resident", new Resident());
 		mav.addObject("cycle", cycle);
@@ -500,6 +503,34 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
+		List<Resident> residentList = residentService.fetchAllResidents();
+		List<Resident> apmekletaji = cycle.getResidentList();
+		for (Resident res : apmekletaji) {
+			if (residentList.contains(res)) {
+				residentList.remove(res);
+			}
+		}
+		
+		mav.addObject("residentList", residentList);
+		mav.addObject("resident", new Resident());
+		mav.addObject("cycle", residentService.findCycleByID(cycleID));
+		mav.setViewName("view/cycleDetails");
+		return mav;
+	}
+	
+	@RequestMapping(value="cycleDetails.htm", method=RequestMethod.POST, params={"action=submitPassedChangeForm"})
+	public ModelAndView onSubmitPassedChangeForm(int residentID, int cycleID, boolean passedNew) {
+		Cycle cycle = residentService.findCycleByID(cycleID);
+		Resident resident = residentService.findResidentByID(residentID);
+		
+		ResidentCycleId resCycId = new ResidentCycleId();
+		resCycId.setCycle(cycle);
+		resCycId.setResident(resident);
+		ResidentCycle resCyc = residentService.findResidentCycleByID(resCycId);
+		resCyc.setPassed(passedNew);
+		residentService.update(resCyc);
+		
+		ModelAndView mav = new ModelAndView();
 		List<Resident> residentList = residentService.fetchAllResidents();
 		List<Resident> apmekletaji = cycle.getResidentList();
 		for (Resident res : apmekletaji) {

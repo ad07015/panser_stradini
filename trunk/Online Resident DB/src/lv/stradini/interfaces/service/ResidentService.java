@@ -65,4 +65,6 @@ public interface ResidentService {
 	ResidentCycle findResidentCycleByID(ResidentCycleId resCycId);
 
 	boolean insertResidentCycle(Resident resident, Cycle cycle);
+
+	<T> void update(T t);
 }

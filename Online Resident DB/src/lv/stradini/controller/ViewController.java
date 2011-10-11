@@ -20,6 +20,7 @@ import lv.stradini.validation.UpdateDoctorFormValidator;
 import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;

@@ -26,6 +26,7 @@ public class Resident {
 	private String epasts;
 	private String komentari;
 	private List<Heart> heartList = new LinkedList<Heart>();
+	private List<ResidentCycle> residentCycleList = new LinkedList<ResidentCycle>();
 	
 	public Resident() {
 	}
@@ -69,6 +70,16 @@ public class Resident {
 
 	public void setHeartList(List<Heart> heartList) {
 		this.heartList = heartList;
+	}
+
+	@OneToMany(targetEntity=ResidentCycle.class, mappedBy="pk.resident",
+			cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	public List<ResidentCycle> getResidentCycleList() {
+		return residentCycleList;
+	}
+
+	public void setResidentCycleList(List<ResidentCycle> residentCycleList) {
+		this.residentCycleList = residentCycleList;
 	}
 
 	public String getVards() {

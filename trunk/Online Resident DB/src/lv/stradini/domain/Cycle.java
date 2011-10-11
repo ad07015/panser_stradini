@@ -2,13 +2,17 @@ package lv.stradini.domain;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
@@ -22,7 +26,7 @@ public class Cycle {
 	
 	private Doctor pasniedzejs;
 	private Department department;
-	private LinkedList<Resident> residentList;
+	private List<ResidentCycle> residentCycleList = new LinkedList<ResidentCycle>();
 	
 	public Cycle() {
 	}
@@ -58,6 +62,16 @@ public class Cycle {
 		this.department = department;
 	}
 
+	@OneToMany(targetEntity=ResidentCycle.class, mappedBy="pk.cycle",
+			cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	public List<ResidentCycle> getResidentCycleList() {
+		return residentCycleList;
+	}
+
+	public void setResidentCycleList(List<ResidentCycle> residentCycleList) {
+		this.residentCycleList = residentCycleList;
+	}
+
 	@Transient
 	public int getDepartmentFk() {
 		return departmentFk;
@@ -90,13 +104,5 @@ public class Cycle {
 
 	public void setBeiguDatums(Date beiguDatums) {
 		this.beiguDatums = beiguDatums;
-	}
-
-	public LinkedList<Resident> getResidentList() {
-		return residentList;
-	}
-
-	public void setResidentList(LinkedList<Resident> residentList) {
-		this.residentList = residentList;
 	}
 }

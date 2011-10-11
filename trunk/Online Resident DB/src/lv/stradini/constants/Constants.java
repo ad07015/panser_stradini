@@ -31,4 +31,7 @@ public class Constants {
 	public static final String MESSAGE_DOCTOR_DELETE_FAIL = MESSAGE_FAIL_PREFIX + "\u0100rsts netika nodz\u0113sts!";
 	public static final String MESSAGE_DOCTOR_UPDATE_SUCCESS = "\u0100rsta dati ir veiksm\u012Bgi redi\u0123\u0113ti!";
 	public static final String MESSAGE_DOCTOR_UPDATE_FAIL = MESSAGE_FAIL_PREFIX + "\u0100rsta dati netika izmain\u012Bti!";
+
+	public static final String MESSAGE_RESIDENT_CYCLE_ADD_SUCCESS = "Rezident veiksmigi pieregistrets ciklam";
+	public static final String MESSAGE_RESIDENT_CYCLE_ADD_FAIL = MESSAGE_FAIL_PREFIX + "Rezidents netika pieregistrets ciklam";
 }

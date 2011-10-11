@@ -65,4 +65,6 @@ public interface ResidentRepository {
 	Cycle findCycleByID(int i);
 
 	ResidentCycle findResidentCycleByID(ResidentCycleId resCycId);
+
+	boolean insertResidentCycle(Resident resident, Cycle cycle);
 }

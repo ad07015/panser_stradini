@@ -8,6 +8,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type='text/css' rel='stylesheet' href='/resdb/main.css' />
 
+<script language="javascript" type="text/javascript">
+function viewCycleDetails(cID)
+{
+  document.viewCycleDetailsForm.cyclePk.value=cID
+  document.viewCycleDetailsForm.submit()
+}
+</script>
+
+<form name="viewCycleDetailsForm" action="/resdb/view/cycleDetails.htm" method="post">
+	<input type="hidden" name="cyclePk">
+</form>	
+
 <title>Ciklu saraksts</title>
 </head>
 <body>
@@ -31,6 +43,8 @@
 <h2>Ciklu saraksts:</h2>
 <table border="1" width="90%">
 	<tr>
+		<th width="2%">
+		</th>
 		<th width="20%">
 			Iestāde un nodaļa
 		</th>
@@ -47,6 +61,11 @@
 	
 <c:forEach var="cycle" items="${cycleList}">
 		<tr>
+			<td>
+				<a href="javascript:viewCycleDetails(${cycle.cyclePk})"> 	
+					<img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" />
+				</a> 	
+			</td>
 			<td>
 				<c:out value="${cycle.department.label}" />
 			</td>

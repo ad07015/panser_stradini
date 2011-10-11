@@ -154,4 +154,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public ResidentCycle findResidentCycleByID(ResidentCycleId resCycId) {
 		return repo.findResidentCycleByID(resCycId);
 	}
+
+	@Override
+	public boolean insertResidentCycle(Resident resident, Cycle cycle) {
+		return repo.insertResidentCycle(resident, cycle);
+	}
 }

@@ -105,4 +105,13 @@ public class Cycle {
 	public void setBeiguDatums(Date beiguDatums) {
 		this.beiguDatums = beiguDatums;
 	}
+	
+	@Transient
+	public List<Resident> getResidentList() {
+		List<Resident> residentList = new LinkedList<Resident>();
+		for (ResidentCycle resCyc : this.residentCycleList) {
+			residentList.add(resCyc.getResident());
+		}
+		return residentList;
+	}
 }

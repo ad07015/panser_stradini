@@ -73,7 +73,7 @@ public class Resident {
 		this.heartList = heartList;
 	}
 
-	@OneToMany(targetEntity=ResidentCycle.class, mappedBy="resident",
+	@OneToMany(targetEntity=ResidentCycle.class, mappedBy="pk.resident",
 			cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<ResidentCycle> getResidentCycleList() {
 		return residentCycleList;

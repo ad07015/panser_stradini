@@ -21,6 +21,14 @@ function addResidentToCycle(cID)
 	document.addResidentToCycleForm.cycleID.value=cID
 	document.addResidentToCycleForm.submit()
 }
+
+function submitPassedChange(rID, cb)
+{
+	document.submitPassedChangeForm.residentID.value=rID
+	document.submitPassedChangeForm.passedNew.value=cb.checked
+	document.submitPassedChangeForm.submit()
+}
+
 </script>
 
 <title>Cikla informācija</title>
@@ -66,49 +74,71 @@ function addResidentToCycle(cID)
 <hr>
 
 <h2>Rezidenti, kuri apmeklē šo kursu:</h2>
-<table border="1" width="90%">
-	<tr>
-		<th width="20%">
-			Vārds
-		</th>
-		<th width="20%">
-			Uzvārds
-		</th>
-		<th width="20%">
-			Personas kods
-		</th>
-		<th width="20%">
-			Talruņa numurs
-		</th>
-		<th width="20%">
-			Adrese
-		</th>
-	</tr>
-	
-<c:forEach var="resCyc" items="${cycle.residentCycleList}">
-		<tr>
-			<td>
-				<c:out value="${resCyc.resident.vards}" />
-			</td>
-			<td>	
-				<c:out value="${resCyc.resident.uzvards}" /> 	
-			</td>
-			<td>
-				<a href="javascript:viewResident(${resCyc.resident.residentPk})"> 	
-					<c:out value="${resCyc.resident.personasKods}" />
-				</a> 	
-			</td>
-			<td>	
-				<c:out value="${resCyc.resident.talrunaNumurs}" /> 	
-			</td>
-			<td>	
-				<c:out value="${resCyc.resident.adrese}" /> 	
-			</td>
-		</tr>
-</c:forEach>
-</table>
 
-<button class="belowTable" onClick="javascript:addResidentToCycle(${cycle.cyclePk})">Piereģistrēt rezidentu šīm ciklam</button>
+
+<form name="submitPassedChangeForm" action="/resdb/view/cycleDetails.htm" class="bordless" method="post">
+	<table border="1" width="90%">
+		<tr>
+			<th width="20%">
+				Vārds
+			</th>
+			<th width="20%">
+				Uzvārds
+			</th>
+			<th width="18%">
+				Personas kods
+			</th>
+			<th width="20%">
+				Talruņa numurs
+			</th>
+			<th width="20%">
+				Adrese
+			</th>
+			<th width="2%">
+				<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
+				<input type="hidden" name="residentID">
+				<input type="hidden" name="passedNew">
+				<input type="hidden" name="action" value="submitPassedChangeForm">
+			</th>
+			
+		</tr>
+		
+	<c:forEach var="resCyc" items="${cycle.residentCycleList}">
+			<tr>
+				<td>
+					<c:out value="${resCyc.resident.vards}" />
+				</td>
+				<td>	
+					<c:out value="${resCyc.resident.uzvards}" /> 	
+				</td>
+				<td>
+					<a href="javascript:viewResident(${resCyc.resident.residentPk})"> 	
+						<c:out value="${resCyc.resident.personasKods}" />
+					</a> 	
+				</td>
+				<td>	
+					<c:out value="${resCyc.resident.talrunaNumurs}" /> 	
+				</td>
+				<td>	
+					<c:out value="${resCyc.resident.adrese}" /> 	
+				</td>
+				<td>
+					<c:choose>
+						<c:when test="${resCyc.passed == true}">
+							<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}"
+									checked  
+									onchange="javascript:submitPassedChange(${resCyc.resident.residentPk}, this)" />
+						</c:when>
+						<c:when test="${resCyc.passed == false}">
+							<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}" 
+									onchange="javascript:submitPassedChange(${resCyc.resident.residentPk}, this)" />
+						</c:when>
+					</c:choose>
+				</td>
+			</tr>
+	</c:forEach>
+	</table>
+</form>
 
 <hr>
 
@@ -119,7 +149,7 @@ function addResidentToCycle(cID)
 	</form:select>
 	<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
 	<input type="hidden" name="action" value="addResidentToCycle">
-	<input type="submit" value="Pievienot rezidentu šīm ciklam" />
+	<input type="submit" value="Piereģistrēt rezidentu šīm ciklam" />
 </form:form>
 
 <hr>

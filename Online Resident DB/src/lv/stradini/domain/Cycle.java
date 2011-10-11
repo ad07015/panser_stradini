@@ -62,7 +62,7 @@ public class Cycle {
 		this.department = department;
 	}
 
-	@OneToMany(targetEntity=ResidentCycle.class, mappedBy="cycle",
+	@OneToMany(targetEntity=ResidentCycle.class, mappedBy="pk.cycle",
 			cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	public List<ResidentCycle> getResidentCycleList() {
 		return residentCycleList;

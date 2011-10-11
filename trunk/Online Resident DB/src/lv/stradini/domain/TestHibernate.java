@@ -135,10 +135,22 @@ public class TestHibernate {
 		
 		session.save(residentCycle);
 		session.save(residentCycle2);
-		session.saveOrUpdate(res1);
-		session.saveOrUpdate(res2);
-		session.saveOrUpdate(cycle);
-		session.saveOrUpdate(cyc2);
+		session.update(res1);
+		session.update(res2);
+		session.update(cycle);
+		session.update(cyc2);
+		
+		ResidentCycle residentCycle3 = new ResidentCycle();
+		residentCycle3.setResident(res2);
+		residentCycle3.setCycle(cycle);
+		residentCycle3.setPassed(false);
+		
+		res2.getResidentCycleList().add(residentCycle3);
+		cycle.getResidentCycleList().add(residentCycle3);
+		
+		session.save(residentCycle3);
+		session.update(res2);
+		session.update(cycle);
 		
 		session.getTransaction().commit();
 		

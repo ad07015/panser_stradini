@@ -69,6 +69,7 @@ public class TestHibernate {
 		session.save(dep1);
 		session.save(dep2);
 		
+		
 		Cycle cycle = new Cycle();
 		cycle.setDepartment(dep1);
 		cycle.setDepartmentFk(dep1.getDepartmentPk());
@@ -76,7 +77,10 @@ public class TestHibernate {
 		cycle.setBeiguDatums(new Date());
 		cycle.setPasniedzejs(doc1);
 		
+		doc1.getCycleList().add(cycle);
+		
 		session.save(cycle);
+		session.save(doc1);
 		
 		session.getTransaction().commit();
 		

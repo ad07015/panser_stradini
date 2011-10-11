@@ -141,6 +141,70 @@ function updateDoctor(dID)
 
 <hr>
 
+<c:choose>
+	<c:when test="${fn:length(doctor.cycleList) != 0}">
+		<h2>Cikli, kurus pasniedz šīs ārsts:</h2>
+		<table>
+			<tr>
+				<th width="20%">
+					Iestāde un nodaļa
+				</th>
+				<th width="20%">
+					Pasniedzējs
+				</th>
+				<th width="20%">
+					Sakuma datums
+				</th>
+				<th width="20%">
+					Beigu datums
+				</th>
+			</tr>
+			<c:forEach var="cycle" items="${doctor.cycleList}">
+				<tr>
+					<td><c:out value="${cycle.department.label}" /></td>
+					<td><c:out value="${cycle.pasniedzejs.label}" /></td>
+					<td><c:out value="${cycle.sakumaDatums}" /></td>
+					<td><c:out value="${cycle.beiguDatums}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:when>
+	<c:otherwise>
+		<c:out value="Šīs ārsts pašlaik nepasniedz nevienu ciklu" />
+		<br>
+	</c:otherwise>
+</c:choose>
+
+<hr>
+
+<c:choose>
+	<c:when test="${fn:length(doctor.departmentList) != 0}">
+		<h2>Cikli, kurus pasniedz šīs ārsts:</h2>
+		<table class="narrow_table">
+			<tr>
+				<th width="20%">
+					Medicīniskā iestāde
+				</th>
+				<th width="20%">
+					Nodaļa
+				</th>
+			</tr>
+			<c:forEach var="department" items="${doctor.departmentList}">
+				<tr>
+					<td><c:out value="${department.facility.nosaukums}" /></td>
+					<td><c:out value="${department.nosaukums}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:when>
+	<c:otherwise>
+		<c:out value="Šīs ārsts pašlaik nevāda nevienu nodaļu" />
+		<br>
+	</c:otherwise>
+</c:choose>
+
+<hr>
+
 <a href="/resdb/view/doctorList.htm">Atgriezties uz ārstu sarakstu</a>
 
 </body>

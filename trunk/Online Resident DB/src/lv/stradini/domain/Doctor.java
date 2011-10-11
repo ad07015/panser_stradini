@@ -73,7 +73,7 @@ public class Doctor {
 	}
 
 	@OneToMany(targetEntity=Department.class, mappedBy="vaditajs",
-			cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+			cascade=CascadeType.ALL)
 	public List<Department> getDepartmentList() {
 		return departmentList;
 	}

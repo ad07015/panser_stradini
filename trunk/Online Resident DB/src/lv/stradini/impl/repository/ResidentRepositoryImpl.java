@@ -22,6 +22,7 @@ import lv.stradini.util.Utils;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -125,34 +126,13 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 
 	@Override
 	public Doctor findDoctorByID(int doctorID) {
-		Doctor doctor = new Doctor();
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		String query = "SELECT * FROM DOCTOR WHERE DOCTOR_PK = ? ";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.prepareStatement(query);
-			st.setLong(1, doctorID);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				doctor = new Doctor(rs.getInt("DOCTOR_PK"),
-						rs.getString("VARDS"), rs.getString("UZVARDS"),
-						rs.getString("PERSONAS_KODS"),
-						rs.getString("AKADEMISKAIS_GRADS"),
-						rs.getString("DARBA_VIETA"),
-						rs.getString("SPECIALITATE"), rs.getString("ADRESE"),
-						rs.getString("TALRUNA_NUMURS"), rs.getString("EPASTS"),
-						rs.getString("KOMENTARI"));
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
-		return doctor;
+		Session session = sessionFactory.openSession();
+		Doctor result = (Doctor) session.get(Doctor.class, doctorID);
+		//TODO: Make a separate method for lazy collection initialization
+		Hibernate.initialize(result.getCycleList());
+		Hibernate.initialize(result.getDepartmentList());
+		session.close();
+		return result;
 	}
 
 	@Override

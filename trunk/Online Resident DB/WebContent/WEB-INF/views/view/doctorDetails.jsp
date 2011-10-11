@@ -179,7 +179,7 @@ function updateDoctor(dID)
 
 <c:choose>
 	<c:when test="${fn:length(doctor.departmentList) != 0}">
-		<h2>Cikli, kurus pasniedz šīs ārsts:</h2>
+		<h2>Nodaļas, kurus vada šīs ārsts:</h2>
 		<table class="narrow_table">
 			<tr>
 				<th width="20%">

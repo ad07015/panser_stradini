@@ -9,6 +9,8 @@ import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
+import lv.stradini.domain.ResidentCycle;
+import lv.stradini.domain.ResidentCycleId;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.util.LoggerUtils;
 import lv.stradini.validation.AddDoctorFormValidator;
@@ -20,7 +22,6 @@ import lv.stradini.validation.UpdateDoctorFormValidator;
 import lv.stradini.validation.UpdateResidentFormValidator;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -53,6 +54,13 @@ public class ViewController {
 
 		List<Resident> residentList = residentService.fetchAllResidents();
 		log.info("Resident list size = " + residentList.size());
+		
+//		Resident resident = residentService.findResidentByID(1);
+//		Cycle cycle = residentService.findCycleByID(1);
+//		ResidentCycleId resCycId = new ResidentCycleId();
+//		resCycId.setCycle(cycle);
+//		resCycId.setResident(resident);
+//		ResidentCycle resCyc = residentService.findResidentCycleByID(resCycId);
 
 		ModelAndView mav = new ModelAndView();
 

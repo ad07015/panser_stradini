@@ -8,6 +8,8 @@ import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
+import lv.stradini.domain.ResidentCycle;
+import lv.stradini.domain.ResidentCycleId;
 import lv.stradini.interfaces.repository.ResidentRepository;
 import lv.stradini.interfaces.service.ResidentService;
 
@@ -140,5 +142,16 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public List<Cycle> fetchAllCycles() {
 		return repo.fetchAllCycles();
+	}
+
+	@Override
+	public Cycle findCycleByID(int i) {
+		return repo.findCycleByID(i);
+		
+	}
+
+	@Override
+	public ResidentCycle findResidentCycleByID(ResidentCycleId resCycId) {
+		return repo.findResidentCycleByID(resCycId);
 	}
 }

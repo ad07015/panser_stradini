@@ -16,6 +16,8 @@ import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
+import lv.stradini.domain.ResidentCycle;
+import lv.stradini.domain.ResidentCycleId;
 import lv.stradini.interfaces.repository.ResidentRepository;
 import lv.stradini.util.LoggerUtils;
 import lv.stradini.util.Utils;
@@ -525,5 +527,21 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		List<Cycle> cycleList = crit.list();
 		session.close();
 		return cycleList;
+	}
+
+	@Override
+	public Cycle findCycleByID(int i) {
+		Session session = sessionFactory.openSession();
+		Cycle result = (Cycle) session.get(Cycle.class, i);
+		session.close();
+		return result;
+	}
+
+	@Override
+	public ResidentCycle findResidentCycleByID(ResidentCycleId resCycId) {
+		Session session = sessionFactory.openSession();
+		ResidentCycle result = (ResidentCycle) session.get(ResidentCycle.class, resCycId);
+		session.close();
+		return result;
 	}
 }

@@ -11,6 +11,9 @@ public class ResidentCycleId implements Serializable {
 	private Resident resident;
 	private Cycle cycle;
 	
+	public ResidentCycleId() {
+	}
+
 	@ManyToOne
 	public Resident getResident() {
 		return resident;

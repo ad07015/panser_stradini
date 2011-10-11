@@ -9,6 +9,8 @@ import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
+import lv.stradini.domain.ResidentCycle;
+import lv.stradini.domain.ResidentCycleId;
 
 public interface ResidentRepository {
 	
@@ -59,4 +61,8 @@ public interface ResidentRepository {
 	Department findDepartmentByID(int departmentFk);
 
 	List<Cycle> fetchAllCycles();
+
+	Cycle findCycleByID(int i);
+
+	ResidentCycle findResidentCycleByID(ResidentCycleId resCycId);
 }

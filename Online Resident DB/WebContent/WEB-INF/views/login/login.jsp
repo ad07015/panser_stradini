@@ -1,7 +1,7 @@
 <html>
 <head><title>Login page</title></head>
 <body>
-<img src="stradini_logo.png" align="middle" alt="stradini logo" />
+<!-- <img src="stradini_logo.png" align="middle" alt="stradini logo" /> -->
 <form method="POST" action='<%= response.encodeURL("j_security_check") %>' >
 	<table style="margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
 		<tr> 

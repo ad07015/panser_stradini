@@ -12,7 +12,7 @@ public class TestHibernate {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void malin(String[] args) {
 		AnnotationConfiguration config = new AnnotationConfiguration();
 		config.configure(); //reads hibernate.cfg.xml
 		
@@ -40,8 +40,8 @@ public class TestHibernate {
 		res1.setUniversitate("LU");
 		
 		Resident res2 = new Resident();
-		res2.setVards("Jane");
-		res2.setUzvards("Doe");
+		res2.setVards("Mary");
+		res2.setUzvards("Willson");
 		res2.setPersonasKods("075656-31111");
 		res2.setAdrese("sdfa");
 		res2.setDarbaLigums("darbaLigums2");
@@ -62,15 +62,15 @@ public class TestHibernate {
 		fac3.setNosaukums("Gailezera slimnica");
 		
 		Doctor doc1 = new Doctor();
-		doc1.setVards("Pe4enko");
-		doc1.setUzvards("Ivanovno");
+		doc1.setVards("Gregory");
+		doc1.setUzvards("House");
 		doc1.setPersonasKods("030303-12121");
-		doc1.setAdrese("Derevnja pe4enkino");
-		doc1.setAkademiskaisGrads("Doctors");
-		doc1.setDarbaVieta("Kolhoz n2");
-		doc1.setEpasts("a@a.com");
+		doc1.setAdrese("Madisson avenue 1-1");
+		doc1.setAkademiskaisGrads("1978");
+		doc1.setDarbaVieta("Princeton university hospital");
+		doc1.setEpasts("g.house@gmail.com");
 		doc1.setTalrunaNumurs("23423432");
-		doc1.setSpecialitate("Pekarj");
+		doc1.setSpecialitate("Diagnosisj");
 		
 		session.save(doc1);
 		session.save(fac1);

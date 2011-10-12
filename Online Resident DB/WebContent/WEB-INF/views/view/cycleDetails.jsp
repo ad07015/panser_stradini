@@ -95,6 +95,7 @@ function submitPassedChange(rID, cb)
 				Adrese
 			</th>
 			<th width="2%">
+				Nokartots
 				<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
 				<input type="hidden" name="residentID">
 				<input type="hidden" name="passedNew">

@@ -98,6 +98,7 @@ public class ViewController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("resident", resident);
+		mav.addObject("heartList", resident.getHeartList());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -117,23 +118,26 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="cycleDetails.htm")
-	public ModelAndView onCycleDetails(int cyclePk) {
+	public ModelAndView onCycleDetails(int cycleID) {
 		log.info("Going to cycle details page");
-		Cycle cycle = residentService.findCycleByID(cyclePk);
+		Cycle cycle = residentService.findCycleByID(cycleID);
 		
 		ModelAndView mav = new ModelAndView();
 		List<Resident> residentList = residentService.fetchAllResidents();
-		List<Resident> apmekletaji = cycle.getResidentList();
-		for (Resident res : apmekletaji) {
+		List<Resident> apmekletajiList = cycle.getResidentList();
+		for (Resident res : apmekletajiList) {
 			if (residentList.contains(res)) {
 				residentList.remove(res);
 			}
 		}
 		
+		Cycle newCycle = residentService.findCycleByID(cycleID);
 		mav.addObject("residentCycle", new ResidentCycle());
 		mav.addObject("residentList", residentList);
+		mav.addObject("residentCycleList", newCycle.getResidentCycleList());
 		mav.addObject("resident", new Resident());
-		mav.addObject("cycle", cycle);
+		mav.addObject("cycle", newCycle);
+//		mav.addObject("cyclePk", cyclePk);
 		mav.setViewName("view/cycleDetails");
 		return mav;
 	}
@@ -229,6 +233,7 @@ public class ViewController {
 		Resident resident = residentService.findResidentByID(residentID);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
+		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("message", message);
 		mav.addObject("status", status);
 		mav.setViewName("view/residentDetails");
@@ -402,6 +407,7 @@ public class ViewController {
 		
 		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
+		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("status", status);
 		mav.addObject("message", message);
 		mav.setViewName("view/residentDetails");
@@ -439,6 +445,7 @@ public class ViewController {
 		
 		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
+		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("status", status);
 		mav.addObject("message", message);
 		mav.setViewName("view/residentDetails");
@@ -504,9 +511,11 @@ public class ViewController {
 			}
 		}
 		
+		Cycle newCycle = residentService.findCycleByID(cycleID);
 		mav.addObject("residentList", residentList);
+		mav.addObject("residentCycleList", newCycle.getResidentCycleList());
 		mav.addObject("resident", new Resident());
-		mav.addObject("cycle", residentService.findCycleByID(cycleID));
+		mav.addObject("cycle", newCycle);
 		mav.setViewName("view/cycleDetails");
 		return mav;
 	}
@@ -532,9 +541,11 @@ public class ViewController {
 			}
 		}
 		
+		Cycle newCycle = residentService.findCycleByID(cycleID);
 		mav.addObject("residentList", residentList);
+		mav.addObject("residentCycleList", newCycle.getResidentCycleList());
 		mav.addObject("resident", new Resident());
-		mav.addObject("cycle", residentService.findCycleByID(cycleID));
+		mav.addObject("cycle", newCycle);
 		mav.setViewName("view/cycleDetails");
 		return mav;
 	}

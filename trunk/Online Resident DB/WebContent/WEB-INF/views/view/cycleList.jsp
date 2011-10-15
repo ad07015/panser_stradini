@@ -12,7 +12,7 @@
 <script language="javascript" type="text/javascript">
 function viewCycleDetails(cID)
 {
-  document.viewCycleDetailsForm.cyclePk.value=cID
+  document.viewCycleDetailsForm.cycleID.value=cID
   document.viewCycleDetailsForm.submit()
 }
 </script>
@@ -22,7 +22,7 @@ function viewCycleDetails(cID)
 <body>
 
 <form name="viewCycleDetailsForm" action="/resdb/view/cycleDetails.htm" method="post">
-	<input type="hidden" name="cyclePk">
+	<input type="hidden" name="cycleID">
 </form>	
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>

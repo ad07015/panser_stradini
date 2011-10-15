@@ -42,7 +42,7 @@ function viewResident(rID)
 <h2>Rezidentu saraksts:</h2>
 <display:table uid="resident" name="residentList" defaultsort="1"
     defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
-    <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="uzvards" />
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="vards" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Uzvārds" property="uzvards" />
     <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods">
     	<a href="javascript:viewResident(${resident.residentPk})"><c:out value="${resident.personasKods}" /></a>

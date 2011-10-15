@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,7 +33,6 @@ function viewResident(rID)
 	</c:when>
 	<c:when test="${status == 'fail'}">
 		<hr>
-		<%-- <span class="error"><c:out value="${message}" escapeXml="false" /></span> --%>
 		<span class="error"><c:out value="${message}" escapeXml="false" /></span>
 	</c:when>
 </c:choose>
@@ -40,48 +40,16 @@ function viewResident(rID)
 <hr>
 
 <h2>Rezidentu saraksts:</h2>
-<table border="1" width="90%">
-	<tr>
-		<th width="20%">
-			Vārds
-		</th>
-		<th width="20%">
-			Uzvārds
-		</th>
-		<th width="20%">
-			Personas kods
-		</th>
-		<th width="20%">
-			Talruņa numurs
-		</th>
-		<th width="20%">
-			Adrese
-		</th>
-	</tr>
-	
-<c:forEach var="resident" items="${residentList}">
-		<tr>
-			<td>
-				<c:out value="${resident.vards}" />
-			</td>
-			<td>	
-				<c:out value="${resident.uzvards}" /> 	
-			</td>
-			<td>
-				<a href="javascript:viewResident(${resident.residentPk})"> 	
-					<c:out value="${resident.personasKods}" />
-				</a> 	
-			</td>
-			<td>	
-				<c:out value="${resident.talrunaNumurs}" /> 	
-			</td>
-			<td>	
-				<c:out value="${resident.adrese}" /> 	
-			</td>
-		</tr>
-</c:forEach>
-</table>
-
+<display:table uid="resident" name="residentList" defaultsort="1"
+    defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="uzvards" />
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Uzvārds" property="uzvards" />
+    <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods">
+    	<a href="javascript:viewResident(${resident.residentPk})"><c:out value="${resident.personasKods}" /></a>
+    </display:column>
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Specialitāte" property="specialitate" />
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Studiju gads" property="studijuGads" />
+</display:table>
 <button class="belowTable" onClick="location.href='/resdb/resident/addResident.htm'">Piereģistrēt rezidentu</button>
 
 </body>

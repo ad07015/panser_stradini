@@ -8,10 +8,16 @@ body {
 table {
 	width: 100%;
 	border-collapse: collapse;
-	border: 0px solid #999999;
+	border: 2px solid #999999;
 	margin: 0;
 	padding: 0;
 }
+
+.colWidth{
+	width: 20%;
+}
+
+.displayTable table { table-layout:fixed; }
 
 form table input {
 	width: 200px;
@@ -20,14 +26,14 @@ form table input {
 table.narrow_table{
 	width: 40%;
 	border-collapse: collapse;
-	border: 0px solid #999999;
+	border: 2px solid #999999;
 	margin: 0;
 	padding: 0;
 }
 
 form.bordless table tr td {
 	color: #000000;
-	border-width: 0px;
+	border-width: 2px;
 }
 
 table.bordless {

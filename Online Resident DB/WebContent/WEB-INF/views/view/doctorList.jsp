@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,47 +31,16 @@ function viewDoctor(dID)
 <hr>
 
 <h2>Ārstu saraksts:</h2>
-<table border="1" width="90%">
-	<tr>
-		<th width="20%">
-			Vārds
-		</th>
-		<th width="20%">
-			Uzvārds
-		</th>
-		<th width="20%">
-			Personas kods
-		</th>
-		<th width="20%">
-			Talruņa numurs
-		</th>
-		<th width="20%">
-			Adrese
-		</th>
-	</tr>
-	
-<c:forEach var="doctor" items="${doctorList}">
-		<tr>
-			<td>
-				<c:out value="${doctor.vards}" />
-			</td>
-			<td>	
-				<c:out value="${doctor.uzvards}" /> 	
-			</td>
-			<td>
-				<a href="javascript:viewDoctor(${doctor.doctorPk})"> 	
-					<c:out value="${doctor.personasKods}" />
-				</a>
-			</td>
-			<td>	
-				<c:out value="${doctor.talrunaNumurs}" /> 	
-			</td>
-			<td>	
-				<c:out value="${doctor.adrese}" /> 	
-			</td>
-		</tr>
-</c:forEach>
-</table>
+<display:table uid="doctor" name="doctorList" defaultsort="1"
+    defaultorder="ascending" requestURI="/resdb/view/doctorList.htm">
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="uzvards" />
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Uzvārds" property="uzvards" />
+    <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods">
+    	<a href="javascript:viewResident(${doctor.doctorPk})"><c:out value="${doctor.personasKods}" /></a>
+    </display:column>
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Specialitāte" property="specialitate" />
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Akadēmiskais grāds" property="akademiskaisGrads" />
+</display:table>
 
 <button class="belowTable" onClick="location.href='/resdb/doctor/addDoctor.htm'">Piereģistrēt ārstu</button>
 </body>

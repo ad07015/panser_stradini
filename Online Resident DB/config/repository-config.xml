@@ -18,26 +18,8 @@
 		<property name="password" value="${password}" />
 	</bean>
 
-	<bean id="employeeRep" class="lv.stradini.impl.repository.EmployeeRepositoryImpl">
-		<constructor-arg ref="dataSource" />
-	</bean>
-
-	<bean id="projectRep" class="lv.stradini.impl.repository.ProjectRepositoryImpl">
-		<constructor-arg ref="dataSource" />
-	</bean>
-
 	<bean id="residentRepository" class="lv.stradini.impl.repository.ResidentRepositoryImpl">
 		<constructor-arg ref="dataSource" />
-	</bean>
-
-	<bean id="projectService" class="lv.stradini.impl.service.ProjectServiceImpl">
-		<constructor-arg ref="employeeRep" />
-		<constructor-arg ref="projectRep" />
-	</bean>
-
-	<bean id="employeeService" class="lv.stradini.impl.service.EmployeeServiceImpl">
-		<constructor-arg ref="employeeRep" />
-		<constructor-arg ref="projectRep" />
 	</bean>
 
 	<bean id="residentService" class="lv.stradini.impl.service.ResidentServiceImpl">

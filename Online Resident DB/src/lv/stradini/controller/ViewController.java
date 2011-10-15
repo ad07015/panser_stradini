@@ -48,22 +48,15 @@ public class ViewController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-	@RequestMapping(value="residentList.htm")
+	@RequestMapping(value="residentList.htm", method=RequestMethod.GET)
 	public ModelAndView showResidentList() {
 		log.info("Entering search form in its initial state");
 
 		List<Resident> residentList = residentService.fetchAllResidents();
 		log.info("Resident list size = " + residentList.size());
 		
-//		Resident resident = residentService.findResidentByID(1);
-//		Cycle cycle = residentService.findCycleByID(1);
-//		ResidentCycleId resCycId = new ResidentCycleId();
-//		resCycId.setCycle(cycle);
-//		resCycId.setResident(resident);
-//		ResidentCycle resCyc = residentService.findResidentCycleByID(resCycId);
-
 		ModelAndView mav = new ModelAndView();
-
+		
 		mav.addObject("residentList", residentList);
 		mav.setViewName("view/residentList");
 		return mav;

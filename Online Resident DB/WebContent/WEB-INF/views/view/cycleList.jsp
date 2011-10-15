@@ -49,6 +49,7 @@ function viewCycleDetails(cID)
     <display:column sortable="true" class="colWidth" title="Pasniedzējs"><c:out value="${cycle.pasniedzejs.label}" /></display:column>
     <display:column sortable="true" class="colWidth" title="Sakuma datums" property="sakumaDatums" />
     <display:column sortable="true" class="colWidth" title="Beigu datums" property="beiguDatums" />
+    <input type="hidden" name="residentID" value="${resCyc.resident.residentPk}">
 </display:table>
 
 <button class="belowTable" onClick="location.href='/resdb/cycle/addCycle.htm'">Piereģistrēt ciklu</button>

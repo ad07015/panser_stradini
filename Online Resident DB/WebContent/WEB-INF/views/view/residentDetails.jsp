@@ -47,6 +47,11 @@ function updateHeart(heartID, residentFK)
 	document.updateHeartForm.residentFK.value=residentFK
 	document.updateHeartForm.submit()
 }
+function viewCycleDetails(cID)
+{
+  document.viewCycleDetailsForm.cycleID.value=cID
+  document.viewCycleDetailsForm.submit()
+}
 </script>
 
 <title>Rezidentu informācija</title>
@@ -72,7 +77,9 @@ function updateHeart(heartID, residentFK)
 	<input type="hidden" name="heartID" />
 	<input type="hidden" name="residentFK" />
 </form>
-
+<form name="viewCycleDetailsForm" action="/resdb/view/cycleDetails.htm" method="post">
+	<input type="hidden" name="cycleID">
+</form>	
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
 <c:choose>
@@ -178,6 +185,26 @@ function updateHeart(heartID, residentFK)
 </c:choose>
 
 <button class="belowTable" onClick="javascript:addHeart(${resident.residentPk})">Piereģistrēt sirsniņu</button>
+
+<hr>
+<c:choose>
+	<c:when test="${fn:length(residentCycleList) != 0}">
+		<h2>Kursi, kurus apmeklē šīs rezidents:</h2>
+		<display:table uid="resCyc" name="residentCycleList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
+		    <display:column sortable="false" style="width: 2%">
+		    	<a href="javascript:viewCycleDetails(${resCyc.cycle.cyclePk})"><img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" /></a> 
+		    </display:column>
+		    <display:column sortable="true" class="colWidth" title="Istāde un nodaļa"><c:out value="${resCyc.cycle.department.label}" /></display:column>
+		    <display:column sortable="true" class="colWidth" title="Pasniedzējs"><c:out value="${resCyc.cycle.pasniedzejs.label}" /></display:column>
+		    <display:column sortable="true" class="colWidth" title="Sakuma datums"><c:out value="${resCyc.cycle.sakumaDatums}" /></display:column>
+		    <display:column sortable="true" class="colWidth" title="Beigu datums"><c:out value="${resCyc.cycle.beiguDatums}" /></display:column>
+		</display:table>
+	</c:when>
+	<c:otherwise>
+		<c:out value="Šīs rezidents nav piereģistrēts nevienam kursam" />
+		<br>
+	</c:otherwise>
+</c:choose>
 
 <hr>
 

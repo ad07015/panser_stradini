@@ -98,6 +98,7 @@ public class ViewController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("resident", resident);
+		mav.addObject("residentCycleList", resident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());
 		mav.setViewName("view/residentDetails");
 		return mav;
@@ -233,6 +234,7 @@ public class ViewController {
 		Resident resident = residentService.findResidentByID(residentID);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
+		mav.addObject("residentCycleList", resident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("message", message);
 		mav.addObject("status", status);
@@ -407,6 +409,7 @@ public class ViewController {
 		
 		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
+		mav.addObject("residentCycleList", resident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("status", status);
 		mav.addObject("message", message);
@@ -445,6 +448,7 @@ public class ViewController {
 		
 		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
+		mav.addObject("residentCycleList", resident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("status", status);
 		mav.addObject("message", message);

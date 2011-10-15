@@ -107,11 +107,27 @@ public class Cycle {
 	}
 	
 	@Transient
+	public String getLabel() {
+		return new StringBuffer().append(this.department.getLabel()).append(", ").append(this.pasniedzejs.getLabel()).toString();
+	}
+	
+	@Transient
 	public List<Resident> getResidentList() {
 		List<Resident> residentList = new LinkedList<Resident>();
 		for (ResidentCycle resCyc : this.residentCycleList) {
 			residentList.add(resCyc.getResident());
 		}
 		return residentList;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Cycle) {
+			Cycle otherRes = (Cycle)obj;
+			if (this.cyclePk == otherRes.getCyclePk()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

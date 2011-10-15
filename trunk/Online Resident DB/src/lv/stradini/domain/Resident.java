@@ -212,10 +212,19 @@ public class Resident {
 	public boolean equals(Object obj) {
 		if (obj instanceof Resident) {
 			Resident otherRes = (Resident)obj;
-			if (this.residentPk == otherRes.residentPk) {
+			if (this.residentPk == otherRes.getResidentPk()) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	@Transient
+	public List<Cycle> getCycleList() {
+		List<Cycle> cycleList = new LinkedList<Cycle>();
+		for (ResidentCycle resCyc : this.residentCycleList) {
+			cycleList.add(resCyc.getCycle());
+		}
+		return cycleList;
 	}
 }

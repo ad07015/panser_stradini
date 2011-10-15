@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,13 +43,13 @@ function viewCycleDetails(cID)
 
 <h2>Ciklu saraksts:</h2>
 <display:table uid="cycle" name="cycleList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/cycleList.htm">
-    <display:column sortable="false" style="width: 2%">
+    <display:column sortable="false" style="width: 1%">
     	<a href="javascript:viewCycleDetails(${cycle.cyclePk})"><img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" /></a> 
     </display:column>
-    <display:column sortable="true" class="colWidth" title="Istāde un nodaļa"><c:out value="${cycle.department.label}" /></display:column>
-    <display:column sortable="true" class="colWidth" title="Pasniedzējs"><c:out value="${cycle.pasniedzejs.label}" /></display:column>
-    <display:column sortable="true" class="colWidth" title="Sakuma datums" property="sakumaDatums" />
-    <display:column sortable="true" class="colWidth" title="Beigu datums" property="beiguDatums" />
+    <display:column sortable="true" style="width: 45%" title="Istāde un nodaļa"><c:out value="${cycle.department.label}" /></display:column>
+    <display:column sortable="true" style="width: 34%" title="Pasniedzējs"><c:out value="${cycle.pasniedzejs.label}" /></display:column>
+    <display:column sortable="true" style="width: 10%" title="Sakuma datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${cycle.sakumaDatums}" /></display:column>
+    <display:column sortable="true" style="width: 10%" title="Beigu datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${cycle.beiguDatums}" /></display:column>
     <input type="hidden" name="residentID" value="${resCyc.resident.residentPk}">
 </display:table>
 

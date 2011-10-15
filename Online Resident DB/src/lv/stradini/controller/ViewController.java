@@ -89,8 +89,7 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="residentDetails.htm")
-	public ModelAndView onResidentDetails(
-			@RequestParam("residentID") int residentID) throws Exception {
+	public ModelAndView onResidentDetails(int residentID) {
 		log.info("Going to resident details page");
 		log.info("ResidentID = " + residentID);
 		Resident resident = residentService.findResidentByID(residentID);
@@ -100,6 +99,8 @@ public class ViewController {
 		mav.addObject("resident", resident);
 		mav.addObject("residentCycleList", resident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());
+		mav.addObject("cycle", new Cycle());
+		mav.addObject("cycleList", getAvailableCycleList(resident));
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -230,7 +231,6 @@ public class ViewController {
 			status = "fail";
 		}
 		
-		
 		Resident resident = residentService.findResidentByID(residentID);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("resident", resident);
@@ -238,6 +238,8 @@ public class ViewController {
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("message", message);
 		mav.addObject("status", status);
+		mav.addObject("cycle", new Cycle());
+		mav.addObject("cycleList", getAvailableCycleList(resident));
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -406,13 +408,14 @@ public class ViewController {
 		log.info("Status: " + status);
 		log.info("Message: " + message);
 		
-		
 		Resident resident = residentService.findResidentByID(residentID);
 		mav.addObject("resident", resident);
 		mav.addObject("residentCycleList", resident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("status", status);
 		mav.addObject("message", message);
+		mav.addObject("cycle", new Cycle());
+		mav.addObject("cycleList", getAvailableCycleList(resident));
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -452,6 +455,8 @@ public class ViewController {
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("status", status);
 		mav.addObject("message", message);
+		mav.addObject("cycle", new Cycle());
+		mav.addObject("cycleList", getAvailableCycleList(resident));
 		mav.setViewName("view/residentDetails");
 		return mav;
 		
@@ -485,7 +490,6 @@ public class ViewController {
 		mav.setViewName("view/cycleList");
 		return mav;
 	}
-	
 
 	@RequestMapping(value="cycleDetails.htm", method = RequestMethod.POST, params={"action=addResidentToCycle"})
 	public ModelAndView onSubmitAddResidentToCycleForm(Resident resident, int cycleID) {
@@ -506,17 +510,9 @@ public class ViewController {
 		}
 		log.info("Status: " + status);
 		log.info("Message: " + message);
-		
-		List<Resident> residentList = residentService.fetchAllResidents();
-		List<Resident> apmekletaji = cycle.getResidentList();
-		for (Resident res : apmekletaji) {
-			if (residentList.contains(res)) {
-				residentList.remove(res);
-			}
-		}
-		
+
 		Cycle newCycle = residentService.findCycleByID(cycleID);
-		mav.addObject("residentList", residentList);
+		mav.addObject("residentList", getAvailableResidentList(cycle));
 		mav.addObject("residentCycleList", newCycle.getResidentCycleList());
 		mav.addObject("resident", new Resident());
 		mav.addObject("cycle", newCycle);
@@ -537,20 +533,64 @@ public class ViewController {
 		residentService.update(resCyc);
 		
 		ModelAndView mav = new ModelAndView();
-		List<Resident> residentList = residentService.fetchAllResidents();
-		List<Resident> apmekletaji = cycle.getResidentList();
-		for (Resident res : apmekletaji) {
-			if (residentList.contains(res)) {
-				residentList.remove(res);
-			}
-		}
 		
 		Cycle newCycle = residentService.findCycleByID(cycleID);
-		mav.addObject("residentList", residentList);
+		mav.addObject("residentList", getAvailableResidentList(cycle));
 		mav.addObject("residentCycleList", newCycle.getResidentCycleList());
 		mav.addObject("resident", new Resident());
 		mav.addObject("cycle", newCycle);
 		mav.setViewName("view/cycleDetails");
 		return mav;
+	}
+	
+	@RequestMapping(value="residentDetails.htm", method = RequestMethod.POST, params={"action=addCycleToResident"})
+	public ModelAndView onSubmitAddCycleToResidentForm(Cycle cycle, int residentID) {
+		log.info("Location");
+		ModelAndView mav = new ModelAndView();
+		cycle = residentService.findCycleByID(cycle.getCyclePk());
+		Resident resident = residentService.findResidentByID(residentID);
+	
+		boolean result = residentService.insertResidentCycle(resident, cycle);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_FAIL;
+			status = "fail";
+		}
+		log.info("Status: " + status);
+		log.info("Message: " + message);
+
+		Resident newResident = residentService.findResidentByID(residentID);
+		mav.addObject("residentCycleList", newResident.getResidentCycleList());
+		mav.addObject("resident", newResident);
+		mav.addObject("cycleList", getAvailableCycleList(newResident));
+		mav.addObject("cycle", new Cycle());
+		mav.setViewName("view/residentDetails");
+		return mav;
+	}
+	
+	private List<Cycle> getAvailableCycleList(Resident resident) {
+		List<Cycle> availableCycleList = residentService.fetchAllCycles();
+		List<Cycle> registretoCikluList	= resident.getCycleList();
+		for (Cycle cyc : registretoCikluList) {
+			if (availableCycleList.contains(cyc)) {
+				availableCycleList.remove(cyc);
+			}
+		}
+		return availableCycleList;
+	}
+	
+	private List<Resident> getAvailableResidentList(Cycle cycle) {
+		List<Resident> availableResidentList = residentService.fetchAllResidents();
+		List<Resident> registretoRezidentuList	= cycle.getResidentList();
+		for (Resident res : registretoRezidentuList) {
+			if (availableResidentList.contains(res)) {
+				availableResidentList.remove(res);
+			}
+		}
+		return availableResidentList;
 	}
 }

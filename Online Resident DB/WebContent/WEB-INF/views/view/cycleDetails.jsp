@@ -106,17 +106,20 @@ function submitPassedChange(rID, cb)
 
 <hr>
 
-<form:form commandName="resident" action="/resdb/view/cycleDetails.htm" cssClass="bordless" method="post">
-	<form:select path="residentPk" cssStyle="width:350px">
-		<form:option value="0" label="Select..." />
-		<form:options items="${residentList}" itemLabel="label" itemValue="residentPk" />
-	</form:select>
-	<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
-	<input type="hidden" name="action" value="addResidentToCycle">
-	<input type="submit" value="Piereģistrēt rezidentu šīm ciklam" />
-</form:form>
-
-<hr>
+<c:choose>
+	<c:when test="${fn:length(cycleList) != 0}">
+		<form:form commandName="resident" action="/resdb/view/cycleDetails.htm" cssClass="bordless" method="post">
+			<form:select path="residentPk" cssStyle="width:350px">
+				<form:option value="0" label="Select..." />
+				<form:options items="${residentList}" itemLabel="label" itemValue="residentPk" />
+			</form:select>
+			<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
+			<input type="hidden" name="action" value="addResidentToCycle">
+			<input type="submit" value="Piereģistrēt rezidentu šīm ciklam" />
+		</form:form>
+		<hr>
+	</c:when>
+</c:choose>
 
 <a href="/resdb/view/cycleList.htm">Atgriezties uz ciklu sarakstu</a>
 

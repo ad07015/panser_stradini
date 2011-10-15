@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -74,71 +75,33 @@ function submitPassedChange(rID, cb)
 <hr>
 
 <h2>Rezidenti, kuri apmeklē šo kursu:</h2>
-
-
 <form name="submitPassedChangeForm" action="/resdb/view/cycleDetails.htm" class="bordless" method="post">
-	<table border="1" width="90%">
-		<tr>
-			<th width="20%">
-				Vārds
-			</th>
-			<th width="20%">
-				Uzvārds
-			</th>
-			<th width="18%">
-				Personas kods
-			</th>
-			<th width="20%">
-				Talruņa numurs
-			</th>
-			<th width="20%">
-				Adrese
-			</th>
-			<th width="2%">
-				Nokartots
-				<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
-				<input type="hidden" name="residentID">
-				<input type="hidden" name="passedNew">
-				<input type="hidden" name="action" value="submitPassedChangeForm">
-			</th>
-			
-		</tr>
-		
-	<c:forEach var="resCyc" items="${cycle.residentCycleList}">
-			<tr>
-				<td>
-					<c:out value="${resCyc.resident.vards}" />
-				</td>
-				<td>	
-					<c:out value="${resCyc.resident.uzvards}" /> 	
-				</td>
-				<td>
-					<a href="javascript:viewResident(${resCyc.resident.residentPk})"> 	
-						<c:out value="${resCyc.resident.personasKods}" />
-					</a> 	
-				</td>
-				<td>	
-					<c:out value="${resCyc.resident.talrunaNumurs}" /> 	
-				</td>
-				<td>	
-					<c:out value="${resCyc.resident.adrese}" /> 	
-				</td>
-				<td>
-					<c:choose>
-						<c:when test="${resCyc.passed == true}">
-							<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}"
-									checked  
-									onchange="javascript:submitPassedChange(${resCyc.resident.residentPk}, this)" />
-						</c:when>
-						<c:when test="${resCyc.passed == false}">
-							<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}" 
-									onchange="javascript:submitPassedChange(${resCyc.resident.residentPk}, this)" />
-						</c:when>
-					</c:choose>
-				</td>
-			</tr>
-	</c:forEach>
-	</table>
+	<display:table uid="resCyc" name="residentCycleList" defaultsort="1"
+	    defaultorder="ascending" requestURI="/resdb/view/cycleDetails.htm">
+	    <display:column sortable="true"  class="colWidth" title="Vārds"><c:out value="${resCyc.resident.vards}" /></display:column>
+	    <display:column sortable="true"  class="colWidth" title="Uzvārds"><c:out value="${resCyc.resident.uzvards}" /></display:column>
+	    <display:column sortable="false" class="colWidth" title="Personas kods">
+	    	<a href="javascript:viewResident(${resCyc.resident.residentPk})"><c:out value="${resCyc.resident.personasKods}" /></a>
+	    </display:column>
+	    <display:column sortable="true"  class="colWidth" title="Specialitāte"><c:out value="${resCyc.resident.specialitate}" /></display:column>
+	    <display:column sortable="true"  class="colWidth" title="Studiju gads"><c:out value="${resCyc.resident.studijuGads}" /></display:column>
+	    <display:column title="Nolikts">
+			<c:choose>
+				<c:when test="${resCyc.passed == true}">
+					<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}" checked  
+							onchange="javascript:submitPassedChange(${resCyc.resident.residentPk}, this)" />
+				</c:when>
+				<c:when test="${resCyc.passed == false}">
+					<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}" 
+							onchange="javascript:submitPassedChange(${resCyc.resident.residentPk}, this)" />
+				</c:when>
+			</c:choose>
+	    </display:column>
+	</display:table>
+	<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
+	<input type="hidden" name="residentID">
+	<input type="hidden" name="passedNew">
+	<input type="hidden" name="action" value="submitPassedChangeForm">
 </form>
 
 <hr>

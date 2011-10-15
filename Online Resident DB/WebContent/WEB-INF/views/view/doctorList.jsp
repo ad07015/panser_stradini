@@ -36,7 +36,7 @@ function viewDoctor(dID)
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="uzvards" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Uzvārds" property="uzvards" />
     <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods">
-    	<a href="javascript:viewResident(${doctor.doctorPk})"><c:out value="${doctor.personasKods}" /></a>
+    	<a href="javascript:viewDoctor(${doctor.doctorPk})"><c:out value="${doctor.personasKods}" /></a>
     </display:column>
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Specialitāte" property="specialitate" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Akadēmiskais grāds" property="akademiskaisGrads" />

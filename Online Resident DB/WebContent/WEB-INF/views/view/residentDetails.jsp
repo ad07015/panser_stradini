@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -147,46 +148,35 @@ function updateHeart(heartID, residentFK)
 <hr>
 
 <c:choose>
-	<c:when test="${fn:length(resident.heartList) != 0}">
+	<c:when test="${fn:length(heartList) != 0}">
 		<h2>Sirsniņas:</h2>
-		<table>
-			<tr>
-				<th width="4%">
-					Tips
-				</th>
-				<th width="70%">
-					Komentāri
-				</th>
-				<th width="15%">
-					Darbība
-				</th>
-			</tr>
-			<c:forEach var="heart" items="${resident.heartList}">
-				<tr>
-					<td>
-						<c:choose>
-							<c:when test="${heart.tips == 'green'}">
-								<img src="pictures/green_heart.png" align="middle" width="48" height="48" alt="Green heart" />
-							</c:when>
-							<c:otherwise>
-								<img src="pictures/black_heart.png" align="middle" width="48" height="48" alt="Black heart" />
-							</c:otherwise>
-						</c:choose>
-					</td>
-					<td><c:out value="${heart.komentari}" /></td>
-					<td>
-						<button class="belowTable" onClick="javascript:updateHeart(${heart.ID}, ${resident.residentPk})">Rediģēt</button>
-						<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
+		<display:table uid="heart" name="heartList" defaultsort="1"
+		    defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
+		    <display:column sortable="false" style="width: 2%" title="Tips">
+				<c:choose>
+					<c:when test="${heart.tips == 'green'}">
+						<img src="pictures/green_heart.png" align="middle" width="48" height="48" alt="Green heart" />
+					</c:when>
+					<c:otherwise>
+						<img src="pictures/black_heart.png" align="middle" width="48" height="48" alt="Black heart" />
+					</c:otherwise>
+				</c:choose>
+		    </display:column>
+		    <display:column title="Komentāri" property="komentari" />
+		    <display:column style="width: 5%">
+		    	<button class="belowTable" onClick="javascript:updateHeart(${heart.ID}, ${resident.residentPk})">Rediģēt</button>
+		    </display:column>
+		    <display:column style="width: 5%">
+				<button class="belowTable" onClick="javascript:deleteHeart(${heart.ID})">Nodzēst</button>
+		    </display:column>
+		</display:table>
 	</c:when>
 	<c:otherwise>
 		<c:out value="Šīm rezidentam nav piereģistrēto zaļo vai melno sirsniņu" />
 		<br>
 	</c:otherwise>
 </c:choose>
+
 <button class="belowTable" onClick="javascript:addHeart(${resident.residentPk})">Piereģistrēt sirsniņu</button>
 
 <hr>

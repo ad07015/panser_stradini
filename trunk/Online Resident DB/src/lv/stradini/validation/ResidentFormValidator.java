@@ -28,6 +28,7 @@ public abstract class ResidentFormValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "uzvards", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "darbaLigums", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "universitate", "error.emptyField");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "specialitate", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studijuGads", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adrese", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "talrunaNumurs", "error.emptyField");

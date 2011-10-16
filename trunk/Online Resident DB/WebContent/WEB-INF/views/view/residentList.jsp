@@ -40,13 +40,13 @@ function viewResident(rID)
 <hr>
 
 <h2>Rezidentu saraksts:</h2>
-<display:table uid="resident" name="residentList" defaultsort="1"
-    defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
+<display:table uid="resident" name="residentList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
+    <display:column style="width: 2%">
+    	<a href="javascript:viewResident(${resident.residentPk})"><img src="pictures/black_arrow.png" align="middle" width="24" height="24" alt="Rezidenta info" /></a>
+    </display:column>
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="vards" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Uzvārds" property="uzvards" />
-    <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods">
-    	<a href="javascript:viewResident(${resident.residentPk})"><c:out value="${resident.personasKods}" /></a>
-    </display:column>
+    <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods" property="personasKods" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Specialitāte" property="specialitate" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Studiju gads" property="studijuGads" />
 </display:table>

@@ -1,6 +1,5 @@
 package lv.stradini.interfaces.repository;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import lv.stradini.domain.Cycle;

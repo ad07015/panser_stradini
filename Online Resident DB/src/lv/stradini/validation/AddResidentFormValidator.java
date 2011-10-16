@@ -3,11 +3,7 @@ package lv.stradini.validation;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 public class AddResidentFormValidator extends ResidentFormValidator {
 	

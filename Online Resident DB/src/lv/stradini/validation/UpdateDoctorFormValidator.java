@@ -1,7 +1,6 @@
 package lv.stradini.validation;
 
 import lv.stradini.domain.Doctor;
-import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
 
 import org.springframework.validation.Errors;

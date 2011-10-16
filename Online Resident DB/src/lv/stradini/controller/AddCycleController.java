@@ -2,12 +2,6 @@ package lv.stradini.controller;
 
 
 
-import java.util.LinkedList;
-
-import lv.stradini.constants.Constants;
-import lv.stradini.domain.Cycle;
-import lv.stradini.domain.Department;
-import lv.stradini.domain.Facility;
 import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.util.LoggerUtils;
 
@@ -15,8 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value={"/cycle/blablabla.htm"})

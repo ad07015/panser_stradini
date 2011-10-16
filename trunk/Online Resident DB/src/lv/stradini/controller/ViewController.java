@@ -1,9 +1,11 @@
 package lv.stradini.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import lv.stradini.comparator.UzvardsResidentComparator;
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Doctor;
@@ -125,21 +127,11 @@ public class ViewController {
 		Cycle cycle = residentService.findCycleByID(cycleID);
 		
 		ModelAndView mav = new ModelAndView();
-		List<Resident> residentList = residentService.fetchAllResidents();
-		List<Resident> apmekletajiList = cycle.getResidentList();
-		for (Resident res : apmekletajiList) {
-			if (residentList.contains(res)) {
-				residentList.remove(res);
-			}
-		}
-		
-		Cycle newCycle = residentService.findCycleByID(cycleID);
 		mav.addObject("residentCycle", new ResidentCycle());
-		mav.addObject("residentList", residentList);
-		mav.addObject("residentCycleList", newCycle.getResidentCycleList());
+		mav.addObject("residentList", getAvailableResidentList(cycle));
+		mav.addObject("residentCycleList", cycle.getResidentCycleList());
 		mav.addObject("resident", new Resident());
-		mav.addObject("cycle", newCycle);
-//		mav.addObject("cyclePk", cyclePk);
+		mav.addObject("cycle", cycle);
 		mav.setViewName("view/cycleDetails");
 		return mav;
 	}
@@ -591,6 +583,36 @@ public class ViewController {
 				availableResidentList.remove(res);
 			}
 		}
+		Collections.sort(availableResidentList, new UzvardsResidentComparator());
 		return availableResidentList;
+	}
+	
+	@RequestMapping(value="cycleDetails.htm", method=RequestMethod.POST, params={"action=unregisterResidentFromCycle"})
+	public ModelAndView onSubmitUnregisterResidentFromCycleForm(int residentID, int cycleID) {
+		Cycle cycle = residentService.findCycleByID(cycleID);
+		Resident resident = residentService.findResidentByID(residentID);
+		
+		ResidentCycleId resCycId = new ResidentCycleId();
+		resCycId.setCycle(cycle);
+		resCycId.setResident(resident);
+		ResidentCycle resCyc = residentService.findResidentCycleByID(resCycId);
+		cycle.getResidentCycleList().remove(resCyc);
+		resident.getResidentCycleList().remove(resCyc);
+//		resCyc.setResident(null);
+//		resCyc.setCycle(null);
+//		resCyc.setPk(null);
+		
+		residentService.delete(resCyc);
+		residentService.update(cycle);
+		residentService.update(resident);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("residentList", getAvailableResidentList(cycle));
+		mav.addObject("residentCycleList", cycle.getResidentCycleList());
+		mav.addObject("resident", new Resident());
+		mav.addObject("cycle", cycle);
+		mav.setViewName("view/cycleDetails");
+		return mav;
 	}
 }

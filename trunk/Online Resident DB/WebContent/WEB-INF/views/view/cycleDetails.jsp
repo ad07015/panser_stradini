@@ -30,6 +30,18 @@ function submitPassedChange(rID, cb)
 	document.submitPassedChangeForm.submit()
 }
 
+function unregisterResidentFromCycle(rID, cID)
+{
+	var con
+	con = confirm('Vai Jūs tiešam gribāt noreģistrēt šo rezidentu no šī kursa?')
+	if (con)
+	{
+		document.unregisterResidentFromCycleForm.residentID.value=rID
+		document.unregisterResidentFromCycleForm.cycleID.value=cID
+		document.unregisterResidentFromCycleForm.submit()
+	}
+}
+
 </script>
 
 <title>Cikla informācija</title>
@@ -41,6 +53,11 @@ function submitPassedChange(rID, cb)
 </form>
 <form name="addResidentToCycleForm" action="/resdb/cycle/addResidentToCycle.htm" method="post">
 	<input type="hidden" name="cycleID">
+</form>
+<form name="unregisterResidentFromCycleForm" action="/resdb/view/cycleDetails.htm" method="post">
+	<input type="hidden" name="residentID">
+	<input type="hidden" name="cycleID">
+	<input type="hidden" name="action" value="unregisterResidentFromCycle">
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
@@ -78,14 +95,14 @@ function submitPassedChange(rID, cb)
 <form name="submitPassedChangeForm" action="/resdb/view/cycleDetails.htm" class="bordless" method="post">
 	<display:table uid="resCyc" name="residentCycleList" defaultsort="1"
 	    defaultorder="ascending" requestURI="/resdb/view/cycleDetails.htm">
-	    <display:column sortable="true"  class="colWidth" title="Vārds"><c:out value="${resCyc.resident.vards}" /></display:column>
-	    <display:column sortable="true"  class="colWidth" title="Uzvārds"><c:out value="${resCyc.resident.uzvards}" /></display:column>
-	    <display:column sortable="false" class="colWidth" title="Personas kods">
+	    <display:column sortable="true" style="width: 20%" title="Vārds"><c:out value="${resCyc.resident.vards}" /></display:column>
+	    <display:column sortable="true" style="width: 20%" title="Uzvārds"><c:out value="${resCyc.resident.uzvards}" /></display:column>
+	    <display:column sortable="false" style="width: 15%" title="Personas kods">
 	    	<a href="javascript:viewResident(${resCyc.resident.residentPk})"><c:out value="${resCyc.resident.personasKods}" /></a>
 	    </display:column>
-	    <display:column sortable="true"  class="colWidth" title="Specialitāte"><c:out value="${resCyc.resident.specialitate}" /></display:column>
-	    <display:column sortable="true"  class="colWidth" title="Studiju gads"><c:out value="${resCyc.resident.studijuGads}" /></display:column>
-	    <display:column title="Nolikts">
+	    <display:column sortable="true" style="width: 20%" title="Specialitāte"><c:out value="${resCyc.resident.specialitate}" /></display:column>
+	    <display:column sortable="true" style="width: 5%" title="Studiju gads"><c:out value="${resCyc.resident.studijuGads}" /></display:column>
+	    <display:column sortable="true" title="Nolikts" style="width: 2%">
 			<c:choose>
 				<c:when test="${resCyc.passed == true}">
 					<input type="checkbox" name="passed" value="${resCyc.resident.residentPk}" checked  
@@ -97,6 +114,9 @@ function submitPassedChange(rID, cb)
 				</c:when>
 			</c:choose>
 	    </display:column>
+	    <display:column style="width: 2%">
+	    	<a href="javascript:unregisterResidentFromCycle(${resCyc.resident.residentPk}, ${cycle.cyclePk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Noreģistrēt rezidentu no cikla" /></a>
+	    </display:column>
 	</display:table>
 	<input type="hidden" name="cycleID" value="${cycle.cyclePk}">
 	<input type="hidden" name="residentID">
@@ -107,7 +127,7 @@ function submitPassedChange(rID, cb)
 <hr>
 
 <c:choose>
-	<c:when test="${fn:length(cycleList) != 0}">
+	<c:when test="${fn:length(residentList) != 0}">
 		<form:form commandName="resident" action="/resdb/view/cycleDetails.htm" cssClass="bordless" method="post">
 			<form:select path="residentPk" cssStyle="width:350px">
 				<form:option value="0" label="Select..." />

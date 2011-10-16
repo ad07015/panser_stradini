@@ -66,4 +66,6 @@ public interface ResidentService {
 	boolean insertResidentCycle(Resident resident, Cycle cycle);
 
 	<T> void update(T t);
+
+	<T> void delete(T t);
 }

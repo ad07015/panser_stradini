@@ -60,4 +60,16 @@ public class ResidentCycle {
 	public void setCycle(Cycle cycle) {
 		this.pk.setCycle(cycle);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ResidentCycle) {
+			ResidentCycle otherResCyc = (ResidentCycle)obj;
+			if (this.pk.getResident().getResidentPk() == otherResCyc.getResident().getResidentPk() 
+					&& this.pk.getCycle().getCyclePk() == otherResCyc.getCycle().getCyclePk()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

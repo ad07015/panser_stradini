@@ -34,7 +34,6 @@ function viewCycleDetails(cID)
 	</c:when>
 	<c:when test="${status == 'fail'}">
 		<hr>
-		<%-- <span class="error"><c:out value="${message}" escapeXml="false" /></span> --%>
 		<span class="error"><c:out value="${message}" escapeXml="false" /></span>
 	</c:when>
 </c:choose>

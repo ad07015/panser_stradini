@@ -40,7 +40,7 @@ function viewResident(rID)
 <hr>
 
 <h2>Rezidentu saraksts:</h2>
-<display:table uid="resident" name="residentList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
+<display:table uid="resident" name="residentList" defaultsort="3" defaultorder="ascending" requestURI="/resdb/view/residentList.htm">
     <display:column style="width: 2%">
     	<a href="javascript:viewResident(${resident.residentPk})"><img src="pictures/black_arrow.png" align="middle" width="24" height="24" alt="Rezidenta info" /></a>
     </display:column>

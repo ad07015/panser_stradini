@@ -54,6 +54,17 @@ function viewCycleDetails(cID)
   document.viewCycleDetailsForm.cycleID.value=cID
   document.viewCycleDetailsForm.submit()
 }
+function unregisterResidentFromCycle(rID, cID)
+{
+	var con
+	con = confirm('Vai Jūs tiešam gribāt noreģistrēt šo rezidentu no šī kursa?')
+	if (con)
+	{
+		document.unregisterResidentFromCycleForm.residentID.value=rID
+		document.unregisterResidentFromCycleForm.cycleID.value=cID
+		document.unregisterResidentFromCycleForm.submit()
+	}
+}
 </script>
 
 <title>Rezidentu informācija</title>
@@ -81,7 +92,12 @@ function viewCycleDetails(cID)
 </form>
 <form name="viewCycleDetailsForm" action="/resdb/view/cycleDetails.htm" method="post">
 	<input type="hidden" name="cycleID">
-</form>	
+</form>
+<form name="unregisterResidentFromCycleForm" action="/resdb/view/residentDetails.htm" method="post">
+	<input type="hidden" name="residentID">
+	<input type="hidden" name="cycleID">
+	<input type="hidden" name="action" value="unregisterResidentFromCycle">
+</form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
 <c:choose>
@@ -200,6 +216,9 @@ function viewCycleDetails(cID)
 		    <display:column sortable="true" style="width: 34%" title="Pasniedzējs"><c:out value="${resCyc.cycle.pasniedzejs.label}" /></display:column>
 		    <display:column sortable="true" style="width: 10%" title="Sakuma datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.sakumaDatums}" /></display:column>
 		    <display:column sortable="true" style="width: 10%" title="Beigu datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.beiguDatums}" /></display:column>
+		   	<display:column style="width: 2%">
+	    		<a href="javascript:unregisterResidentFromCycle(${resident.residentPk}, ${resCyc.cycle.cyclePk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Noreģistrēt rezidentu no cikla" /></a>
+	    	</display:column>
 		    <input type="hidden" name="residentID" value="${resident.residentPk}">
 		</display:table>
 	</c:when>

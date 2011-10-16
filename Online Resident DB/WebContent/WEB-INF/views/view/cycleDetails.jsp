@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -61,7 +62,16 @@ function unregisterResidentFromCycle(rID, cID)
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
-<c:out value="${message}" escapeXml="false" />
+<c:choose>
+	<c:when test="${status == 'success'}">
+		<hr>
+		<span><c:out value="${message}"></c:out></span>
+	</c:when>
+	<c:when test="${status == 'fail'}">
+		<hr>
+		<span class="error"><c:out value="${message}" escapeXml="false" /></span>
+	</c:when>
+</c:choose>
 
 <hr>
 
@@ -81,20 +91,20 @@ function unregisterResidentFromCycle(rID, cID)
 	</tr>
 	<tr>	
 		<td class="th">Sakuma datums</td>
-		<td><c:out value="${cycle.sakumaDatums}" /></td>		
+		<td><fmt:formatDate pattern="dd.MM.yyyy" value="${cycle.sakumaDatums}" /></td>		
 	</tr>
 	<tr>	
 		<td class="th">Beigu datums</td>
-		<td><c:out value="${cycle.beiguDatums}" /></td>		
+		<td><fmt:formatDate pattern="dd.MM.yyyy" value="${cycle.beiguDatums}" /></td>
 	</tr>
 </table>
 
 <hr>
 
-<h2>Rezidenti, kuri apmeklē šo kursu:</h2>
+<h2>Rezidenti, kuri apmeklē šo ciklu:</h2>
 <form name="submitPassedChangeForm" action="/resdb/view/cycleDetails.htm" class="bordless" method="post">
-	<display:table uid="resCyc" name="residentCycleList" defaultsort="1"
-	    defaultorder="ascending" requestURI="/resdb/view/cycleDetails.htm">
+	<display:table uid="resCyc" name="residentCycleList" defaultsort="2" keepStatus="true"
+	    defaultorder="descending" requestURI="/resdb/view/cycleDetails.htm">
 	    <display:column sortable="true" style="width: 20%" title="Vārds"><c:out value="${resCyc.resident.vards}" /></display:column>
 	    <display:column sortable="true" style="width: 20%" title="Uzvārds"><c:out value="${resCyc.resident.uzvards}" /></display:column>
 	    <display:column sortable="false" style="width: 15%" title="Personas kods">

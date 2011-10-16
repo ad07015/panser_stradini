@@ -104,7 +104,7 @@ function unregisterResidentFromCycle(rID, cID)
 <h2>Rezidenti, kuri apmeklē šo ciklu:</h2>
 <form name="submitPassedChangeForm" action="/resdb/view/cycleDetails.htm" class="bordless" method="post">
 	<display:table uid="resCyc" name="residentCycleList" defaultsort="2" keepStatus="true"
-	    defaultorder="descending" requestURI="/resdb/view/cycleDetails.htm">
+	    defaultorder="ascending" requestURI="/resdb/view/cycleDetails.htm">
 	    <display:column sortable="true" style="width: 20%" title="Vārds"><c:out value="${resCyc.resident.vards}" /></display:column>
 	    <display:column sortable="true" style="width: 20%" title="Uzvārds"><c:out value="${resCyc.resident.uzvards}" /></display:column>
 	    <display:column sortable="false" style="width: 15%" title="Personas kods">

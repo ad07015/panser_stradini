@@ -31,11 +31,11 @@ function viewDoctor(dID)
 <hr>
 
 <h2>Ārstu saraksts:</h2>
-<display:table uid="doctor" name="doctorList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/doctorList.htm">
+<display:table uid="doctor" name="doctorList" defaultsort="3" defaultorder="ascending" requestURI="/resdb/view/doctorList.htm">
     <display:column style="width: 2%">
     	<a href="javascript:viewDoctor(${doctor.doctorPk})"><img src="pictures/black_arrow.png" align="middle" width="24" height="24" alt="Rezidenta info" /></a>
     </display:column>
-    <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="uzvards" />
+    <display:column sortable="true"  class="colWidth" maxLength="100" title="Vārds" property="vards" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Uzvārds" property="uzvards" />
     <display:column sortable="false" class="colWidth" maxLength="100" title="Personas kods" property="personasKods" />
     <display:column sortable="true"  class="colWidth" maxLength="100" title="Specialitāte" property="specialitate" />

@@ -207,7 +207,7 @@ function unregisterResidentFromCycle(rID, cID)
 <hr>
 <c:choose>
 	<c:when test="${fn:length(residentCycleList) != 0}">
-		<h2>Kursi, kurus apmeklē šīs rezidents:</h2>
+		<h2>Cikli, kurus apmeklē šīs rezidents:</h2>
 		<display:table uid="resCyc" name="residentCycleList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
 		    <display:column sortable="false" style="width: 1%">
 		    	<a href="javascript:viewCycleDetails(${resCyc.cycle.cyclePk})"><img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" /></a> 

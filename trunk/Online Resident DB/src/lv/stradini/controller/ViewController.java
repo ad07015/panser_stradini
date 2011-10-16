@@ -546,22 +546,24 @@ public class ViewController {
 	public ModelAndView onSubmitAddCycleToResidentForm(Cycle cycle, int residentID) {
 		log.info("Location");
 		ModelAndView mav = new ModelAndView();
-		cycle = residentService.findCycleByID(cycle.getCyclePk());
 		Resident resident = residentService.findResidentByID(residentID);
+		int cycleID = cycle.getCyclePk();
 	
-		boolean result = residentService.insertResidentCycle(resident, cycle);
-		String message;
-		String status;
-		if(result) {
-			message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_SUCCESS;
-			status = "success";
-		} else {
-			message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_FAIL;
-			status = "fail";
+		if (cycleID != 0) {
+			cycle = residentService.findCycleByID(cycleID);
+			boolean result = residentService.insertResidentCycle(resident, cycle);
+			String message;
+			String status;
+			if (result) {
+				message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_SUCCESS;
+				status = "success";
+			} else {
+				message = Constants.MESSAGE_RESIDENT_CYCLE_ADD_FAIL;
+				status = "fail";
+			}
+			mav.addObject("message", message);
+			mav.addObject("status", status);
 		}
-		log.info("Status: " + status);
-		log.info("Message: " + message);
-
 		Resident newResident = residentService.findResidentByID(residentID);
 		mav.addObject("residentCycleList", newResident.getResidentCycleList());
 		mav.addObject("heartList", resident.getHeartList());

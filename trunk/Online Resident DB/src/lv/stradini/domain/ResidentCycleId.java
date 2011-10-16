@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Embeddable
 public class ResidentCycleId implements Serializable {
 

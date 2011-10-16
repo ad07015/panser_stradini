@@ -20,7 +20,6 @@ import lv.stradini.domain.ResidentCycle;
 import lv.stradini.domain.ResidentCycleId;
 import lv.stradini.interfaces.repository.ResidentRepository;
 import lv.stradini.util.LoggerUtils;
-import lv.stradini.util.Utils;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;

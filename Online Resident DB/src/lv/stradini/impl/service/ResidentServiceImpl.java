@@ -164,4 +164,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public <T> void update(T t) {
 		repo.update(t);
 	}
+	
+	@Override
+	public <T> void delete(T t) {
+		repo.delete(t);
+	}
 }

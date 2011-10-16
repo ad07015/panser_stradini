@@ -586,4 +586,19 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 			logger.error("", he);
 		}
 	}
+	
+	@Override
+	public <T> void delete(T t) {
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			
+			session.delete(t);
+			
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+	}
 }

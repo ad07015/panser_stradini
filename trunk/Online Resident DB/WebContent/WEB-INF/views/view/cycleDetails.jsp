@@ -105,11 +105,12 @@ function unregisterResidentFromCycle(rID, cID)
 <form name="submitPassedChangeForm" action="/resdb/view/cycleDetails.htm" class="bordless" method="post">
 	<display:table uid="resCyc" name="residentCycleList" defaultsort="2" keepStatus="true"
 	    defaultorder="ascending" requestURI="/resdb/view/cycleDetails.htm">
+		<display:column style="width: 2%">
+	    	<a href="javascript:viewResident(${resCyc.resident.residentPk})"><img src="pictures/black_arrow.png" align="middle" width="24" height="24" alt="Rezidenta info" /></a>
+	    </display:column>
 	    <display:column sortable="true" style="width: 20%" title="Vārds"><c:out value="${resCyc.resident.vards}" /></display:column>
 	    <display:column sortable="true" style="width: 20%" title="Uzvārds"><c:out value="${resCyc.resident.uzvards}" /></display:column>
-	    <display:column sortable="false" style="width: 15%" title="Personas kods">
-	    	<a href="javascript:viewResident(${resCyc.resident.residentPk})"><c:out value="${resCyc.resident.personasKods}" /></a>
-	    </display:column>
+	    <display:column sortable="false" style="width: 15%" title="Personas kods"><c:out value="${resCyc.resident.personasKods}" /></display:column>
 	    <display:column sortable="true" style="width: 20%" title="Specialitāte"><c:out value="${resCyc.resident.specialitate}" /></display:column>
 	    <display:column sortable="true" style="width: 5%" title="Studiju gads"><c:out value="${resCyc.resident.studijuGads}" /></display:column>
 	    <display:column sortable="true" title="Nolikts" style="width: 2%">

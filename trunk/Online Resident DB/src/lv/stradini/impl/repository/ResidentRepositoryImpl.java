@@ -11,6 +11,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import lv.stradini.domain.Cycle;
+import lv.stradini.domain.CyclePlanEntry;
 import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
@@ -96,6 +97,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		Session session = sessionFactory.openSession();
 		Resident result = (Resident) session.get(Resident.class, residentID);
 		Hibernate.initialize(result.getResidentCycleList());
+		Hibernate.initialize(result.getCyclePlanEntryList());
 		session.close();
 		return result;
 	}
@@ -130,7 +132,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	public Doctor findDoctorByID(int doctorID) {
 		Session session = sessionFactory.openSession();
 		Doctor result = (Doctor) session.get(Doctor.class, doctorID);
-		//TODO: Make a separate method for lazy collection initialization
+		// TODO: Make a separate method for lazy collection initialization
 		Hibernate.initialize(result.getCycleList());
 		Hibernate.initialize(result.getDepartmentList());
 		session.close();
@@ -203,14 +205,15 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return count;
 	}
-	
+
 	@Override
 	public int getDoctorCountByPersonasKods(String newPersonasKods) {
 		logger.info("Location");
 		int result = -1;
 		try {
 			Session session = sessionFactory.openSession();
-			Query query = session.getNamedQuery("getDoctorCountByPersonasKods").setString("personasKods", newPersonasKods);
+			Query query = session.getNamedQuery("getDoctorCountByPersonasKods")
+					.setString("personasKods", newPersonasKods);
 			List resultList = query.list();
 			result = resultList.size();
 			session.close();
@@ -347,29 +350,6 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		return false;
 	}
 
-	private long findFacilityToDepartmentByID(long facilityID, long departmentID) {
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		String query = "SELECT FAC_TO_DEP_PK FROM FACILITY_TO_DEPARTMENT WHERE FACILITY_FK = ? and DEPARTMENT_FK = ? ";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.prepareStatement(query);
-			st.setLong(1, facilityID);
-			st.setLong(2, departmentID);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				return rs.getLong("FAC_TO_DEP_PK");
-			}
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
-		return 0;
-	}
-
 	@Override
 	public List<Facility> fetchAllFacilities() {
 		Session session = sessionFactory.openSession();
@@ -379,35 +359,7 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		session.close();
 		return facilityList;
 	}
-/*
-	private LinkedList<Department> findDepartmentsByFacilityID(int facilityID) {
-		LinkedList<Department> departmentList = new LinkedList<Department>();
-		Connection conn = null;
-		Statement st = null;
-		ResultSet rs = null;
 
-		String query = "SELECT * FROM DEPARTMENT WHERE FACILITY_FK = ?;";
-		try {
-			conn = dataSource.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(query);
-
-			Department department;
-			while (rs.next()) {
-				department = new Department(rs.getInt("DEPARTMENT_PK"),
-						rs.getInt("FACILITY_FK"), rs.getInt("DOCTOR_FK"),
-						rs.getString("NOSAUKUMS"));
-				departmentList.add(department);
-			}
-
-		} catch (SQLException se) {
-			logger.error("SQLException has occured", se);
-		} finally {
-			closeConnection(rs, st, conn);
-		}
-		return departmentList;
-	}
-*/
 	@Override
 	public List<Department> fetchAllDepartments() {
 		Session session = sessionFactory.openSession();
@@ -514,7 +466,8 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	@Override
 	public Department findDepartmentByID(int departmentFk) {
 		Session session = sessionFactory.openSession();
-		Department result = (Department) session.get(Department.class, departmentFk);
+		Department result = (Department) session.get(Department.class,
+				departmentFk);
 		session.close();
 		return result;
 	}
@@ -541,7 +494,8 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 	@Override
 	public ResidentCycle findResidentCycleByID(ResidentCycleId resCycId) {
 		Session session = sessionFactory.openSession();
-		ResidentCycle result = (ResidentCycle) session.get(ResidentCycle.class, resCycId);
+		ResidentCycle result = (ResidentCycle) session.get(ResidentCycle.class,
+				resCycId);
 		session.close();
 		return result;
 	}
@@ -551,18 +505,18 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			
+
 			ResidentCycle resCyc = new ResidentCycle();
 			resCyc.setResident(resident);
 			resCyc.setCycle(cycle);
-			
+
 			resident.getResidentCycleList().add(resCyc);
 			cycle.getResidentCycleList().add(resCyc);
-			
+
 			session.save(resCyc);
 			session.update(resident);
 			session.update(cycle);
-			
+
 			session.getTransaction().commit();
 			session.close();
 			return true;
@@ -571,34 +525,58 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public <T> void update(T t) {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			
+
 			session.update(t);
-			
+
 			session.getTransaction().commit();
 			session.close();
 		} catch (HibernateException he) {
 			logger.error("", he);
 		}
 	}
-	
+
 	@Override
 	public <T> void delete(T t) {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			
+
 			session.delete(t);
-			
+
 			session.getTransaction().commit();
 			session.close();
 		} catch (HibernateException he) {
 			logger.error("", he);
 		}
+	}
+
+	@Override
+	public CyclePlanEntry findCyclePlanEntryByID(int cpeID) {
+		Session session = sessionFactory.openSession();
+		CyclePlanEntry result = (CyclePlanEntry) session.get(CyclePlanEntry.class, cpeID);
+		session.close();
+		return result;
+	}
+
+	@Override
+	public boolean insertCyclePlanEntry(CyclePlanEntry cyclePlanEntry) {
+		logger.info("Location");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(cyclePlanEntry);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
 	}
 }

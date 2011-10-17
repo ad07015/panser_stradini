@@ -23,6 +23,10 @@ form table input {
 	width: 200px;
 }
 
+.inputWidth {
+	width: 32px;
+}
+
 table.narrow_table{
 	width: 40%;
 	border-collapse: collapse;

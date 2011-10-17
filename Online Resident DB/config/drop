@@ -1,0 +1,9 @@
+drop table cycle_plan_entry;
+drop table cycleplanentry;
+drop table resident_cycle;
+drop table heart;
+drop table doctor;
+drop table department;
+drop table facility;
+drop table cycle;
+drop table resident;

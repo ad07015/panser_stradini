@@ -65,6 +65,16 @@ function unregisterResidentFromCycle(rID, cID)
 		document.unregisterResidentFromCycleForm.submit()
 	}
 }
+function deleteCyclePlanEntry(cpeID, rID) {
+	var con
+	con = confirm('Vai Jūs tiešam gribāt nodzēst šo plāna ierakstu?')
+	if (con)
+	{
+		document.deleteCyclePlanEntryForm.cyclePlanEntryID.value=cpeID
+		document.deleteCyclePlanEntryForm.residentID.value=rID
+		document.deleteCyclePlanEntryForm.submit()
+	}
+}
 </script>
 
 <title>Rezidentu informācija</title>
@@ -97,6 +107,11 @@ function unregisterResidentFromCycle(rID, cID)
 	<input type="hidden" name="residentID">
 	<input type="hidden" name="cycleID">
 	<input type="hidden" name="action" value="unregisterResidentFromCycle">
+</form>
+<form name="deleteCyclePlanEntryForm" action="/resdb/view/residentDetails.htm" method="post">
+	<input type="hidden" name="residentID">
+	<input type="hidden" name="cyclePlanEntryID">
+	<input type="hidden" name="action" value="deleteCyclePlanEntry">
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
@@ -169,7 +184,63 @@ function unregisterResidentFromCycle(rID, cID)
 
 <button class="belowTable" onClick="javascript:updateResident(${resident.residentPk})">Rediģēt rezidenta datus</button>
 <button class="belowTable" onClick="javascript:deleteResident(${resident.residentPk})">Nodzēst rezidentu</button>
+<hr>
 
+<c:choose>
+	<c:when test="${fn:length(cyclePlanEntryList) != 0}">
+		<h2>Cikli, kurus apmeklē šīs rezidents:</h2>
+		<display:table uid="cpe" name="cyclePlanEntryList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
+		    <display:column sortable="true" style="width: 47%" title="Cikla nosaukums" property="nosaukums"/>
+		    <display:column sortable="true" style="width: 47%" title="Komentāri" property="komentari"/>
+		    <display:column sortable="true" style="width: 3%" title="Kurss" property="kurss"/>
+		    <display:column style="width: 3%">
+	    		<a href="javascript:deleteCyclePlanEntry(${cpe.cyclePlanEntryPk}, ${resident.residentPk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Nodzēst plana ierakstu" /></a>
+	    	</display:column>
+		</display:table>
+	</c:when>
+	<c:otherwise>
+		<c:out value="Šīm rezidentam nav ieplānoto ciklu" />
+		<br>
+	</c:otherwise>
+</c:choose>
+
+<form action="/resdb/view/residentDetails.htm" method="post">
+	<table>
+		<tr>
+			<td width="47%"><input name="nosaukums" /></td>
+			<td width="47%"><input name="komentari" /></td>
+			<td width="3%"><input class="inputWidth" name="kurss" /></td>
+			<td width="3%"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Nodzēst plana ierakstu" /></td>
+		</tr>
+	</table>
+	<input type="hidden" name="residentID" value="${resident.residentPk}" />
+	<input type="hidden" name="action" value="addCyclePlanEntry" />
+	<input type="submit" value="Pievienot plāna ierakstu" />
+</form>
+<hr>
+
+<c:choose>
+	<c:when test="${fn:length(residentCycleList) != 0}">
+		<h2>Cikli, kurus apmeklē šīs rezidents:</h2>
+		<display:table uid="resCyc" name="residentCycleList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
+		    <display:column sortable="false" style="width: 1%">
+		    	<a href="javascript:viewCycleDetails(${resCyc.cycle.cyclePk})"><img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" /></a> 
+		    </display:column>
+		    <display:column sortable="true" style="width: 45%" title="Istāde un nodaļa"><c:out value="${resCyc.cycle.department.label}" /></display:column>
+		    <display:column sortable="true" style="width: 34%" title="Pasniedzējs"><c:out value="${resCyc.cycle.pasniedzejs.label}" /></display:column>
+		    <display:column sortable="true" style="width: 10%" title="Sakuma datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.sakumaDatums}" /></display:column>
+		    <display:column sortable="true" style="width: 10%" title="Beigu datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.beiguDatums}" /></display:column>
+		   	<display:column style="width: 2%">
+	    		<a href="javascript:unregisterResidentFromCycle(${resident.residentPk}, ${resCyc.cycle.cyclePk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Noreģistrēt rezidentu no cikla" /></a>
+	    	</display:column>
+		    <input type="hidden" name="residentID" value="${resident.residentPk}">
+		</display:table>
+	</c:when>
+	<c:otherwise>
+		<c:out value="Šīs rezidents nav piereģistrēts nevienam kursam" />
+		<br>
+	</c:otherwise>
+</c:choose>
 <hr>
 
 <c:choose>
@@ -203,30 +274,6 @@ function unregisterResidentFromCycle(rID, cID)
 </c:choose>
 
 <button class="belowTable" onClick="javascript:addHeart(${resident.residentPk})">Piereģistrēt sirsniņu</button>
-
-<hr>
-<c:choose>
-	<c:when test="${fn:length(residentCycleList) != 0}">
-		<h2>Cikli, kurus apmeklē šīs rezidents:</h2>
-		<display:table uid="resCyc" name="residentCycleList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
-		    <display:column sortable="false" style="width: 1%">
-		    	<a href="javascript:viewCycleDetails(${resCyc.cycle.cyclePk})"><img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" /></a> 
-		    </display:column>
-		    <display:column sortable="true" style="width: 45%" title="Istāde un nodaļa"><c:out value="${resCyc.cycle.department.label}" /></display:column>
-		    <display:column sortable="true" style="width: 34%" title="Pasniedzējs"><c:out value="${resCyc.cycle.pasniedzejs.label}" /></display:column>
-		    <display:column sortable="true" style="width: 10%" title="Sakuma datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.sakumaDatums}" /></display:column>
-		    <display:column sortable="true" style="width: 10%" title="Beigu datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.beiguDatums}" /></display:column>
-		   	<display:column style="width: 2%">
-	    		<a href="javascript:unregisterResidentFromCycle(${resident.residentPk}, ${resCyc.cycle.cyclePk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Noreģistrēt rezidentu no cikla" /></a>
-	    	</display:column>
-		    <input type="hidden" name="residentID" value="${resident.residentPk}">
-		</display:table>
-	</c:when>
-	<c:otherwise>
-		<c:out value="Šīs rezidents nav piereģistrēts nevienam kursam" />
-		<br>
-	</c:otherwise>
-</c:choose>
 <hr>
 
 <c:choose>

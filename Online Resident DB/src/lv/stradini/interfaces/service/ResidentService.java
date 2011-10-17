@@ -3,6 +3,7 @@ package lv.stradini.interfaces.service;
 import java.util.List;
 
 import lv.stradini.domain.Cycle;
+import lv.stradini.domain.CyclePlanEntry;
 import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
@@ -68,4 +69,8 @@ public interface ResidentService {
 	<T> void update(T t);
 
 	<T> void delete(T t);
+
+	CyclePlanEntry findCyclePlanEntryByID(int cpeID);
+
+	boolean insertCyclePlanEntry(CyclePlanEntry cyclePlanEntry);
 }

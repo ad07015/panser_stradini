@@ -28,6 +28,7 @@ public class Resident {
 	private String komentari;
 	private List<Heart> heartList = new LinkedList<Heart>();
 	private List<ResidentCycle> residentCycleList = new LinkedList<ResidentCycle>();
+	private List<CyclePlanEntry> cyclePlanEntryList = new LinkedList<CyclePlanEntry>();
 	
 	public Resident() {
 	}
@@ -81,6 +82,17 @@ public class Resident {
 
 	public void setResidentCycleList(List<ResidentCycle> residentCycleList) {
 		this.residentCycleList = residentCycleList;
+	}
+
+	@OneToMany(targetEntity=CyclePlanEntry.class, mappedBy="resident",
+			cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN)	
+	public List<CyclePlanEntry> getCyclePlanEntryList() {
+		return cyclePlanEntryList;
+	}
+
+	public void setCyclePlanEntryList(List<CyclePlanEntry> cyclePlanEntryList) {
+		this.cyclePlanEntryList = cyclePlanEntryList;
 	}
 
 	public String getVards() {

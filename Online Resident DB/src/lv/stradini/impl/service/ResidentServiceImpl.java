@@ -3,6 +3,7 @@ package lv.stradini.impl.service;
 import java.util.List;
 
 import lv.stradini.domain.Cycle;
+import lv.stradini.domain.CyclePlanEntry;
 import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
@@ -168,5 +169,15 @@ public class ResidentServiceImpl implements ResidentService {
 	@Override
 	public <T> void delete(T t) {
 		repo.delete(t);
+	}
+
+	@Override
+	public CyclePlanEntry findCyclePlanEntryByID(int cpeID) {
+		return repo.findCyclePlanEntryByID(cpeID);
+	}
+
+	@Override
+	public boolean insertCyclePlanEntry(CyclePlanEntry cyclePlanEntry) {
+		return repo.insertCyclePlanEntry(cyclePlanEntry);
 	}
 }

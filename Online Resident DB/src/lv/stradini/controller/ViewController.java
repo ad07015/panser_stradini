@@ -8,6 +8,7 @@ import java.util.List;
 import lv.stradini.comparator.UzvardsResidentComparator;
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
+import lv.stradini.domain.CyclePlanEntry;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
@@ -103,6 +104,8 @@ public class ViewController {
 		mav.addObject("heartList", resident.getHeartList());
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("cycleList", getAvailableCycleList(resident));
+		mav.addObject("cyclePlanEntryList", resident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -232,6 +235,8 @@ public class ViewController {
 		mav.addObject("status", status);
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("cycleList", getAvailableCycleList(resident));
+		mav.addObject("cyclePlanEntryList", resident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -337,6 +342,8 @@ public class ViewController {
 		mav.addObject("heartList", newResident.getHeartList());
 		mav.addObject("cycleList", getAvailableCycleList(newResident));
 		mav.addObject("cycle", new Cycle());
+		mav.addObject("cyclePlanEntryList", resident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -412,6 +419,8 @@ public class ViewController {
 		mav.addObject("message", message);
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("cycleList", getAvailableCycleList(resident));
+		mav.addObject("cyclePlanEntryList", resident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -453,6 +462,8 @@ public class ViewController {
 		mav.addObject("message", message);
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("cycleList", getAvailableCycleList(resident));
+		mav.addObject("cyclePlanEntryList", resident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 		
@@ -566,10 +577,12 @@ public class ViewController {
 		}
 		Resident newResident = residentService.findResidentByID(residentID);
 		mav.addObject("residentCycleList", newResident.getResidentCycleList());
-		mav.addObject("heartList", resident.getHeartList());
+		mav.addObject("heartList", newResident.getHeartList());
 		mav.addObject("resident", newResident);
 		mav.addObject("cycleList", getAvailableCycleList(newResident));
 		mav.addObject("cycle", new Cycle());
+		mav.addObject("cyclePlanEntryList", newResident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}
@@ -644,9 +657,64 @@ public class ViewController {
 		Resident newResident = residentService.findResidentByID(residentID);
 		mav.addObject("residentCycleList", newResident.getResidentCycleList());
 		mav.addObject("resident", newResident);
-		mav.addObject("heartList", resident.getHeartList());
+		mav.addObject("heartList", newResident.getHeartList());
 		mav.addObject("cycleList", getAvailableCycleList(newResident));
 		mav.addObject("cycle", new Cycle());
+		mav.addObject("cyclePlanEntryList", newResident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
+		mav.setViewName("view/residentDetails");
+		return mav;
+	}
+		
+	@RequestMapping(value="residentDetails.htm", method=RequestMethod.POST, params={"action=deleteCyclePlanEntry"})
+	public ModelAndView onSubmitDeleteCyclePlaneEntryForm(int residentID, int cyclePlanEntryID) {
+		Resident resident = residentService.findResidentByID(residentID);
+		CyclePlanEntry cpe = residentService.findCyclePlanEntryByID(cyclePlanEntryID);
+		resident.getCyclePlanEntryList().remove(cpe);
+
+		residentService.delete(cpe);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Resident newResident = residentService.findResidentByID(residentID);
+		mav.addObject("residentCycleList", newResident.getResidentCycleList());
+		mav.addObject("resident", newResident);
+		mav.addObject("heartList", newResident.getHeartList());
+		mav.addObject("cycleList", getAvailableCycleList(newResident));
+		mav.addObject("cycle", new Cycle());
+		mav.addObject("cyclePlanEntryList", newResident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
+		mav.setViewName("view/residentDetails");
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="residentDetails.htm", method=RequestMethod.POST, params={"action=addCyclePlanEntry"})
+	public ModelAndView onSubmitAddCyclePlaneEntryForm(int residentID, String nosaukums, String komentari, String kurss) {
+		try {
+			int iKurss = Integer.parseInt(kurss);
+			Resident resident = residentService.findResidentByID(residentID);
+			CyclePlanEntry cpe = new CyclePlanEntry();
+			cpe.setNosaukums(nosaukums);
+			cpe.setKomentari(komentari);
+			cpe.setKurss(iKurss);
+			cpe.setResident(resident);
+			
+			residentService.insertCyclePlanEntry(cpe);
+		} catch (NumberFormatException e) {
+			log.error("", e);
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Resident newResident = residentService.findResidentByID(residentID);
+		mav.addObject("residentCycleList", newResident.getResidentCycleList());
+		mav.addObject("resident", newResident);
+		mav.addObject("heartList", newResident.getHeartList());
+		mav.addObject("cycleList", getAvailableCycleList(newResident));
+		mav.addObject("cycle", new Cycle());
+		mav.addObject("cyclePlanEntryList", newResident.getCyclePlanEntryList());
+		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
 		return mav;
 	}

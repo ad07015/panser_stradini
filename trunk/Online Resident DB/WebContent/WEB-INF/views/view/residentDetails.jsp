@@ -186,23 +186,16 @@ function deleteCyclePlanEntry(cpeID, rID) {
 <button class="belowTable" onClick="javascript:deleteResident(${resident.residentPk})">Nodzēst rezidentu</button>
 <hr>
 
-<c:choose>
-	<c:when test="${fn:length(cyclePlanEntryList) != 0}">
-		<h2>Cikli, kurus apmeklē šīs rezidents:</h2>
-		<display:table uid="cpe" name="cyclePlanEntryList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
-		    <display:column sortable="true" style="width: 47%" title="Cikla nosaukums" property="nosaukums"/>
-		    <display:column sortable="true" style="width: 47%" title="Komentāri" property="komentari"/>
-		    <display:column sortable="true" style="width: 3%" title="Kurss" property="kurss"/>
-		    <display:column style="width: 3%">
-	    		<a href="javascript:deleteCyclePlanEntry(${cpe.cyclePlanEntryPk}, ${resident.residentPk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Nodzēst plana ierakstu" /></a>
-	    	</display:column>
-		</display:table>
-	</c:when>
-	<c:otherwise>
-		<c:out value="Šīm rezidentam nav ieplānoto ciklu" />
-		<br>
-	</c:otherwise>
-</c:choose>
+<h2>Stūdiju plans:</h2>
+<display:table uid="cpe" name="cyclePlanEntryList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
+    <display:column sortable="true" style="width: 47%" title="Cikla nosaukums" property="nosaukums"/>
+    <display:column sortable="true" style="width: 47%" title="Komentāri" property="komentari"/>
+    <display:column sortable="true" style="width: 3%" title="Kurss" property="kurss"/>
+    <display:column style="width: 3%">
+   		<a href="javascript:deleteCyclePlanEntry(${cpe.cyclePlanEntryPk}, ${resident.residentPk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Nodzēst plana ierakstu" /></a>
+   	</display:column>
+   	<display:setProperty name="basic.msg.empty_list_row" value="Šīm rezidentam nav sastadīts stūdiju plāns" />
+</display:table>
 
 <form action="/resdb/view/residentDetails.htm" method="post">
 	<table>
@@ -241,6 +234,21 @@ function deleteCyclePlanEntry(cpeID, rID) {
 		<br>
 	</c:otherwise>
 </c:choose>
+
+<c:choose>
+	<c:when test="${fn:length(cycleList) != 0}">
+		<form:form commandName="cycle" action="/resdb/view/residentDetails.htm" cssClass="bordless" method="post">
+			<form:select path="cyclePk" cssStyle="width:350px">
+				<form:option value="0" label="Select..." />
+				<form:options items="${cycleList}" itemLabel="label" itemValue="cyclePk" />
+			</form:select>
+			<input type="hidden" name="residentID" value="${resident.residentPk}">
+			<input type="hidden" name="action" value="addCycleToResident">
+			<input type="submit" value="Piereģistrēt rezidentu šīm ciklam" />
+		</form:form>
+		<hr>
+	</c:when>
+</c:choose>
 <hr>
 
 <c:choose>
@@ -275,21 +283,6 @@ function deleteCyclePlanEntry(cpeID, rID) {
 
 <button class="belowTable" onClick="javascript:addHeart(${resident.residentPk})">Piereģistrēt sirsniņu</button>
 <hr>
-
-<c:choose>
-	<c:when test="${fn:length(cycleList) != 0}">
-		<form:form commandName="cycle" action="/resdb/view/residentDetails.htm" cssClass="bordless" method="post">
-			<form:select path="cyclePk" cssStyle="width:350px">
-				<form:option value="0" label="Select..." />
-				<form:options items="${cycleList}" itemLabel="label" itemValue="cyclePk" />
-			</form:select>
-			<input type="hidden" name="residentID" value="${resident.residentPk}">
-			<input type="hidden" name="action" value="addCycleToResident">
-			<input type="submit" value="Piereģistrēt rezidentu šīm ciklam" />
-		</form:form>
-		<hr>
-	</c:when>
-</c:choose>
 
 <a href="/resdb/view/residentList.htm">Atgriezties uz rezidentu sarakstu</a>
 </body>

@@ -121,6 +121,7 @@ public class ViewController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("doctor", doctor);
+		mav.addObject("cycleList", doctor.getCycleList());
 		mav.setViewName("view/doctorDetails");
 		return mav;
 	}

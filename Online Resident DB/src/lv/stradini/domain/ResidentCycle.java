@@ -1,5 +1,7 @@
 package lv.stradini.domain;
 
+import java.util.Date;
+
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
@@ -59,6 +61,16 @@ public class ResidentCycle {
 	
 	public void setCycle(Cycle cycle) {
 		this.pk.setCycle(cycle);
+	}
+	
+	@Transient
+	public Date getSakumaDatums() {
+		return this.getCycle().getSakumaDatums();
+	}
+	
+	@Transient
+	public Date getBeiguDatums() {
+		return this.getCycle().getBeiguDatums();
 	}
 
 	@Override

@@ -228,8 +228,8 @@ function deleteCyclePlanEntry(cpeID, rID) {
 		    </display:column>
 		    <display:column sortable="true" style="width: 45%" title="Istāde un nodaļa"><c:out value="${resCyc.cycle.department.label}" /></display:column>
 		    <display:column sortable="true" style="width: 34%" title="Pasniedzējs"><c:out value="${resCyc.cycle.pasniedzejs.label}" /></display:column>
-		    <display:column sortable="true" style="width: 10%" title="Sakuma datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.sakumaDatums}" /></display:column>
-		    <display:column sortable="true" style="width: 10%" title="Beigu datums"><fmt:formatDate pattern="dd.MM.yyyy" value="${resCyc.cycle.beiguDatums}" /></display:column>
+		    <display:column sortable="true" style="width: 10%" title="Beigu datums" property="sakumaDatums" format="{0,date,dd.MM.yyyy}" />
+		    <display:column sortable="true" style="width: 10%" title="Beigu datums" property="beiguDatums" format="{0,date,dd.MM.yyyy}" />
 		   	<display:column style="width: 2%">
 	    		<a href="javascript:unregisterResidentFromCycle(${resident.residentPk}, ${resCyc.cycle.cyclePk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Noreģistrēt rezidentu no cikla" /></a>
 	    	</display:column>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -24,6 +25,11 @@ function updateDoctor(dID)
   document.updateDoctorForm.updateDoctorID.value=dID
   document.updateDoctorForm.submit()
 }
+function viewCycleDetails(cID)
+{
+  document.viewCycleDetailsForm.cycleID.value=cID
+  document.viewCycleDetailsForm.submit()
+}
 </script>
 
 <title>Rezidentu informācija</title>
@@ -37,6 +43,9 @@ function updateDoctor(dID)
 <form name="updateDoctorForm" action="/resdb/doctor/updateDoctor.htm" method="post">
 	<input type="hidden" name="action" value="updateDoctor" />
 	<input type="hidden" name="updateDoctorID" />
+</form>
+<form name="viewCycleDetailsForm" action="/resdb/view/cycleDetails.htm" method="post">
+	<input type="hidden" name="cycleID">
 </form>
 
 <h1><a href="/resdb/">Rezidentu uzskaites sistēma</a></h1>
@@ -138,43 +147,26 @@ function updateDoctor(dID)
 
 <button class="belowTable" onClick="javascript:updateDoctor(${doctor.doctorPk})">Rediģēt ārsta datus</button>
 <button class="belowTable" onClick="javascript:deleteDoctor(${doctor.doctorPk})">Nodzēst ārstu</button>
-
 <hr>
 
 <c:choose>
 	<c:when test="${fn:length(doctor.cycleList) != 0}">
 		<h2>Cikli, kurus pasniedz šīs ārsts:</h2>
-		<table>
-			<tr>
-				<th width="20%">
-					Iestāde un nodaļa
-				</th>
-				<th width="20%">
-					Pasniedzējs
-				</th>
-				<th width="20%">
-					Sakuma datums
-				</th>
-				<th width="20%">
-					Beigu datums
-				</th>
-			</tr>
-			<c:forEach var="cycle" items="${doctor.cycleList}">
-				<tr>
-					<td><c:out value="${cycle.department.label}" /></td>
-					<td><c:out value="${cycle.pasniedzejs.label}" /></td>
-					<td><c:out value="${cycle.sakumaDatums}" /></td>
-					<td><c:out value="${cycle.beiguDatums}" /></td>
-				</tr>
-			</c:forEach>
-		</table>
+		<display:table uid="cycle" name="cycleList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/residentDetails.htm">
+		    <display:column sortable="false" style="width: 1%">
+		    	<a href="javascript:viewCycleDetails(${cycle.cyclePk})"><img src="pictures/black_arrow.png" align="middle" width="32" height="32" alt="Apskatīt papildus informāciju" /></a> 
+		    </display:column>
+		    <display:column sortable="true" style="width: 45%" title="Istāde un nodaļa"><c:out value="${cycle.department.label}" /></display:column>
+		    <display:column sortable="true" style="width: 34%" title="Pasniedzējs"><c:out value="${cycle.pasniedzejs.label}" /></display:column>
+		    <display:column sortable="true" style="width: 10%" title="Beigu datums" property="sakumaDatums" format="{0,date,dd.MM.yyyy}" />
+		    <display:column sortable="true" style="width: 10%" title="Beigu datums" property="beiguDatums" format="{0,date,dd.MM.yyyy}" />
+		</display:table>
 	</c:when>
 	<c:otherwise>
 		<c:out value="Šīs ārsts pašlaik nepasniedz nevienu ciklu" />
 		<br>
 	</c:otherwise>
 </c:choose>
-
 <hr>
 
 <c:choose>

@@ -18,6 +18,7 @@ import lv.stradini.interfaces.service.ResidentService;
 import lv.stradini.util.LoggerUtils;
 import lv.stradini.validation.AddDoctorFormValidator;
 import lv.stradini.validation.AddResidentFormValidator;
+import lv.stradini.validation.CycleFormValidator;
 import lv.stradini.validation.DoctorFormValidator;
 import lv.stradini.validation.HeartFormValidator;
 import lv.stradini.validation.ResidentFormValidator;
@@ -46,7 +47,7 @@ public class ViewController {
 	
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
@@ -473,6 +474,18 @@ public class ViewController {
 	public ModelAndView onSubmitAddCycleForm(Cycle cycle, Errors errors, String actionType) {
 		log.info("Location");
 		ModelAndView mav = new ModelAndView();
+		
+		CycleFormValidator validator = new CycleFormValidator(residentService);
+		validator.validate(cycle, errors);
+		if (errors.hasErrors()) {
+			mav.addObject("departmentList", residentService.fetchAllDepartments());
+			mav.addObject("doctorList", residentService.fetchAllDoctors());
+			mav.addObject("cycle", cycle);
+			mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
+			mav.setViewName("add/addCycle");
+			return mav;
+		}
+		
 		cycle.setDepartment(residentService.findDepartmentByID(cycle.getDepartmentFk()));
 		cycle.setPasniedzejs(residentService.findDoctorByID(cycle.getPasniedzejsFk()));
 		

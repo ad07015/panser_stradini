@@ -31,13 +31,14 @@ Ievadiet cikla informāciju
 <form:form commandName="cycle" action="/resdb/view/cycleList.htm" cssClass="bordless" method="post">
 	<table class="bordless">
   		<tr>
-			<td>Nodaļa</td>
-			<td>
+			<td width="160px">Nodaļa</td>
+			<td width="160px">
 				<form:select path="departmentFk">
 					<form:option value="0" label="Select..." />
 					<form:options items="${departmentList}" itemLabel="label" itemValue="departmentPk" />
 				</form:select>
 			</td>
+			<td><form:errors path="departmentFk" cssClass="error" /></td>
 		</tr>
   		<tr>
 			<td>Pasniedzējs</td>
@@ -47,6 +48,7 @@ Ievadiet cikla informāciju
 					<form:options items="${doctorList}" itemLabel="label" itemValue="doctorPk" />
 				</form:select>
 			</td>
+			<td><form:errors path="pasniedzejsFk" cssClass="error" /></td>
 		</tr>
 
 <%-- 		<tr>

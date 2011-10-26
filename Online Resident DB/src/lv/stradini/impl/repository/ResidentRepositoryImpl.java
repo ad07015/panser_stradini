@@ -579,4 +579,28 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean insertFacility(Facility facility) {
+		logger.info("Location");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(facility);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
+	}
+
+	@Override
+	public Facility findFacilityByID(int facilityID) {
+		Session session = sessionFactory.openSession();
+		Facility result = (Facility) session.get(Facility.class, facilityID);
+		session.close();
+		return result;
+	}
 }

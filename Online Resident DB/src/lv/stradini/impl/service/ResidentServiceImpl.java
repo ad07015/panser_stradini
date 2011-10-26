@@ -180,4 +180,14 @@ public class ResidentServiceImpl implements ResidentService {
 	public boolean insertCyclePlanEntry(CyclePlanEntry cyclePlanEntry) {
 		return repo.insertCyclePlanEntry(cyclePlanEntry);
 	}
+
+	@Override
+	public boolean insertFacility(Facility facility) {
+		return repo.insertFacility(facility);
+	}
+
+	@Override
+	public Facility findFacilityByID(int facilityID) {
+		return repo.findFacilityByID(facilityID);
+	}
 }

@@ -73,4 +73,8 @@ public interface ResidentService {
 	CyclePlanEntry findCyclePlanEntryByID(int cpeID);
 
 	boolean insertCyclePlanEntry(CyclePlanEntry cyclePlanEntry);
+
+	boolean insertFacility(Facility facility);
+
+	Facility findFacilityByID(int facilityID);
 }

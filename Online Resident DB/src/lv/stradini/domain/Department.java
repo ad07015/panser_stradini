@@ -17,6 +17,9 @@ import javax.persistence.Transient;
 public class Department {
 	
 	private int departmentPk;
+	
+	private int facilityFk;
+	private int vaditajsFk;
 	private String nosaukums;
 	private String label;
 	
@@ -86,5 +89,23 @@ public class Department {
 	
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	
+	@Transient
+	public int getFacilityFk() {
+		return facilityFk;
+	}
+
+	public void setFacilityFk(int facilityFk) {
+		this.facilityFk = facilityFk;
+	}
+	
+	@Transient
+	public int getVaditajsFk() {
+		return vaditajsFk;
+	}
+
+	public void setVaditajsFk(int vaditajsFk) {
+		this.vaditajsFk = vaditajsFk;
 	}
 }

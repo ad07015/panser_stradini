@@ -48,11 +48,11 @@ function deleteFacility(fID) {
 <display:table uid="facility" name="facilityList" defaultsort="1" defaultorder="ascending" requestURI="/resdb/view/facilityList.htm" class="narrow_table">
     <display:column sortable="true" style="width: 45%" title="Nosaukums" property="nosaukums" />
     <display:column style="width: 3%">
-   		<a href="javascript:deleteFacility(${facility.facilityPk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Nodzēst medicinisko iestadi" /></a>
+   		<a href="javascript:deleteFacility(${facility.facilityPk})"><img src="pictures/red_cross.png" align="middle" width="24" height="24" alt="Nodzest medicinisko iestadi" /></a>
    	</display:column>
 </display:table>
 
-<button class="belowTable" onClick="location.href='/resdb/doctor/addFacility.htm'">Piereģistrēt medicīnisko iestādi</button>
+<button class="belowTable" onClick="location.href='/resdb/facility/addFacility.htm'">Piereģistrēt medicīnisko iestādi</button>
 
 </body>
 </html>

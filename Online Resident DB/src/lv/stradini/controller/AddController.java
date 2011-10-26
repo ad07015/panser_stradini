@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/resident/add*.htm", "/cycle/add*.htm", "/doctor/add*.htm", "/facility/add*.htm"})
+@RequestMapping(value={"/resident/add*.htm", "/cycle/add*.htm", "/doctor/add*.htm", "/facility/add*.htm", "/department/add*.htm"})
 public class AddController {
 
 	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(AddController.class));
@@ -95,6 +95,16 @@ public class AddController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("facility", new Facility());
 		mav.setViewName("add/addFacility");
+		return mav;
+	}
+	
+	@RequestMapping(value="addDepartment.htm", method = RequestMethod.GET)
+	public ModelAndView showAddDepartmentForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("facilityList", residentService.fetchAllFacilities());
+		mav.addObject("doctorList", residentService.fetchAllDoctors());
+		mav.addObject("department", new Department());
+		mav.setViewName("add/addDepartment");
 		return mav;
 	}
 }

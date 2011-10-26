@@ -595,6 +595,22 @@ public class ResidentRepositoryImpl implements ResidentRepository {
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean save(Object object) {
+		logger.info("Location");
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(object);
+			session.getTransaction().commit();
+			session.close();
+			return true;
+		} catch (HibernateException he) {
+			logger.error("", he);
+		}
+		return false;
+	}
 
 	@Override
 	public Facility findFacilityByID(int facilityID) {

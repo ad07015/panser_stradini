@@ -8,6 +8,7 @@ import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
 import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.interfaces.service.ResidentService;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/resident/add*.htm", "/cycle/add*.htm", "/doctor/add*.htm"})
+@RequestMapping(value={"/resident/add*.htm", "/cycle/add*.htm", "/doctor/add*.htm", "/facility/add*.htm"})
 public class AddController {
 
 	private static Logger log = Logger.getLogger(LoggerUtils.getClassName(AddController.class));
@@ -86,6 +87,14 @@ public class AddController {
 		mav.addObject("cycle", new Cycle());
 		mav.addObject("actionType", Constants.ACTION_TYPE_NEW);
 		mav.setViewName("add/addCycle");
+		return mav;
+	}
+	
+	@RequestMapping(value="addFacility.htm", method = RequestMethod.GET)
+	public ModelAndView showAddFacilityForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("facility", new Facility());
+		mav.setViewName("add/addFacility");
 		return mav;
 	}
 }

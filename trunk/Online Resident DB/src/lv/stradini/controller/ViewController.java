@@ -10,6 +10,7 @@ import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
 import lv.stradini.domain.CyclePlanEntry;
 import lv.stradini.domain.Doctor;
+import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
 import lv.stradini.domain.Resident;
 import lv.stradini.domain.ResidentCycle;
@@ -68,7 +69,6 @@ public class ViewController {
 	
 	@RequestMapping(value="doctorList.htm", method=RequestMethod.GET)
 	public ModelAndView showDoctorList() {
-		log.info("Entering search form in its initial state");
 
 		List<Doctor> doctorList = residentService.fetchAllDoctors();
 		log.info("Resident list size = " + doctorList.size());
@@ -89,6 +89,18 @@ public class ViewController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("cycleList", cycleList);
 		mav.setViewName("view/cycleList");
+		return mav;
+	}
+
+	@RequestMapping(value="facilityList.htm", method=RequestMethod.GET)
+	public ModelAndView showFacilityList() {
+
+		List<Facility> facilityList = residentService.fetchAllFacilities();
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("facilityList", facilityList);
+		mav.setViewName("view/facilityList");
 		return mav;
 	}
 	
@@ -730,6 +742,39 @@ public class ViewController {
 		mav.addObject("cyclePlanEntryList", newResident.getCyclePlanEntryList());
 		mav.addObject("cyclePlanEntry", new CyclePlanEntry());
 		mav.setViewName("view/residentDetails");
+		return mav;
+	}
+	
+	@RequestMapping(value="facilityList.htm", method = RequestMethod.POST, params={"action=addFacility"})
+	public ModelAndView onSubmitNewFacilityForm(Facility facility, Errors errors) {
+		log.info("Location");
+		ModelAndView mav = new ModelAndView();
+		
+		boolean result = residentService.insertFacility(facility);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_FACILITY_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_FACILITY_ADD_FAIL;
+			status = "fail";
+		}
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.addObject("facilityList", residentService.fetchAllFacilities());
+		mav.setViewName("view/facilityList");
+		return mav;
+	}
+
+	@RequestMapping(value="facilityList.htm", method=RequestMethod.POST, params={"action=deleteFacility"})
+	public ModelAndView onSubmitDeleteFacilityForm(int facilityID) {
+		Facility facility = residentService.findFacilityByID(facilityID);
+		residentService.delete(facility);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("facilityList", residentService.fetchAllFacilities());
+		mav.setViewName("view/facilityList");
 		return mav;
 	}
 }

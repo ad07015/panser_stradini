@@ -34,4 +34,8 @@ public class Constants {
 
 	public static final String MESSAGE_RESIDENT_CYCLE_ADD_SUCCESS = "Rezident veiksmigi pieregistrets ciklam";
 	public static final String MESSAGE_RESIDENT_CYCLE_ADD_FAIL = MESSAGE_FAIL_PREFIX + "Rezidents netika pieregistrets ciklam";
+
+	//TODO [task] Fix puctuation
+	public static final String MESSAGE_FACILITY_ADD_SUCCESS = "Mediciniska iestada veiksm\u012Bgi piere\u0123istr\u0113ts!";
+	public static final String MESSAGE_FACILITY_ADD_FAIL = MESSAGE_FAIL_PREFIX + " Mediciniska iestade netika piere\u0123istr\u0113ta!";
 }

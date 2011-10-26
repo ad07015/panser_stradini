@@ -36,6 +36,9 @@ public class Constants {
 	public static final String MESSAGE_RESIDENT_CYCLE_ADD_FAIL = MESSAGE_FAIL_PREFIX + "Rezidents netika pieregistrets ciklam";
 
 	//TODO [task] Fix puctuation
-	public static final String MESSAGE_FACILITY_ADD_SUCCESS = "Mediciniska iestada veiksm\u012Bgi piere\u0123istr\u0113ts!";
-	public static final String MESSAGE_FACILITY_ADD_FAIL = MESSAGE_FAIL_PREFIX + " Mediciniska iestade netika piere\u0123istr\u0113ta!";
+	public static final String MESSAGE_FACILITY_ADD_SUCCESS = "Mediciniska iestade veiksm\u012Bgi piere\u0123istr\u0113ta!";
+	public static final String MESSAGE_FACILITY_ADD_FAIL = MESSAGE_FAIL_PREFIX + "Mediciniska iestade netika piere\u0123istr\u0113ta!";
+
+	public static final String MESSAGE_DEPARTMENT_ADD_SUCCESS = "Nodala veiksm\u012Bgi piere\u0123istr\u0113ts!";
+	public static final String MESSAGE_DEPARTMENT_ADD_FAIL = MESSAGE_FAIL_PREFIX + "Nodala netika piere\u0123istr\u0113ta!";
 }

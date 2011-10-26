@@ -77,4 +77,6 @@ public interface ResidentService {
 	boolean insertFacility(Facility facility);
 
 	Facility findFacilityByID(int facilityID);
+
+	boolean save(Object object);
 }

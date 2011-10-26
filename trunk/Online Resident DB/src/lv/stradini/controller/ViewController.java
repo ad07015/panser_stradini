@@ -9,6 +9,7 @@ import lv.stradini.comparator.UzvardsResidentComparator;
 import lv.stradini.constants.Constants;
 import lv.stradini.domain.Cycle;
 import lv.stradini.domain.CyclePlanEntry;
+import lv.stradini.domain.Department;
 import lv.stradini.domain.Doctor;
 import lv.stradini.domain.Facility;
 import lv.stradini.domain.Heart;
@@ -101,6 +102,18 @@ public class ViewController {
 		
 		mav.addObject("facilityList", facilityList);
 		mav.setViewName("view/facilityList");
+		return mav;
+	}
+
+	@RequestMapping(value="departmentList.htm", method=RequestMethod.GET)
+	public ModelAndView showDepartmentList() {
+
+		List<Department> departmentList = residentService.fetchAllDepartments();
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("departmentList", departmentList);
+		mav.setViewName("view/departmentList");
 		return mav;
 	}
 	
@@ -775,6 +788,41 @@ public class ViewController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("facilityList", residentService.fetchAllFacilities());
 		mav.setViewName("view/facilityList");
+		return mav;
+	}
+	
+	@RequestMapping(value="departmentList.htm", method = RequestMethod.POST, params={"action=addDepartment"})
+	public ModelAndView onSubmitNewDepartmentForm(Department department, Errors errors) {
+		log.info("Location");
+		ModelAndView mav = new ModelAndView();
+		department.setFacility(residentService.findFacilityByID(department.getFacilityFk()));
+		department.setVaditajs(residentService.findDoctorByID(department.getVaditajsFk()));
+		
+		boolean result = residentService.save(department);
+		String message;
+		String status;
+		if(result) {
+			message = Constants.MESSAGE_DEPARTMENT_ADD_SUCCESS;
+			status = "success";
+		} else {
+			message = Constants.MESSAGE_DEPARTMENT_ADD_FAIL;
+			status = "fail";
+		}
+		mav.addObject("status", status);
+		mav.addObject("message", message);
+		mav.addObject("departmentList", residentService.fetchAllDepartments());
+		mav.setViewName("view/departmentList");
+		return mav;
+	}
+
+	@RequestMapping(value="departmentList.htm", method=RequestMethod.POST, params={"action=deleteDepartment"})
+	public ModelAndView onSubmitDeleteDepartmentForm(int departmentID) {
+		Department department = residentService.findDepartmentByID(departmentID);
+		residentService.delete(department);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("departmentList", residentService.fetchAllDepartments());
+		mav.setViewName("view/departmentList");
 		return mav;
 	}
 }

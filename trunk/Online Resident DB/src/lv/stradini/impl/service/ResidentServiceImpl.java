@@ -190,4 +190,9 @@ public class ResidentServiceImpl implements ResidentService {
 	public Facility findFacilityByID(int facilityID) {
 		return repo.findFacilityByID(facilityID);
 	}
+
+	@Override
+	public boolean save(Object object) {
+		return repo.save(object);
+	}
 }

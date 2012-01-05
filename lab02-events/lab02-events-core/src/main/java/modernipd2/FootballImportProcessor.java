@@ -173,10 +173,10 @@ public class FootballImportProcessor implements DataImportProcessor {
                 game.getGoalList().addAll(getGoalList(team2Node, team2, game));
                 game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
                 game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
+                game.getViolationList().addAll(getViolationList(team1Node, team1, game));
+                game.getViolationList().addAll(getViolationList(team2Node, team2, game));
             }
 
-//            game.getViolationList().addAll(getViolationList(team1Node, team1, game));
-//            game.getViolationList().addAll(getViolationList(team2Node, team2, game));
 
         }
 
@@ -363,12 +363,13 @@ public class FootballImportProcessor implements DataImportProcessor {
     private Violation parseViolation(Node violationNode, Team team, Game game) {
         Element violationElement = (Element) violationNode;
         Integer time = getTimeInSeconds(violationElement.getAttribute(ATTR_ACTION_TIME));
-        Player player = TeamUtils.findPlayerByPlayerNumber(team, violationElement.getAttribute(ATTR_PLAYER_NUMBER));
+        Player player = playerService.getPlayerByTeamAndNumber(team, violationElement.getAttribute(ATTR_PLAYER_NUMBER));
 
         Violation violation = new Violation();
         violation.setViolationTime(time);
         violation.setPlayer(player);
         violation.setGame(game);
+        commonDAO.save(violation);
         return violation;
     }
 

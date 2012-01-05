@@ -9,30 +9,52 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+@Entity
 public class Game implements PersistentEntity, Serializable {
     
+    @Id
+    @GeneratedValue
     private Long id;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date date;
     private String venue;
     private Integer viewerCount;
+    @Transient
     private Team team1;
+    @Transient
     private Team team2;
+    @Transient
     private Referee mainReferee;
+    @Transient
     private Referee lineReferee1;
+    @Transient
     private Referee lineReferee2;
     
+    @Transient
     private Set<Player> team1InitialPlayerList = new LinkedHashSet<Player>();
+    @Transient
     private Set<Player> team2InitialPlayerList = new LinkedHashSet<Player>();
     
+    @OneToMany(targetEntity=Goal.class, cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Goal> goalList = new TreeSet<Goal>();
     
+    @Transient
     private Set<Violation> violationList = new TreeSet<Violation>();
     
+    @Transient
     private Set<Substitusion> substitusionList = new LinkedHashSet<Substitusion>();
     
     public Game() {

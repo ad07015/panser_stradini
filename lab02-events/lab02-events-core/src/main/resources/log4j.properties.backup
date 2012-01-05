@@ -1,0 +1,43 @@
+# [Task 6] 
+# Your task is to configure two appenders.
+# First one should write in console.
+# Second one should write in local file.
+
+log4j.rootLogger=all, fileAll, fileDebug, fileInfo, fileTrace, console
+
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%-5p: %c - %m%n
+
+log4j.appender.fileAll=org.apache.log4j.RollingFileAppender
+log4j.appender.fileAll.File=c:/log/magistrantura/timekli/lab1/lab1-events.log
+log4j.appender.fileAll.Append=true
+log4j.appender.fileAll.MaxFileSize=3000KB
+log4j.appender.fileAll.layout=org.apache.log4j.PatternLayout
+log4j.appender.fileAll.layout.ConversionPattern=%d{DATE} %-5p %-15c{1}: %m%n
+
+log4j.appender.fileDebug=org.apache.log4j.RollingFileAppender
+log4j.appender.fileDebug.Threshold=DEBUG
+log4j.appender.fileDebug.File=c:/log/magistrantura/timekli/lab1/lab1-events_debug.log
+log4j.appender.fileDebug.Append=true
+log4j.appender.fileDebug.MaxFileSize=3000KB
+log4j.appender.fileDebug.layout=org.apache.log4j.PatternLayout
+log4j.appender.fileDebug.layout.ConversionPattern=%d{DATE} %-5p %-15c{1}: %m%n
+
+log4j.appender.fileInfo=org.apache.log4j.RollingFileAppender
+log4j.appender.fileInfo.Threshold=INFO
+log4j.appender.fileInfo.File=c:/log/magistrantura/timekli/lab1/lab1-events_info.log
+log4j.appender.fileInfo.Append=true
+log4j.appender.fileInfo.MaxFileSize=3000KB
+log4j.appender.fileInfo.layout=org.apache.log4j.PatternLayout
+log4j.appender.fileInfo.layout.ConversionPattern=%d{DATE} %-5p %-15c{1}: %m%n
+
+log4j.appender.fileTrace=org.apache.log4j.RollingFileAppender
+log4j.appender.fileTrace.Threshold=TRACE
+log4j.appender.fileTrace.File=c:/log/magistrantura/timekli/lab1/lab1-events_trace.log
+log4j.appender.fileTrace.Append=true
+log4j.appender.fileTrace.MaxFileSize=3000KB
+log4j.appender.fileTrace.layout=org.apache.log4j.PatternLayout
+log4j.appender.fileTrace.layout.ConversionPattern=%d{DATE} %-5p %-15c{1}: %m%n
+

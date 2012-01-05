@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Spring Web application configuration file -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <!-- Support for annotation-based Spring Web MVC controllers configuration -->
+    <context:component-scan base-package="lv.lu.events.portal.mvc.controller"/>
+    
+    <!-- Spring Web MVC controllers and mappings -->    
+	
+	<!-- The following controllers are configured using annotations -->
+	<!-- Listed here just for reference, see Java classes -->
+	<!-- bean name="loginLogoutController" class="lv.lu.events.portal.mvc.controller.LoginLogoutController" /-->
+	
+	<!-- Validator for LoginLogoutController -->
+    <bean name="loginValidator" class="lv.lu.events.portal.mvc.validator.LoginValidator"></bean>
+	
+    <bean name="eventValidator" class="lv.lu.events.portal.mvc.validator.EventValidator"></bean>
+        
+    <bean name="registrationValidator" class="lv.lu.events.portal.mvc.validator.RegistrationValidator"></bean>
+	
+	<!-- After successful login user is navigated to Home page -->
+	<!-- Example of XML configuration based controller -->
+    <bean name="homePageController" class="lv.lu.events.portal.mvc.controller.HomePageController">
+        <property name="viewName" value="home"/>
+    </bean>	
+
+	<!-- URL mappings to controllers -->
+
+	<!-- Mapping for controllers defined in XML only -->
+    <bean id="urlMappingA" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="0"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="loginInterceptor"/>
+            </list>
+        </property>
+        <property name="mappings">
+            <props>
+                <prop key="/home">homePageController</prop>
+            </props>
+        </property>
+    </bean>
+	
+	<!-- Mapping for annotation-based Spring Web MVC controllers configuration -->
+    <bean id="urlMappingB" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="order" value="1"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="loginInterceptor"/>
+            </list>
+        </property>
+    </bean>
+	
+	<!-- Interceptors -->
+
+	<!-- Handles unauthorized access attempts -->
+    <bean id="loginInterceptor" class="lv.lu.events.portal.mvc.interceptor.LoginInterceptor">
+        <property name="ignoreList">
+            <list>
+                <value>/home</value>
+                <value>/login</value>
+                <value>/register</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <value>messages</value>
+        </property>
+    </bean>
+        
+	<!-- View resolvers -->
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+    
+    <!-- Application services -->
+    
+    <bean id="commonDAO" class="lv.lu.events.impl.CommonDAOImpl" />
+    <bean id="userService" class="lv.lu.events.impl.service.UserServiceImpl"/>
+    <bean id="inviteService" class="lv.lu.events.impl.service.InviteServiceImpl"/>
+    <bean id="eventService" class="lv.lu.events.impl.service.EventServiceImpl"/>
+    <bean id="friendshipService" class="lv.lu.events.impl.service.FriendshipServiceImpl"/>
+
+   	<!-- Persistence configuration -->
+
+    <bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="hibernate_mysql"/>
+        <property name="jpaVendorAdapter">
+		    <!-- Hibernate properties are specified in persistence.xml file -->
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+    </bean>
+
+    <bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+	
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

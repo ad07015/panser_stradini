@@ -4,7 +4,10 @@
  */
 package modernipd2.interfaces.service;
 
+import java.util.Date;
+import modernipd2.model.Game;
 import modernipd2.model.Player;
+import modernipd2.model.Referee;
 import modernipd2.model.Team;
 
 /**
@@ -14,4 +17,8 @@ import modernipd2.model.Team;
 public interface PlayerService {
     
     public Player getPlayerByTeamAndNumber(Team team, String playerNumber);
+    
+    public Referee getRefereeByFirstNameAndLastName(String firstName, String lastName);
+    
+    public Game getGameByVenueAndTeams(Team team1, Team team2, String venue, Date date);
 }

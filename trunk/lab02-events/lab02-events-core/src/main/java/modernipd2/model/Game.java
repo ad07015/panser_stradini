@@ -14,7 +14,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
@@ -22,46 +26,50 @@ import javax.persistence.Transient;
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+@SuppressWarnings("serial")
+@NamedQueries({
+    @NamedQuery(name = "GetGameByVenueAndTeams",
+    query = "SELECT g FROM Game g WHERE g.team1 = :team1 AND g.team2 = :team2 AND g.venue = :venue AND g.gameDate = :gameDate")
+})
 @Entity
 public class Game implements PersistentEntity, Serializable {
-    
+
     @Id
     @GeneratedValue
     private Long id;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date date;
+    private Date gameDate;
     private String venue;
     private Integer viewerCount;
-    @Transient
+    @OneToOne
     private Team team1;
-    @Transient
+    @OneToOne
     private Team team2;
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "MAIN_REF_FK")
     private Referee mainReferee;
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "LINE_REF_1_FK")
     private Referee lineReferee1;
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "LINE_REF_2_FK")
     private Referee lineReferee2;
-    
     @Transient
     private Set<Player> team1InitialPlayerList = new LinkedHashSet<Player>();
     @Transient
     private Set<Player> team2InitialPlayerList = new LinkedHashSet<Player>();
-    
-    @OneToMany(targetEntity=Goal.class, cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Goal> goalList = new TreeSet<Goal>();
-    
     @Transient
     private Set<Violation> violationList = new TreeSet<Violation>();
-    
     @Transient
     private Set<Substitusion> substitusionList = new LinkedHashSet<Substitusion>();
-    
+
     public Game() {
     }
 
     public Game(Date date, String venue, Integer viewerCount) {
-        this.date = date;
+        this.gameDate = date;
         this.venue = venue;
         this.viewerCount = viewerCount;
     }
@@ -74,12 +82,12 @@ public class Game implements PersistentEntity, Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getGameDate() {
+        return gameDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setGameDate(Date gameDate) {
+        this.gameDate = gameDate;
     }
 
     public String getVenue() {
@@ -181,7 +189,7 @@ public class Game implements PersistentEntity, Serializable {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("Datums: ").append(this.date).append("\nVieta: ").append(this.venue).append("\nSkatitaju skaits: ").append(this.viewerCount);
+        sb.append("Datums: ").append(this.gameDate).append("\nVieta: ").append(this.venue).append("\nSkatitaju skaits: ").append(this.viewerCount);
         return sb.toString();
     }
 }

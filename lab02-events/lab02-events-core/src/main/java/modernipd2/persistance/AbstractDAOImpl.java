@@ -1,4 +1,4 @@
-package lv.lu.events.impl;
+package modernipd2.persistance;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

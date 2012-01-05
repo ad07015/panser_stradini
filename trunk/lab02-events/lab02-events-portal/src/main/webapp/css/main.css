@@ -1,0 +1,105 @@
+html, body {
+	margin-left: 20;
+	margin-top: 20;
+	font-family: Verdana, Arial;
+	font-size: 12px;
+}
+form {
+    padding: 0;
+    margin: 0;
+}
+form.event textarea{
+    width: 100%;
+}
+form.event input:text{
+    width: 100%;
+}
+p {
+	margin: 5px 5px 5px 5px;
+}
+
+a {
+	text-decoration: none;
+	color: #71179E;
+}
+a:link { color: #71179E; }
+a:visited { color: #71179E; }
+a:hover { color: #209920; }
+
+#menu {
+	width: 250px;
+	float:left;
+	background-color: #FFBC42;
+	border: 2px solid #7C1B1B;
+	min-height:200px;
+}
+
+#menu a {	
+	font-size: 11pt;	
+	margin: 5px 30px 5px 5px;
+	font-weight: bold;
+}
+
+#content {
+	margin-left: 260px;
+	margin-right: 20px;
+	background-color: #FFBC42;
+	border: 2px solid #7C1B1B;
+        margin-bottom: 200px;
+	min-height:600px;
+}
+
+#content table {
+    border: 1px solid #7C1B1B;
+    border-spacing: 0px;
+}
+
+#content th {
+	background-color: #FFD07F;	
+	border: 1px solid #7C1B1B;
+}
+
+#content td {
+	background-color: #FFD88C;	
+	border: 1px solid #7C1B1B;
+}
+
+#content table .default_table{
+	width: 600px;
+	padding: 3px;
+}
+
+#categories_main a {
+	font-size: 16pt;
+	margin: 5px 30px 5px 5px;
+	font-weight: bold;
+}
+
+#login_form {	
+	width: 250px;
+	height: 120px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	background-color: #FFBC42;
+	border: 2px solid #7C1B1B;
+	border-spacing: 0px;
+}
+
+#login_form tr,#login_form td {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
+.user_profile{
+	width:400px; 
+	border: 1px solid; 
+	text-align: left; 
+	padding: 10px;
+}
+
+.error {
+	color: #D8000C;
+	font-style: italic;	
+}

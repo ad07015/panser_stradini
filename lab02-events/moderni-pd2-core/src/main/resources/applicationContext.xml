@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation=" 
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+	<!-- Users data loader configuration -->
+	
+    <bean id="footballImportProcessor" class="modernipd2.FootballImportProcessor">
+        <property name="commonDAO" ref="commonDAO"/>
+        <property name="teamService" ref="teamService"/>
+        <property name="playerService" ref="playerService"/>
+    </bean>
+    
+    <bean id="teamService" class="modernipd2.impl.service.TeamServiceImpl">
+        <property name="commonDAO" ref="commonDAO"/>
+    </bean>
+    
+    <bean id="playerService" class="modernipd2.impl.service.PlayerServiceImpl">
+    </bean>
+
+    <!-- Bean for common DAO operations -->
+	
+    <bean id="commonDAO" class="modernipd2.persistance.CommonDAOImpl"/>
+
+ <!-- Persistence configuration -->	     
+	               
+    <!-- Database connection properties are specified in \lab01-events\src\main\resources\META-INF\persistence.xml file -->
+    <bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="hibernate_mysql"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+    </bean>
+	
+    <bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+	
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+	
+</beans>

@@ -51,10 +51,8 @@ public class FootballImportProcessor implements DataImportProcessor {
     public static final String ATTR_TEAM_NAME = "Nosaukums";
     DOMParser parser;
     List<Game> gameList = new ArrayList<Game>();
-    
     private TeamService teamService;
     private PlayerService playerService;
-    
     protected CommonDAO commonDAO;
 
     public FootballImportProcessor() {
@@ -62,12 +60,12 @@ public class FootballImportProcessor implements DataImportProcessor {
 //        em = emf.createEntityManager();
 //        commonDAO.setEntityManager(em);
     }
-    
+
     @Autowired
     public FootballImportProcessor(CommonDAO commonDAO) {
         this.commonDAO = commonDAO;
     }
-    
+
     @Override
     public void importData() {
         parseXmlFile();
@@ -108,41 +106,41 @@ public class FootballImportProcessor implements DataImportProcessor {
             System.out.println("Second line referee: " + game.getLineReferee2());
             System.out.println("Team 1 player list");
             for (Player player : game.getTeam1().getPlayerList()) {
-                System.out.println(player);
+            System.out.println(player);
             }
             System.out.println("Team 2 player list");
             for (Player player : game.getTeam1().getPlayerList()) {
-                System.out.println(player);
+            System.out.println(player);
             }
             System.out.println("Goal list");
             for (Goal goal : game.getGoalList()) {
-                System.out.println(goal);
+            System.out.println(goal);
             }
             System.out.println("Substitusion list");
             for (Substitusion substitusion : game.getSubstitusionList()) {
-                System.out.println(substitusion);
+            System.out.println(substitusion);
             }
             System.out.println("Violation list");
             for (Violation violation : game.getViolationList()) {
-                System.out.println(violation);
+            System.out.println(violation);
             }
-            */
+             */
         }
     }
 
     private Game parseGame(Node gameNode) {
+        Game game = null;
         Element gameElement = (Element) gameNode;
         Date date = parseDate(gameElement.getAttribute(Constants.ATTR_DATUMS));
         String venue = gameElement.getAttribute(Constants.ATTR_VIETA);
         Integer viewerCount = Integer.parseInt(gameElement.getAttribute(Constants.ATTR_SKATITAJI));
-        Game game = new Game(date, venue, viewerCount);
 
         Node mainRefereeNode = gameElement.getElementsByTagName("VT").item(0);
-        game.setMainReferee(parseReferee(mainRefereeNode));
+        Referee mainReferee = parseReferee(mainRefereeNode);
 
         NodeList lineRefereeNodeList = gameElement.getElementsByTagName("T");
-        game.setLineReferee1(parseReferee(lineRefereeNodeList.item(0)));
-        game.setLineReferee2(parseReferee(lineRefereeNodeList.item(1)));
+        Referee lineReferee1 = parseReferee(lineRefereeNodeList.item(0));
+        Referee lineReferee2 = parseReferee(lineRefereeNodeList.item(1));
 
         NodeList teamNodeList = gameElement.getElementsByTagName("Komanda");
         if (teamNodeList != null && teamNodeList.getLength() == 2) {
@@ -153,23 +151,33 @@ public class FootballImportProcessor implements DataImportProcessor {
 
             team1Node = teamNodeList.item(0);
             team1 = parseTeam(team1Node);
-            game.setTeam1(team1);
-            game.setTeam1InitialPlayerList(getPlayerList(team1Node, team1, "Pamatsastavs"));
+            Set<Player> team1InitialPlayerList = getPlayerList(team1Node, team1, "Pamatsastavs");
 
             team2Node = teamNodeList.item(1);
             team2 = parseTeam(team2Node);
-            game.setTeam2InitialPlayerList(getPlayerList(team1Node, team1, "Pamatsastavs"));
-            game.setTeam2(team2);
+            Set<Player> team2InitialPlayerList = getPlayerList(team1Node, team1, "Pamatsastavs");
 
-            commonDAO.save(game);
-            
-            game.getGoalList().addAll(getGoalList(team1Node, team1, game));
-            game.getGoalList().addAll(getGoalList(team2Node, team2, game));
+            game = playerService.getGameByVenueAndTeams(team1, team2, venue, date);
+
+            if (game == null) {
+                game = new Game(date, venue, viewerCount);
+                game.setMainReferee(mainReferee);
+                game.setLineReferee1(lineReferee1);
+                game.setLineReferee2(lineReferee2);
+                game.setTeam1InitialPlayerList(team1InitialPlayerList);
+                game.setTeam1(team1);
+                game.setTeam2InitialPlayerList(team2InitialPlayerList);
+                game.setTeam2(team2);
+                commonDAO.save(game);
+                game.getGoalList().addAll(getGoalList(team1Node, team1, game));
+                game.getGoalList().addAll(getGoalList(team2Node, team2, game));
+            }
+
 //            game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
 //            game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
 //            game.getViolationList().addAll(getViolationList(team1Node, team1, game));
 //            game.getViolationList().addAll(getViolationList(team2Node, team2, game));
-            
+
         }
 
         return game;
@@ -190,14 +198,14 @@ public class FootballImportProcessor implements DataImportProcessor {
     private Team parseTeam(Node teamNode) {
         Element teamElement = (Element) teamNode;
         String teamName = teamElement.getAttribute(ATTR_TEAM_NAME);
-        
+
         Team team = teamService.getTeamByName(teamName);
         if (team == null) {
             team = new Team();
             team.setTeamName(teamName);
             commonDAO.save(team);
         }
-        
+
         Set<Player> playerList = getPlayerList(teamNode, team, "Speletaji");
         Player tempPlayer;
         for (Player player : playerList) {
@@ -216,11 +224,14 @@ public class FootballImportProcessor implements DataImportProcessor {
         String firstName = refereeElement.getAttribute("Vards");
         String lastName = refereeElement.getAttribute("Uzvards");
 
-        Referee referee = new Referee();
-        referee.setFirstName(firstName);
-        referee.setLastName(lastName);
-        
-        commonDAO.save(referee);
+        Referee referee = playerService.getRefereeByFirstNameAndLastName(firstName, lastName);
+        if (referee == null) {
+            referee = new Referee();
+            referee.setFirstName(firstName);
+            referee.setLastName(lastName);
+            commonDAO.save(referee);
+        }
+
         return referee;
     }
 
@@ -256,6 +267,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         player.setLastName(lastName);
         player.setPlayerNumber(playerNumber);
         player.setPlayerRole(playerRole);
+
         return player;
     }
 

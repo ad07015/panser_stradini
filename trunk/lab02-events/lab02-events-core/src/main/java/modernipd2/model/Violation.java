@@ -5,23 +5,32 @@
 package modernipd2.model;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import modernipd2.constants.utils.Utils;
 
 /**
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+@Entity
 public class Violation implements PersistentEntity, Serializable, Comparable {
     
-    private Long id;
-    private Game game;
-    private Integer violationTime;
-    private Player player;
-
     @Id
     @GeneratedValue
+    private Long id;
+    @ManyToOne(targetEntity=Game.class)
+    @JoinColumn(name="GAME_FK")
+    private Game game;
+    private Integer violationTime;
+    @OneToOne
+    @JoinColumn(name="PLAYER_FK")
+    private Player player;
+
     public Long getId() {
         return id;
     }

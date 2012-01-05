@@ -60,7 +60,7 @@ public class Game implements PersistentEntity, Serializable {
     private Set<Player> team2InitialPlayerList = new LinkedHashSet<Player>();
     @OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Goal> goalList = new TreeSet<Goal>();
-    @Transient
+    @OneToMany(targetEntity = Violation.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Violation> violationList = new TreeSet<Violation>();
     @OneToMany(targetEntity = Substitusion.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Substitusion> substitusionList = new TreeSet<Substitusion>();

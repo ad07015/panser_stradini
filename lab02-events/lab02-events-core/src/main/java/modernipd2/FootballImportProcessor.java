@@ -14,13 +14,11 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import modernipd2.constants.Constants;
 import modernipd2.constants.utils.TeamUtils;
 import modernipd2.interfaces.service.PlayerService;
 import modernipd2.interfaces.service.TeamService;
+import modernipd2.model.Assist;
 import modernipd2.model.Game;
 import modernipd2.model.Goal;
 import modernipd2.model.Player;
@@ -29,7 +27,6 @@ import modernipd2.model.Substitusion;
 import modernipd2.model.Team;
 import modernipd2.model.Violation;
 import modernipd2.persistance.CommonDAO;
-import modernipd2.persistance.CommonDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -176,8 +173,6 @@ public class FootballImportProcessor implements DataImportProcessor {
                 game.getViolationList().addAll(getViolationList(team1Node, team1, game));
                 game.getViolationList().addAll(getViolationList(team2Node, team2, game));
             }
-
-
         }
 
         return game;
@@ -336,20 +331,9 @@ public class FootballImportProcessor implements DataImportProcessor {
         Element goalElement = (Element) goalNode;
 //        Player author = TeamUtils.findPlayerByPlayerNumber(team, goalElement.getAttribute(ATTR_PLAYER_NUMBER));
         Player author = playerService.getPlayerByTeamAndNumber(team, goalElement.getAttribute(ATTR_PLAYER_NUMBER));
-        Set<Player> assistList = new LinkedHashSet<Player>();
+        Set<Assist> assistList = new LinkedHashSet<Assist>();
         Integer time = getTimeInSeconds(goalElement.getAttribute(ATTR_ACTION_TIME));
 
-        NodeList passPlayerNodeList = goalElement.getElementsByTagName("P");
-        int assistPlayerNodeListCount = passPlayerNodeList.getLength();
-        if (passPlayerNodeList != null && assistPlayerNodeListCount > 0) {
-            Node assistPlayerNode;
-            String assistPlayerNumber;
-            for (int i = 0; i < assistPlayerNodeListCount; i++) {
-                assistPlayerNode = passPlayerNodeList.item(i);
-                assistPlayerNumber = ((Element) assistPlayerNode).getAttribute(ATTR_PLAYER_NUMBER);
-                assistList.add(TeamUtils.findPlayerByPlayerNumber(team, assistPlayerNumber));
-            }
-        }
 
         Goal goal = new Goal();
         goal.setAuthor(author);
@@ -357,6 +341,28 @@ public class FootballImportProcessor implements DataImportProcessor {
         goal.setGame(game);
         goal.setTime(time);
         commonDAO.save(goal);
+        
+        NodeList passPlayerNodeList = goalElement.getElementsByTagName("P");
+        int assistPlayerNodeListCount = passPlayerNodeList.getLength();
+        if (passPlayerNodeList != null && assistPlayerNodeListCount > 0) {
+            Node assistPlayerNode;
+            String assistPlayerNumber;
+            Player assistingPlayer;
+            Assist assist;
+            for (int i = 0; i < assistPlayerNodeListCount; i++) {
+                assistPlayerNode = passPlayerNodeList.item(i);
+                assistPlayerNumber = ((Element) assistPlayerNode).getAttribute(ATTR_PLAYER_NUMBER);
+                assistingPlayer = TeamUtils.findPlayerByPlayerNumber(team, assistPlayerNumber);
+                assist = new Assist();
+                assist.setPlayer(assistingPlayer);
+                assistList.add(assist);
+            }
+        }
+        for (Assist assist : assistList) {
+            assist.setGoal(goal);
+        }
+        commonDAO.saveAll(assistList);
+        
         return goal;
     }
 

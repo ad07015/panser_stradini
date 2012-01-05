@@ -5,5 +5,5 @@ package modernipd2.model;
  */
 public interface PersistentEntity {
 
-	public Long getId();
+    public Long getId();
 }

@@ -161,12 +161,14 @@ public class FootballImportProcessor implements DataImportProcessor {
             game.setTeam2InitialPlayerList(getPlayerList(team1Node, team1, "Pamatsastavs"));
             game.setTeam2(team2);
 
+            commonDAO.save(game);
+            
             game.getGoalList().addAll(getGoalList(team1Node, team1, game));
             game.getGoalList().addAll(getGoalList(team2Node, team2, game));
-            game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
-            game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
-            game.getViolationList().addAll(getViolationList(team1Node, team1, game));
-            game.getViolationList().addAll(getViolationList(team2Node, team2, game));
+//            game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
+//            game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
+//            game.getViolationList().addAll(getViolationList(team1Node, team1, game));
+//            game.getViolationList().addAll(getViolationList(team2Node, team2, game));
             
         }
 
@@ -201,27 +203,10 @@ public class FootballImportProcessor implements DataImportProcessor {
         for (Player player : playerList) {
             tempPlayer = playerService.getPlayerByTeamAndNumber(team, player.getPlayerNumber());
             if (tempPlayer == null) {
-//                player.setTeam(team);
                 commonDAO.save(player);
             }
         }
         team = teamService.getTeamByName(teamName);
-//        
-//        Team tempTeam = teamService.getTeamByName(teamName);
-//        if (tempTeam == null) {
-//            commonDAO.save(team);
-//            System.out.println("New team persisted");
-//        } else {
-//            team = tempTeam;
-//            System.out.println("Team already exists");
-//        }
-//        
-//        System.out.println(team.getPlayerList().size());
-//        
-//        commonDAO.saveAll(playerList);
-////        team.setPlayerList(playerList);
-////        commonDAO.save(team);
-//        team = teamService.getTeamByName(teamName);
         System.out.println("Team size: " + team.getPlayerList().size());
         return team;
     }
@@ -291,7 +276,7 @@ public class FootballImportProcessor implements DataImportProcessor {
                 }
             }
         }
-        commonDAO.saveAll(goalList);
+//        commonDAO.saveAll(goalList);
         return goalList;
     }
 
@@ -337,7 +322,8 @@ public class FootballImportProcessor implements DataImportProcessor {
 
     private Goal parseGoal(Node goalNode, Team team, Game game) {
         Element goalElement = (Element) goalNode;
-        Player author = TeamUtils.findPlayerByPlayerNumber(team, goalElement.getAttribute(ATTR_PLAYER_NUMBER));
+//        Player author = TeamUtils.findPlayerByPlayerNumber(team, goalElement.getAttribute(ATTR_PLAYER_NUMBER));
+        Player author = playerService.getPlayerByTeamAndNumber(team, goalElement.getAttribute(ATTR_PLAYER_NUMBER));
         Set<Player> assistList = new LinkedHashSet<Player>();
         Integer time = getTimeInSeconds(goalElement.getAttribute(ATTR_ACTION_TIME));
 
@@ -358,6 +344,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         goal.setAssistList(assistList);
         goal.setGame(game);
         goal.setTime(time);
+        commonDAO.save(goal);
         return goal;
     }
 

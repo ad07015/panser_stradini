@@ -7,9 +7,15 @@ package modernipd2.model;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import modernipd2.constants.utils.Utils;
 
@@ -20,14 +26,19 @@ import modernipd2.constants.utils.Utils;
 @Entity
 public class Goal implements Comparable, PersistentEntity, Serializable {
 
-    private Long id;
-    private Game game;
-    private Integer time;
-    private Player author;
-    private Set<Player> assistList = new LinkedHashSet<Player>();
-
     @Id
     @GeneratedValue
+    private Long id;
+    @ManyToOne(targetEntity=Game.class)
+    @JoinColumn(name="GAME_FK")
+    private Game game;
+    private Integer time;
+    @OneToOne
+    @JoinColumn(name="AUTHOR_FK")
+    private Player author;
+    @Transient
+    private Set<Player> assistList = new LinkedHashSet<Player>();
+
     public Long getId() {
         return id;
     }
@@ -36,7 +47,6 @@ public class Goal implements Comparable, PersistentEntity, Serializable {
         this.id = id;
     }
 
-    @Transient
     public Player getAuthor() {
         return author;
     }
@@ -45,7 +55,6 @@ public class Goal implements Comparable, PersistentEntity, Serializable {
         this.author = author;
     }
 
-    @Transient
     public Game getGame() {
         return game;
     }
@@ -54,7 +63,6 @@ public class Goal implements Comparable, PersistentEntity, Serializable {
         this.game = game;
     }
 
-    @Transient
     public Set<Player> getAssistList() {
         return assistList;
     }

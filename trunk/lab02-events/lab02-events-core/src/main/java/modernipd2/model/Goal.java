@@ -7,16 +7,13 @@ package modernipd2.model;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import modernipd2.constants.utils.Utils;
 
 /**
@@ -36,8 +33,8 @@ public class Goal implements Comparable, PersistentEntity, Serializable {
     @OneToOne
     @JoinColumn(name="AUTHOR_FK")
     private Player author;
-    @Transient
-    private Set<Player> assistList = new LinkedHashSet<Player>();
+    @OneToMany(targetEntity=Assist.class)
+    private Set<Assist> assistList = new LinkedHashSet<Assist>();
 
     public Long getId() {
         return id;
@@ -63,11 +60,11 @@ public class Goal implements Comparable, PersistentEntity, Serializable {
         this.game = game;
     }
 
-    public Set<Player> getAssistList() {
+    public Set<Assist> getAssistList() {
         return assistList;
     }
 
-    public void setAssistList(Set<Player> assistList) {
+    public void setAssistList(Set<Assist> assistList) {
         this.assistList = assistList;
     }
 

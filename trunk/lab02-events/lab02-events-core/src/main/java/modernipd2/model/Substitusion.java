@@ -5,25 +5,35 @@
 package modernipd2.model;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import modernipd2.constants.utils.Utils;
 
 /**
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+@Entity
 public class Substitusion implements PersistentEntity, Serializable, Comparable {
     
-    private Long id;
-    private Integer substitusionTime;
-    private Game game;
-    private Team team;
-    private Player removed;
-    private Player added;
-
     @Id
     @GeneratedValue
+    private Long id;
+    private Integer substitusionTime;
+    @ManyToOne(targetEntity=Game.class)
+    @JoinColumn(name="GAME_FK")
+    private Game game;
+    @OneToOne
+    private Team team;
+    @OneToOne
+    private Player removed;
+    @OneToOne
+    private Player added;
+    
     public Long getId() {
         return id;
     }

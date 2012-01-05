@@ -62,8 +62,8 @@ public class Game implements PersistentEntity, Serializable {
     private Set<Goal> goalList = new TreeSet<Goal>();
     @Transient
     private Set<Violation> violationList = new TreeSet<Violation>();
-    @Transient
-    private Set<Substitusion> substitusionList = new LinkedHashSet<Substitusion>();
+    @OneToMany(targetEntity = Substitusion.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Substitusion> substitusionList = new TreeSet<Substitusion>();
 
     public Game() {
     }

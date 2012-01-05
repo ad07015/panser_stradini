@@ -171,10 +171,10 @@ public class FootballImportProcessor implements DataImportProcessor {
                 commonDAO.save(game);
                 game.getGoalList().addAll(getGoalList(team1Node, team1, game));
                 game.getGoalList().addAll(getGoalList(team2Node, team2, game));
+                game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
+                game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
             }
 
-//            game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
-//            game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
 //            game.getViolationList().addAll(getViolationList(team1Node, team1, game));
 //            game.getViolationList().addAll(getViolationList(team2Node, team2, game));
 
@@ -375,14 +375,19 @@ public class FootballImportProcessor implements DataImportProcessor {
     private Substitusion parseSubstitusion(Node substitusionNode, Team team, Game game) {
         Element substitusionElement = (Element) substitusionNode;
         Integer time = getTimeInSeconds(substitusionElement.getAttribute(ATTR_ACTION_TIME));
-        Player removed = TeamUtils.findPlayerByPlayerNumber(team, substitusionElement.getAttribute("Nr1"));
-        Player added = TeamUtils.findPlayerByPlayerNumber(team, substitusionElement.getAttribute("Nr2"));
+//        Player removed = TeamUtils.findPlayerByPlayerNumber(team, substitusionElement.getAttribute("Nr1"));
+        Player removed = playerService.getPlayerByTeamAndNumber(team, substitusionElement.getAttribute("Nr1"));
+//        Player added = TeamUtils.findPlayerByPlayerNumber(team, substitusionElement.getAttribute("Nr2"));
+        Player added = playerService.getPlayerByTeamAndNumber(team, substitusionElement.getAttribute("Nr2"));
 
         Substitusion substitusion = new Substitusion();
         substitusion.setSubstitusionTime(time);
         substitusion.setRemoved(removed);
         substitusion.setAdded(added);
         substitusion.setGame(game);
+        substitusion.setTeam(team);
+        
+        commonDAO.save(substitusion);
         return substitusion;
     }
 

@@ -1,22 +1,21 @@
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
-	
-	<!-- Connection to MySQL database -->
-	<persistence-unit name="hibernate_mysql" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<properties>
-			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.username" value="events_user"/>
-            <property name="hibernate.connection.password" value="events_pass"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost/events"/>			
-		    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- Connection to MySQL database -->
+    <persistence-unit name="hibernate_mysql" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="user"/>
+            <property name="hibernate.connection.password" value="pass"/>
+            <property name="hibernate.connection.autocommit" value="true"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost/modernipdtwo"/>			
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="false"/>
-		</properties>
-	</persistence-unit>
-	
-	<!-- Connection to HSQLDB used by unit tests -->
-	<persistence-unit name="hibernate_hsqldb" transaction-type="RESOURCE_LOCAL">
+        </properties>
+    </persistence-unit>
+  <!-- Connection to HSQLDB used by unit tests -->
+    <persistence-unit name="hibernate_hsqldb" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:unit-testing-jpa"/>
@@ -24,7 +23,7 @@
             <property name="hibernate.connection.username" value="sa"/>
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>        
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
         </properties>
     </persistence-unit>
 </persistence>

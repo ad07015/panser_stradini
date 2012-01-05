@@ -1,3 +1,3 @@
-CREATE DATABASE IF NOT EXISTS events;
-CREATE USER 'events_user'@'localhost' IDENTIFIED BY 'events_pass';
-GRANT ALL ON events.* to 'events_user'@'localhost';
+CREATE DATABASE IF NOT EXISTS modernipdtwo;
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'pass';
+GRANT ALL ON modernipdtwo.* to 'user'@'localhost';

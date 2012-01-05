@@ -1,4 +1,4 @@
-package lv.lu.events.interfaces;
+package modernipd2.model;
 
 /**
  * A common interface for all persistent entities in a system.

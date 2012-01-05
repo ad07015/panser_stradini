@@ -10,62 +10,22 @@
 
 	<!-- Users data loader configuration -->
 	
-    <bean id="usersImportProcessor" class="lv.lu.events.impl.users.UsersDataImportProcessor">
-        <property name="dataProvider" ref="localDataProvider"/>
-        <property name="xmlParser" ref="digesterXmlParser"/>
+    <bean id="footballImportProcessor" class="modernipd2.FootballImportProcessor">
         <property name="commonDAO" ref="commonDAO"/>
-        <property name="cleanDB" value="false"/>
+        <property name="teamService" ref="teamService"/>
+        <property name="playerService" ref="playerService"/>
     </bean>
-	
-	<!-- Data provider, which loads data from local files -->
-    <bean id="localDataProvider" class="lv.lu.events.impl.LocalXmlDataProvider">
-        <property name="usersFilePath" value="src\main\resources\data\users.xml"/>
-        <property name="contentFilePath" value="src\main\resources\data\content.xml"/>
-    </bean>
-	
-	<!-- XML parsers -->
-    <bean id="domXmlParser" class="lv.lu.events.impl.xml.DomXmlParser">
-        <property name="validateXml" value="true"/>
-    </bean>
-	
-    <bean id="digesterXmlParser" class="lv.lu.events.impl.xml.DigesterXmlParser" />
-
-	<!-- TODO [task] add Facebook data loader configuration -->
-    <bean id="facebookImportProcessor" class="lv.lu.events.impl.facebook.FacebookDataImportProcessor">
-        <property name="friendshipService" ref="friendshipService"/>
-        <property name="inviteService" ref="inviteService"/>
-        <property name="eventService" ref="eventService"/>
-        <property name="jsonService" ref="jsonService"/>
-        <property name="userService" ref="userService"/>
-        <property name="importFriendships" value="true"/>
-        <property name="importEvents" value="true"/>
-        <property name="importInvites" value="true"/>
-        <property name="accessToken" value="AAACEdEose0cBAPg8lLGpELYhtQ9LZButXwUZB5fNrtZA58LShKgbE9nSVSmeVZBfy0HVNmtJGGmpmSQRqm7ExdCZBMTZBunubZA4HvD5ZA6DZBgZDZD"/>
-    </bean>
-		
-    <bean id="friendshipService" class="lv.lu.events.impl.service.FriendshipServiceImpl">
+    
+    <bean id="teamService" class="modernipd2.impl.service.TeamServiceImpl">
         <property name="commonDAO" ref="commonDAO"/>
     </bean>
-	
-    <bean id="inviteService" class="lv.lu.events.impl.service.InviteServiceImpl">
-        <property name="commonDAO" ref="commonDAO"/>
-    </bean>
-	
-    <bean id="eventService" class="lv.lu.events.impl.service.EventServiceImpl">
-        <property name="commonDAO" ref="commonDAO"/>
-        <property name="inviteService" ref="inviteService"/>
-    </bean>
-	
-    <bean id="userService" class="lv.lu.events.impl.service.UserServiceImpl">
-        <property name="commonDAO" ref="commonDAO"/>
-        <property name="jsonService" ref="jsonService"/>
+    
+    <bean id="playerService" class="modernipd2.impl.service.PlayerServiceImpl">
     </bean>
 
-    <bean id="jsonService" class="lv.lu.events.impl.service.JSONServiceImpl" />
-
-	<!-- Bean for common DAO operations -->
+    <!-- Bean for common DAO operations -->
 	
-    <bean id="commonDAO" class="lv.lu.events.impl.CommonDAOImpl"/>
+    <bean id="commonDAO" class="modernipd2.persistance.CommonDAOImpl"/>
 
  <!-- Persistence configuration -->	     
 	               

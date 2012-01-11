@@ -10,5 +10,5 @@ package modernipd2;
  */
 public interface DataImportProcessor {
     
-    public void importData();
+    public void importData(String folderPath);
 }

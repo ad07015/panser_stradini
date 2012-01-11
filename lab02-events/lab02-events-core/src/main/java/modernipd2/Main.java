@@ -16,16 +16,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
 
     public static final String SPRING_CONFIG_FILE = "/applicationContext.xml";
-    private static final String SPRING_BEAN_ID = "footballImportProcessor";
+    private static final String IMPORT_BEAN_ID = "footballImportProcessor";
+    private static final String STATISTICS_BEAN_ID = "footballStatisticsProcessor";
 
     public static void main(String[] args) {
         ApplicationContext appCtxt = new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE);
         
-        FootballImportProcessor dataImportProcessor = (FootballImportProcessor) appCtxt.getBean(SPRING_BEAN_ID);
+        FootballImportProcessor dataImportProcessor = (FootballImportProcessor) appCtxt.getBean(IMPORT_BEAN_ID);
         dataImportProcessor.importData();
         
+        
         List<Game> gameList = dataImportProcessor.getGameList();
-        StatisticsProcessor stProc = new StatisticsProcessor();
+        StatisticsProcessor stProc = (StatisticsProcessor) appCtxt.getBean(STATISTICS_BEAN_ID);
         stProc.generateStatistics(gameList);
         
         System.out.println("Application execution successfully completed");

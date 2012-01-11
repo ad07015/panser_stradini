@@ -8,12 +8,14 @@ package modernipd2.constants;
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
-public class Constants {
-    
+public final class Constants {
+
     public static String ATTR_SKATITAJI = "Skatitaji";
     public static String ATTR_VIETA = "Vieta";
     public static String ATTR_DATUMS = "Laiks";
-    
-    
     public static String DATE_FORMAT = "yyyy/dd/MM";
+    
+    public final class GameTeamJpq {
+        public static final String QUERY_GET_ALL_BY_TEAM = "GameTeam.getAllByTeam";
+    }
 }

@@ -8,7 +8,11 @@
 	
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-	<!-- Users data loader configuration -->
+    <bean id="footballStatisticsProcessor" class="modernipd2.StatisticsProcessor">
+        <property name="commonDAO" ref="commonDAO"/>
+        <property name="teamService" ref="teamService"/>
+        <property name="playerService" ref="playerService"/>
+    </bean>
 	
     <bean id="footballImportProcessor" class="modernipd2.FootballImportProcessor">
         <property name="commonDAO" ref="commonDAO"/>

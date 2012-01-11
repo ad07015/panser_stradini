@@ -41,6 +41,7 @@ public class Game implements PersistentEntity, Serializable {
     private Date gameDate;
     private String venue;
     private Integer viewerCount;
+    private Integer gameEndTime;
     @OneToOne
     private Team team1;
     @OneToOne
@@ -59,21 +60,13 @@ public class Game implements PersistentEntity, Serializable {
     @Transient
     private Set<Player> team2InitialPlayerList = new LinkedHashSet<Player>();
     @OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Goal> team1GoalList = new TreeSet<Goal>();
-    @OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Goal> team2GoalList = new TreeSet<Goal>();
+    private Set<Goal> goalList = new TreeSet<Goal>();
     @OneToMany(targetEntity = Violation.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Violation> violationList = new TreeSet<Violation>();
     @OneToMany(targetEntity = Substitusion.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Substitusion> substitusionList = new TreeSet<Substitusion>();
 
     public Game() {
-    }
-
-    public Game(Date date, String venue, Integer viewerCount) {
-        this.gameDate = date;
-        this.venue = venue;
-        this.viewerCount = viewerCount;
     }
 
     public Long getId() {
@@ -92,36 +85,12 @@ public class Game implements PersistentEntity, Serializable {
         this.gameDate = gameDate;
     }
 
-    public String getVenue() {
-        return venue;
+    public Integer getGameEndTime() {
+        return gameEndTime;
     }
 
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
-
-    public Integer getViewerCount() {
-        return viewerCount;
-    }
-
-    public void setViewerCount(Integer viewerCount) {
-        this.viewerCount = viewerCount;
-    }
-
-    public Team getTeam1() {
-        return team1;
-    }
-
-    public void setTeam1(Team team1) {
-        this.team1 = team1;
-    }
-
-    public Team getTeam2() {
-        return team2;
-    }
-
-    public void setTeam2(Team team2) {
-        this.team2 = team2;
+    public void setGameEndTime(Integer gameEndTime) {
+        this.gameEndTime = gameEndTime;
     }
 
     public Referee getLineReferee1() {
@@ -148,12 +117,44 @@ public class Game implements PersistentEntity, Serializable {
         this.mainReferee = mainReferee;
     }
 
+    public Set<Substitusion> getSubstitusionList() {
+        return substitusionList;
+    }
+
+    public void setSubstitusionList(Set<Substitusion> substitusionList) {
+        this.substitusionList = substitusionList;
+    }
+
+    public Team getTeam1() {
+        return team1;
+    }
+
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
+    }
+
+    public Set<Goal> getGoalList() {
+        return goalList;
+    }
+
+    public void setGoalList(Set<Goal> goalList) {
+        this.goalList = goalList;
+    }
+
     public Set<Player> getTeam1InitialPlayerList() {
         return team1InitialPlayerList;
     }
 
     public void setTeam1InitialPlayerList(Set<Player> team1InitialPlayerList) {
         this.team1InitialPlayerList = team1InitialPlayerList;
+    }
+
+    public Team getTeam2() {
+        return team2;
+    }
+
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
     }
 
     public Set<Player> getTeam2InitialPlayerList() {
@@ -164,28 +165,20 @@ public class Game implements PersistentEntity, Serializable {
         this.team2InitialPlayerList = team2InitialPlayerList;
     }
 
-    public Set<Goal> getTeam1GoalList() {
-        return team1GoalList;
+    public String getVenue() {
+        return venue;
     }
 
-    public void setTeam1GoalList(Set<Goal> team1GoalList) {
-        this.team1GoalList = team1GoalList;
+    public void setVenue(String venue) {
+        this.venue = venue;
     }
 
-    public Set<Goal> getTeam2GoalList() {
-        return team2GoalList;
+    public Integer getViewerCount() {
+        return viewerCount;
     }
 
-    public void setTeam2GoalList(Set<Goal> team2GoalList) {
-        this.team2GoalList = team2GoalList;
-    }
-
-    public Set<Substitusion> getSubstitusionList() {
-        return substitusionList;
-    }
-
-    public void setSubstitusionList(Set<Substitusion> substitusionList) {
-        this.substitusionList = substitusionList;
+    public void setViewerCount(Integer viewerCount) {
+        this.viewerCount = viewerCount;
     }
 
     public Set<Violation> getViolationList() {

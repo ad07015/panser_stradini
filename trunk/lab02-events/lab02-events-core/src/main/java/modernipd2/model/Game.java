@@ -59,7 +59,9 @@ public class Game implements PersistentEntity, Serializable {
     @Transient
     private Set<Player> team2InitialPlayerList = new LinkedHashSet<Player>();
     @OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Goal> goalList = new TreeSet<Goal>();
+    private Set<Goal> team1GoalList = new TreeSet<Goal>();
+    @OneToMany(targetEntity = Goal.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Goal> team2GoalList = new TreeSet<Goal>();
     @OneToMany(targetEntity = Violation.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Violation> violationList = new TreeSet<Violation>();
     @OneToMany(targetEntity = Substitusion.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -162,12 +164,20 @@ public class Game implements PersistentEntity, Serializable {
         this.team2InitialPlayerList = team2InitialPlayerList;
     }
 
-    public Set<Goal> getGoalList() {
-        return goalList;
+    public Set<Goal> getTeam1GoalList() {
+        return team1GoalList;
     }
 
-    public void setGoalList(Set<Goal> goalList) {
-        this.goalList = goalList;
+    public void setTeam1GoalList(Set<Goal> team1GoalList) {
+        this.team1GoalList = team1GoalList;
+    }
+
+    public Set<Goal> getTeam2GoalList() {
+        return team2GoalList;
+    }
+
+    public void setTeam2GoalList(Set<Goal> team2GoalList) {
+        this.team2GoalList = team2GoalList;
     }
 
     public Set<Substitusion> getSubstitusionList() {

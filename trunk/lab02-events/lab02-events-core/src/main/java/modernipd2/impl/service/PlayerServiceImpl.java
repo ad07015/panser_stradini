@@ -39,7 +39,7 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             player = (Player) query.getSingleResult();
         } catch (NoResultException nre) {
             // no such team
-            System.out.println("Player does not exist");
+//            System.out.println("Player does not exist");
         } catch (NonUniqueResultException nure) {
             // multiple users with such name
             System.out.println("There are multiple players with this number from this team");
@@ -61,7 +61,7 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             referee = (Referee) query.getSingleResult();
         } catch (NoResultException nre) {
             // no such team
-            System.out.println("Referee is not persisted yet");
+//            System.out.println("Referee is not persisted yet");
         } catch (NonUniqueResultException nure) {
             // multiple users with such name
            System.out.println("There are multiple referees with this name");
@@ -85,7 +85,7 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             game = (Game) query.getSingleResult();
         } catch (NoResultException nre) {
             // no such team
-            System.out.println("Referee does not exist");
+//            System.out.println("Referee does not exist");
         } catch (NonUniqueResultException nure) {
             // multiple users with such name
             System.out.println("There are multiple referees with this name");

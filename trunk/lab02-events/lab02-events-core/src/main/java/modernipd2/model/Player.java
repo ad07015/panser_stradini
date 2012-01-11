@@ -23,7 +23,7 @@ import javax.persistence.NamedQuery;
 		query = "SELECT p FROM Player p WHERE p.playerNumber = :playerNumber AND p.team = :team")
 })
 @Entity
-public class Player implements PersistentEntity, Serializable {
+public class Player implements PersistentEntity, Serializable, Comparable {
         
     private Long id;
     private String firstName;
@@ -88,7 +88,11 @@ public class Player implements PersistentEntity, Serializable {
     public boolean equals(Object obj) {
         if (obj instanceof Player) {
             Player other = (Player) obj;
-            if (other.getTeam().equals(this.team)
+            if (this.id != null && other.getId() != null) {
+                if (this.id.equals(other.getId())) {
+                    return true;
+                }
+            } else if (other.getTeam().equals(this.team)
                     && other.getPlayerNumber().equals(this.playerNumber)) {
                 return true;
             }
@@ -107,5 +111,17 @@ public class Player implements PersistentEntity, Serializable {
         sb.append("; ");
         sb.append("Player role: ").append(this.playerRole);
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        final int BEFORE = -1;
+        final int AFTER = 1;
+        
+        if (o instanceof Player) {
+            Player other = (Player) o;
+            return this.playerNumber.compareTo(other.getPlayerNumber());
+        }
+        return 1;
     }
 }

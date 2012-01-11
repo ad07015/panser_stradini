@@ -22,6 +22,7 @@ import modernipd2.interfaces.service.PlayerService;
 import modernipd2.interfaces.service.TeamService;
 import modernipd2.model.Assist;
 import modernipd2.model.Game;
+import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
 import modernipd2.model.Goal;
 import modernipd2.model.Player;
@@ -66,9 +67,52 @@ public class FootballImportProcessor implements DataImportProcessor {
     @Override
     public void importData(String folderPath) {
         List<String> pathList = getFileList(folderPath);
+//        parseXmlFile(pathList.get(0));
         for (String path : pathList) {
             parseXmlFile(path);
         }
+    }
+
+    private void createAndPersistGamePlayer(Set<Substitusion> team1SubList, Team team1, Game game, Set<Player> team1InitialPlayerList) {
+        List<GamePlayer> gamePlayerList = new ArrayList<GamePlayer>();
+
+        List<Player> addedList = new ArrayList<Player>();
+        List<Player> removedList = new ArrayList<Player>();
+        for (Substitusion sub : team1SubList) {
+            addedList.add(sub.getAdded());
+            removedList.add(sub.getRemoved());
+        }
+
+        GamePlayer gamePlayer;
+        for (Player player : team1.getPlayerList()) {
+            gamePlayer = new GamePlayer();
+            gamePlayer.setGame(game);
+            gamePlayer.setPlayer(player);
+            if (team1InitialPlayerList.contains(player)) {
+                gamePlayer.setTimeStart(0);
+                gamePlayer.setTimeEnd(game.getGameEndTime());// default end time, if not subbed
+                if (removedList.contains(player)) {
+                    for (Substitusion sub : team1SubList) {
+                        if (sub.getRemoved().equals(player)) {
+                            gamePlayer.setTimeEnd(sub.getSubstitusionTime());
+                            break;
+                        }
+                    }
+                    
+                }
+                gamePlayerList.add(gamePlayer);
+            } else if (addedList.contains(player)) {
+                for (Substitusion sub : team1SubList) {
+                    if (sub.getAdded().equals(player)) {
+                        gamePlayer.setTimeStart(sub.getSubstitusionTime());
+                        gamePlayer.setTimeEnd(game.getGameEndTime());
+                        break;
+                    }
+                }
+                gamePlayerList.add(gamePlayer);
+            }
+        }
+        commonDAO.saveAll(gamePlayerList);
     }
 
     private List<String> getFileList(String folderPath) {
@@ -163,36 +207,6 @@ public class FootballImportProcessor implements DataImportProcessor {
                 gameList.add(game);
             }
         }
-        for (Game game : gameList) {
-            /*
-            System.out.println(game.toString());
-            System.out.println("Team 1 name: " + game.getTeam1());
-            System.out.println("Team 2 name: " + game.getTeam2());
-            System.out.println("Main referee: " + game.getMainReferee());
-            System.out.println("First line referee: " + game.getLineReferee1());
-            System.out.println("Second line referee: " + game.getLineReferee2());
-            System.out.println("Team 1 player list");
-            for (Player player : game.getTeam1().getPlayerList()) {
-            System.out.println(player);
-            }
-            System.out.println("Team 2 player list");
-            for (Player player : game.getTeam1().getPlayerList()) {
-            System.out.println(player);
-            }
-            System.out.println("Goal list");
-            for (Goal goal : game.getGoalList()) {
-            System.out.println(goal);
-            }
-            System.out.println("Substitusion list");
-            for (Substitusion substitusion : game.getSubstitusionList()) {
-            System.out.println(substitusion);
-            }
-            System.out.println("Violation list");
-            for (Violation violation : game.getViolationList()) {
-            System.out.println(violation);
-            }
-             */
-        }
     }
 
     private Game parseGame(Node gameNode) {
@@ -211,6 +225,8 @@ public class FootballImportProcessor implements DataImportProcessor {
 
         Set<Goal> team1GoalList = new TreeSet<Goal>();
         Set<Goal> team2GoalList = new TreeSet<Goal>();
+        Set<Substitusion> team1SubList = new TreeSet<Substitusion>();
+        Set<Substitusion> team2SubList = new TreeSet<Substitusion>();
 
         NodeList teamNodeList = gameElement.getElementsByTagName("Komanda");
         if (teamNodeList != null && teamNodeList.getLength() == 2) {
@@ -221,11 +237,11 @@ public class FootballImportProcessor implements DataImportProcessor {
 
             team1Node = teamNodeList.item(0);
             team1 = parseTeam(team1Node);
-            Set<Player> team1InitialPlayerList = getPlayerList(team1Node, team1, "Pamatsastavs");
+            Set<Player> team1InitialPlayerList = getInitialPlayerList(team1Node, team1, "Pamatsastavs");
 
             team2Node = teamNodeList.item(1);
             team2 = parseTeam(team2Node);
-            Set<Player> team2InitialPlayerList = getPlayerList(team1Node, team1, "Pamatsastavs");
+            Set<Player> team2InitialPlayerList = getInitialPlayerList(team2Node, team2, "Pamatsastavs");
 
             game = playerService.getGameByVenueAndTeams(team1, team2, venue, date);
 
@@ -246,13 +262,17 @@ public class FootballImportProcessor implements DataImportProcessor {
                 team2GoalList = getGoalList(team2Node, team2, game);
                 game.getGoalList().addAll(team1GoalList);
                 game.getGoalList().addAll(team2GoalList);
-                game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
-                game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
+                team1SubList = getSubstitusionList(team1Node, team1, game);
+                team2SubList = getSubstitusionList(team2Node, team2, game);
+                game.getSubstitusionList().addAll(team1SubList);
+                game.getSubstitusionList().addAll(team2SubList);
                 game.getViolationList().addAll(getViolationList(team1Node, team1, game));
                 game.getViolationList().addAll(getViolationList(team2Node, team2, game));
                 game.setGameEndTime(getGameEndTime(game));
                 commonDAO.save(game);
                 createAndPersistGameTeam(game, team1, team1GoalList, team2GoalList, team2);
+                createAndPersistGamePlayer(team1SubList, team1, game, team1InitialPlayerList);
+                createAndPersistGamePlayer(team2SubList, team2, game, team2InitialPlayerList);
             } else {
                 System.out.println("This game is already persisted");
             }
@@ -315,7 +335,7 @@ public class FootballImportProcessor implements DataImportProcessor {
     }
 
     private Set<Player> getPlayerList(Node team1Node, Team team, String playerListType) {
-        Set<Player> playerList = new LinkedHashSet<Player>();
+        Set<Player> playerList = new TreeSet<Player>();
 
         Element teamElement = (Element) team1Node;
         Node playersNode = teamElement.getElementsByTagName(playerListType).item(0);
@@ -328,6 +348,24 @@ public class FootballImportProcessor implements DataImportProcessor {
                 player = parsePlayer(playerNode);
                 player.setTeam(team);
 //                commonDAO.save(player);
+                playerList.add(player);
+            }
+        }
+        return playerList;
+    }
+    
+    private Set<Player> getInitialPlayerList(Node team1Node, Team team, String playerListType) {
+        Set<Player> playerList = new TreeSet<Player>();
+
+        Element teamElement = (Element) team1Node;
+        Node playersNode = teamElement.getElementsByTagName(playerListType).item(0);
+        NodeList declaredPlayerNodeList = ((Element) playersNode).getElementsByTagName("Speletajs");
+        if (declaredPlayerNodeList != null && declaredPlayerNodeList.getLength() > 0) {
+            Node playerNode;
+            Player player;
+            for (int i = 0; i < declaredPlayerNodeList.getLength(); i++) {
+                playerNode = declaredPlayerNodeList.item(i);
+                player = playerService.getPlayerByTeamAndNumber(team, ((Element)playerNode).getAttribute(ATTR_PLAYER_NUMBER));
                 playerList.add(player);
             }
         }

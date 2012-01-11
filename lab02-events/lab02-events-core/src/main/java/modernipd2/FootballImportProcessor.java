@@ -67,7 +67,19 @@ public class FootballImportProcessor implements DataImportProcessor {
 
     @Override
     public void importData() {
-        parseXmlFile();
+        String folderPath = "c:/Users/root/Documents/NetBeansProjects/ModernProgTehPD2/";
+        List<String> pathList = new ArrayList<String>();
+        pathList.add(folderPath + "futbols1.xml");
+        pathList.add(folderPath + "futbols2.xml");
+        pathList.add(folderPath + "futbols10.xml");
+        pathList.add(folderPath + "futbols15.xml");
+        pathList.add(folderPath + "futbols20.xml");
+        pathList.add(folderPath + "futbols25.xml");
+        pathList.add(folderPath + "futbols30.xml");
+        pathList.add(folderPath + "futbols35.xml");
+        for (String path : pathList) {
+            parseXmlFile(path);
+        }
     }
 
     private void createAndPersistGameTeam(Game game, Team team1, Set<Goal> team1GoalList, Set<Goal> team2GoalList, Team team2) {
@@ -82,8 +94,10 @@ public class FootballImportProcessor implements DataImportProcessor {
         gameTeam2.setGame(game);
         gameTeam2.setTeam(team2);
         
-        gameTeam1.setGoalCount(team1GoalList.size());
-        gameTeam2.setGoalCount(team2GoalList.size());
+        gameTeam1.setGoalsScoredCount(team1GoalList.size());
+        gameTeam2.setGoalsScoredCount(team2GoalList.size());
+        gameTeam1.setGoalsLetInCount(team2GoalList.size());
+        gameTeam2.setGoalsLetInCount(team1GoalList.size());
 
         int winnerPoints;
         int loserPoints;
@@ -119,10 +133,10 @@ public class FootballImportProcessor implements DataImportProcessor {
         commonDAO.save(gameTeam2);
     }
 
-    private void parseXmlFile() {
+    private void parseXmlFile(String path) {
         try {
             parser = new DOMParser();
-            parser.parse("c:/Users/root/Documents/NetBeansProjects/ModernProgTehPD2/futbols1.xml");
+            parser.parse(path);
             Document doc = parser.getDocument();
             NodeList gameNodeList = doc.getElementsByTagName("Spele");
             parseGames(gameNodeList);
@@ -134,8 +148,8 @@ public class FootballImportProcessor implements DataImportProcessor {
     }
 
     private void parseGames(NodeList gameNodeList) {
-        System.out.println("There are " + gameNodeList.getLength()
-                + " elements.");
+//        System.out.println("There are " + gameNodeList.getLength()
+//                + " elements.");
 
         if (gameNodeList != null && gameNodeList.getLength() > 0) {
             for (int i = 0; i < gameNodeList.getLength(); i++) {
@@ -234,6 +248,8 @@ public class FootballImportProcessor implements DataImportProcessor {
                 game.setGameEndTime(getGameEndTime(game));
                 commonDAO.save(game);
                 createAndPersistGameTeam(game, team1, team1GoalList, team2GoalList, team2);
+            } else {
+                System.out.println("This game is already persisted");
             }
 
         }
@@ -273,7 +289,7 @@ public class FootballImportProcessor implements DataImportProcessor {
             }
         }
         team = teamService.getTeamByName(teamName);
-        System.out.println("Team size: " + team.getPlayerList().size());
+//        System.out.println("Team size: " + team.getPlayerList().size());
         return team;
     }
 

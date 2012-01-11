@@ -45,7 +45,8 @@ public class GameTeam implements Serializable, PersistentEntity {
     
     private Boolean won;
     private Integer points;
-    private Integer goalCount;
+    private Integer goalsScoredCount;
+    private Integer goalsLetInCount;
 
     public GameTeam() {
     }
@@ -106,11 +107,19 @@ public class GameTeam implements Serializable, PersistentEntity {
         this.winner = winner;
     }
 
-    public Integer getGoalCount() {
-        return goalCount;
+    public Integer getGoalsLetInCount() {
+        return goalsLetInCount;
     }
 
-    public void setGoalCount(Integer goalCount) {
-        this.goalCount = goalCount;
+    public void setGoalsLetInCount(Integer goalsLetInCount) {
+        this.goalsLetInCount = goalsLetInCount;
+    }
+
+    public Integer getGoalsScoredCount() {
+        return goalsScoredCount;
+    }
+
+    public void setGoalsScoredCount(Integer goalsScoredCount) {
+        this.goalsScoredCount = goalsScoredCount;
     }
 }

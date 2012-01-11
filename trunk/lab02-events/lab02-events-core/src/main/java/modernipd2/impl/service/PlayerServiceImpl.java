@@ -61,10 +61,10 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             referee = (Referee) query.getSingleResult();
         } catch (NoResultException nre) {
             // no such team
-            System.out.println("Referee does not exist");
+            System.out.println("Referee is not persisted yet");
         } catch (NonUniqueResultException nure) {
             // multiple users with such name
-            System.out.println("There are multiple referees with this name");
+           System.out.println("There are multiple referees with this name");
         }
         return referee;
     }
@@ -105,9 +105,9 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             query.setParameter("team", team);
             gameTeamSet = (List<GameTeam>) query.getResultList();
         } catch (NoResultException nre) {
-            nre.printStackTrace();
+//            nre.printStackTrace();
         } catch (NonUniqueResultException nure) {
-            nure.printStackTrace();
+//            nure.printStackTrace();
         }
         return gameTeamSet;
     }

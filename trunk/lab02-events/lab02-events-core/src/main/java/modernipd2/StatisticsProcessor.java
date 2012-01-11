@@ -47,7 +47,7 @@ public class StatisticsProcessor {
 //            }
 //            
 //        }
-        List<TopTeamTableRow> rowList = new ArrayList<TopTeamTableRow>();
+        Set<TopTeamTableRow> rowList = new TreeSet<TopTeamTableRow>();
         TopTeamTableRow row = new TopTeamTableRow();
         
         List<Team> teamList = getAllTeams(gameList);
@@ -59,7 +59,8 @@ public class StatisticsProcessor {
                 row.setTeamName(team.getTeamName());
                 
                 for (GameTeam gameTeam : gameTeamList) {
-                    row.setGoalCount(gameTeam.getGoalCount());
+                    row.setGoalsScoredCount(row.getGoalsScoredCount() + gameTeam.getGoalsScoredCount());
+                    row.setGoalsLetInCount(row.getGoalsLetInCount() + gameTeam.getGoalsLetInCount());
                     row.setPointCount(row.getPointCount() + gameTeam.getPoints());
                     if (gameTeam.getWon()) {
                         if (!isOvertime(gameTeam.getGame())) {

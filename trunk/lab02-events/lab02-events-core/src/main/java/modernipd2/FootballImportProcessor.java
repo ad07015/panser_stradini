@@ -14,12 +14,14 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import modernipd2.constants.Constants;
 import modernipd2.constants.utils.TeamUtils;
 import modernipd2.interfaces.service.PlayerService;
 import modernipd2.interfaces.service.TeamService;
 import modernipd2.model.Assist;
 import modernipd2.model.Game;
+import modernipd2.model.GameTeam;
 import modernipd2.model.Goal;
 import modernipd2.model.Player;
 import modernipd2.model.Referee;
@@ -66,6 +68,55 @@ public class FootballImportProcessor implements DataImportProcessor {
     @Override
     public void importData() {
         parseXmlFile();
+    }
+
+    private void createAndPersistGameTeam(Game game, Team team1, Set<Goal> team1GoalList, Set<Goal> team2GoalList, Team team2) {
+        GameTeam gameTeam1 = new GameTeam();
+        GameTeam gameTeam2 = new GameTeam();
+
+        Team winner;
+        Team loser;
+
+        gameTeam1.setGame(game);
+        gameTeam1.setTeam(team1);
+        gameTeam2.setGame(game);
+        gameTeam2.setTeam(team2);
+        
+        gameTeam1.setGoalCount(team1GoalList.size());
+        gameTeam2.setGoalCount(team2GoalList.size());
+
+        int winnerPoints;
+        int loserPoints;
+        if (game.getGameEndTime() > 90 * 60) {
+            winnerPoints = 2;
+            loserPoints = 1;
+        } else {
+            winnerPoints = 3;
+            loserPoints = 0;
+        }
+
+        if (team1GoalList.size() > team2GoalList.size()) {
+            winner = team1;
+            loser = team2;
+            gameTeam1.setWon(Boolean.TRUE);
+            gameTeam2.setWon(Boolean.FALSE);
+            gameTeam1.setPoints(winnerPoints);
+            gameTeam2.setPoints(loserPoints);
+        } else {
+            winner = team2;
+            loser = team1;
+            gameTeam1.setWon(Boolean.FALSE);
+            gameTeam2.setWon(Boolean.TRUE);
+            gameTeam1.setPoints(loserPoints);
+            gameTeam2.setPoints(winnerPoints);
+        }
+        gameTeam1.setWinner(winner);
+        gameTeam1.setLoser(loser);
+        gameTeam2.setWinner(winner);
+        gameTeam2.setLoser(loser);
+        
+        commonDAO.save(gameTeam1);
+        commonDAO.save(gameTeam2);
     }
 
     private void parseXmlFile() {
@@ -139,6 +190,9 @@ public class FootballImportProcessor implements DataImportProcessor {
         Referee lineReferee1 = parseReferee(lineRefereeNodeList.item(0));
         Referee lineReferee2 = parseReferee(lineRefereeNodeList.item(1));
 
+        Set<Goal> team1GoalList = new TreeSet<Goal>();
+        Set<Goal> team2GoalList = new TreeSet<Goal>();
+
         NodeList teamNodeList = gameElement.getElementsByTagName("Komanda");
         if (teamNodeList != null && teamNodeList.getLength() == 2) {
             Node team1Node;
@@ -157,7 +211,10 @@ public class FootballImportProcessor implements DataImportProcessor {
             game = playerService.getGameByVenueAndTeams(team1, team2, venue, date);
 
             if (game == null) {
-                game = new Game(date, venue, viewerCount);
+                game = new Game();
+                game.setGameDate(date);
+                game.setVenue(venue);
+                game.setViewerCount(viewerCount);
                 game.setMainReferee(mainReferee);
                 game.setLineReferee1(lineReferee1);
                 game.setLineReferee2(lineReferee2);
@@ -166,13 +223,19 @@ public class FootballImportProcessor implements DataImportProcessor {
                 game.setTeam2InitialPlayerList(team2InitialPlayerList);
                 game.setTeam2(team2);
                 commonDAO.save(game);
-                game.setTeam1GoalList((getGoalList(team1Node, team1, game)));
-                game.setTeam2GoalList((getGoalList(team2Node, team2, game)));
+                team1GoalList = getGoalList(team1Node, team1, game);
+                team2GoalList = getGoalList(team2Node, team2, game);
+                game.getGoalList().addAll(team1GoalList);
+                game.getGoalList().addAll(team2GoalList);
                 game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
                 game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
                 game.getViolationList().addAll(getViolationList(team1Node, team1, game));
                 game.getViolationList().addAll(getViolationList(team2Node, team2, game));
+                game.setGameEndTime(getGameEndTime(game));
+                commonDAO.save(game);
+                createAndPersistGameTeam(game, team1, team1GoalList, team2GoalList, team2);
             }
+
         }
 
         return game;
@@ -341,7 +404,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         goal.setGame(game);
         goal.setTime(time);
         commonDAO.save(goal);
-        
+
         NodeList passPlayerNodeList = goalElement.getElementsByTagName("P");
         int assistPlayerNodeListCount = passPlayerNodeList.getLength();
         if (passPlayerNodeList != null && assistPlayerNodeListCount > 0) {
@@ -362,7 +425,7 @@ public class FootballImportProcessor implements DataImportProcessor {
             assist.setGoal(goal);
         }
         commonDAO.saveAll(assistList);
-        
+
         return goal;
     }
 
@@ -393,7 +456,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         substitusion.setAdded(added);
         substitusion.setGame(game);
         substitusion.setTeam(team);
-        
+
         commonDAO.save(substitusion);
         return substitusion;
     }
@@ -417,5 +480,20 @@ public class FootballImportProcessor implements DataImportProcessor {
 
     public List<Game> getGameList() {
         return gameList;
+    }
+
+    private Integer getGameEndTime(Game game) {
+        Integer result = null;
+        TreeSet<Goal> goalList = new TreeSet();
+        goalList.addAll(game.getGoalList());
+        Integer lastGoalTime;
+        if (goalList.size() > 0) {
+            Goal goal = goalList.last();
+            lastGoalTime = goal.getTime();
+            result = lastGoalTime > (90 * 60) ? lastGoalTime : 90 * 60;
+            return result;
+        }
+        System.out.println("--------------------THIS PLACE SHOULD NEVER HAVE BEEN REACHED!!!");
+        return result;
     }
 }

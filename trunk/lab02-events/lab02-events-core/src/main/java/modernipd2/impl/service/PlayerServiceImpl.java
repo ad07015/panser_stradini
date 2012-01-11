@@ -5,11 +5,15 @@
 package modernipd2.impl.service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import modernipd2.constants.Constants;
 import modernipd2.interfaces.service.PlayerService;
 import modernipd2.model.Game;
+import modernipd2.model.GameTeam;
 import modernipd2.model.Player;
 import modernipd2.model.Referee;
 import modernipd2.model.Team;
@@ -87,5 +91,24 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             System.out.println("There are multiple referees with this name");
         }
         return game;
+    }
+
+    @Override
+    public List<GameTeam> getAllGameTeamByTeam(Team team) {
+        if (team == null) {
+            return null;
+        }
+
+        List<GameTeam> gameTeamSet = null;
+        try {
+            Query query = getEntityManager().createNamedQuery(Constants.GameTeamJpq.QUERY_GET_ALL_BY_TEAM);
+            query.setParameter("team", team);
+            gameTeamSet = (List<GameTeam>) query.getResultList();
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+        } catch (NonUniqueResultException nure) {
+            nure.printStackTrace();
+        }
+        return gameTeamSet;
     }
 }

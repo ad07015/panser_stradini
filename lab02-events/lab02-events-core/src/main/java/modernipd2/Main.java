@@ -4,6 +4,8 @@
  */
 package modernipd2;
 
+import java.util.List;
+import modernipd2.model.Game;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -19,8 +21,12 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext appCtxt = new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE);
         
-        DataImportProcessor dataImportProcessor = (DataImportProcessor) appCtxt.getBean(SPRING_BEAN_ID);
+        FootballImportProcessor dataImportProcessor = (FootballImportProcessor) appCtxt.getBean(SPRING_BEAN_ID);
         dataImportProcessor.importData();
+        
+        List<Game> gameList = dataImportProcessor.getGameList();
+        StatisticsProcessor stProc = new StatisticsProcessor();
+        stProc.generateStatistics(gameList);
         
         System.out.println("Application execution successfully completed");
         System.exit(0);

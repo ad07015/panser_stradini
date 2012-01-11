@@ -166,8 +166,8 @@ public class FootballImportProcessor implements DataImportProcessor {
                 game.setTeam2InitialPlayerList(team2InitialPlayerList);
                 game.setTeam2(team2);
                 commonDAO.save(game);
-                game.getGoalList().addAll(getGoalList(team1Node, team1, game));
-                game.getGoalList().addAll(getGoalList(team2Node, team2, game));
+                game.setTeam1GoalList((getGoalList(team1Node, team1, game)));
+                game.setTeam2GoalList((getGoalList(team2Node, team2, game)));
                 game.getSubstitusionList().addAll(getSubstitusionList(team1Node, team1, game));
                 game.getSubstitusionList().addAll(getSubstitusionList(team2Node, team2, game));
                 game.getViolationList().addAll(getViolationList(team1Node, team1, game));
@@ -413,5 +413,9 @@ public class FootballImportProcessor implements DataImportProcessor {
 
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    public List<Game> getGameList() {
+        return gameList;
     }
 }

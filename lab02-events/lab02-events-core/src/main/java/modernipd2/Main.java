@@ -20,10 +20,14 @@ public class Main {
     private static final String STATISTICS_BEAN_ID = "footballStatisticsProcessor";
 
     public static void main(String[] args) {
+        String folderPath;
+//        folderPath = args[0];
+        folderPath = "c:/Users/root/Documents/NetBeansProjects/ModernProgTehPD2/";
+        
         ApplicationContext appCtxt = new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE);
         
         FootballImportProcessor dataImportProcessor = (FootballImportProcessor) appCtxt.getBean(IMPORT_BEAN_ID);
-        dataImportProcessor.importData();
+        dataImportProcessor.importData(folderPath);
         
         
         List<Game> gameList = dataImportProcessor.getGameList();

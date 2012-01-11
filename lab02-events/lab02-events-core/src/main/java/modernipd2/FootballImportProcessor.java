@@ -5,6 +5,7 @@
 package modernipd2;
 
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,9 +56,6 @@ public class FootballImportProcessor implements DataImportProcessor {
     protected CommonDAO commonDAO;
 
     public FootballImportProcessor() {
-//        emf = Persistence.createEntityManagerFactory(PU_HIBERNATE_MYSQL);
-//        em = emf.createEntityManager();
-//        commonDAO.setEntityManager(em);
     }
 
     @Autowired
@@ -66,20 +64,27 @@ public class FootballImportProcessor implements DataImportProcessor {
     }
 
     @Override
-    public void importData() {
-        String folderPath = "c:/Users/root/Documents/NetBeansProjects/ModernProgTehPD2/";
-        List<String> pathList = new ArrayList<String>();
-        pathList.add(folderPath + "futbols1.xml");
-        pathList.add(folderPath + "futbols2.xml");
-        pathList.add(folderPath + "futbols10.xml");
-        pathList.add(folderPath + "futbols15.xml");
-        pathList.add(folderPath + "futbols20.xml");
-        pathList.add(folderPath + "futbols25.xml");
-        pathList.add(folderPath + "futbols30.xml");
-        pathList.add(folderPath + "futbols35.xml");
+    public void importData(String folderPath) {
+        List<String> pathList = getFileList(folderPath);
         for (String path : pathList) {
             parseXmlFile(path);
         }
+    }
+
+    private List<String> getFileList(String folderPath) {
+        List<String> pathList = new ArrayList<String>();
+        File folder = new File(folderPath);
+        File[] listOfFiles = folder.listFiles();
+        String filename;
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                filename = listOfFiles[i].getName();
+                if (filename.startsWith("futbols")) {
+                    pathList.add(folderPath + filename);
+                }
+            }
+        }
+        return pathList;
     }
 
     private void createAndPersistGameTeam(Game game, Team team1, Set<Goal> team1GoalList, Set<Goal> team2GoalList, Team team2) {
@@ -93,7 +98,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         gameTeam1.setTeam(team1);
         gameTeam2.setGame(game);
         gameTeam2.setTeam(team2);
-        
+
         gameTeam1.setGoalsScoredCount(team1GoalList.size());
         gameTeam2.setGoalsScoredCount(team2GoalList.size());
         gameTeam1.setGoalsLetInCount(team2GoalList.size());
@@ -128,7 +133,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         gameTeam1.setLoser(loser);
         gameTeam2.setWinner(winner);
         gameTeam2.setLoser(loser);
-        
+
         commonDAO.save(gameTeam1);
         commonDAO.save(gameTeam2);
     }

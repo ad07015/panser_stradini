@@ -39,10 +39,10 @@ public class StatisticsProcessor {
     protected CommonDAO commonDAO;
 
     void generateStatistics(List<Game> gameList) {
-//        topTeam();
-//        topPlayer();
-//        topGoalie();
-//        topUnsportsmanlike();
+        topTeam();
+        topPlayer();
+        topGoalie();
+        topUnsportsmanlike();
         topReferee();
     }
 

@@ -9,12 +9,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import modernipd2.constants.Constants;
 
 /**
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+@SuppressWarnings("serial")
+@NamedQueries({
+    @NamedQuery(name = Constants.GamePlayerJpq.QUERY_GET_ALL_GOALIES,
+    query = "SELECT gp FROM GamePlayer gp WHERE gp.playerRole = :role")
+})
 @Entity
 public class GamePlayer implements Serializable, PersistentEntity {
       
@@ -31,6 +39,7 @@ public class GamePlayer implements Serializable, PersistentEntity {
     
     private Integer timeStart;
     private Integer timeEnd;
+    private String playerRole;
 
     public GamePlayer() {
     }
@@ -73,5 +82,13 @@ public class GamePlayer implements Serializable, PersistentEntity {
 
     public void setTimeStart(Integer timeStart) {
         this.timeStart = timeStart;
+    }
+
+    public String getPlayerRole() {
+        return playerRole;
+    }
+
+    public void setPlayerRole(String playerRole) {
+        this.playerRole = playerRole;
     }
 }

@@ -4,6 +4,8 @@
  */
 package modernipd2;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,12 +14,14 @@ import modernipd2.interfaces.service.PlayerService;
 import modernipd2.interfaces.service.TeamService;
 import modernipd2.model.Assist;
 import modernipd2.model.Game;
+import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
 import modernipd2.model.Goal;
 import modernipd2.model.Player;
 import modernipd2.model.Team;
 import modernipd2.model.Violation;
 import modernipd2.persistance.CommonDAO;
+import modernipd2.statistics.TopGoalieTableRow;
 import modernipd2.statistics.TopPlayerTableRow;
 import modernipd2.statistics.TopTeamTableRow;
 import modernipd2.statistics.TopUnsportsmanlikeTableRow;
@@ -35,6 +39,7 @@ public class StatisticsProcessor {
     void generateStatistics(List<Game> gameList) {
         topTeam();
         topPlayer();
+        topGoalie();
         topUnsportsmanlike();
     }
 
@@ -126,6 +131,70 @@ public class StatisticsProcessor {
         }
     }
 
+    private void topGoalie() {
+        Set<TopGoalieTableRow> rowList = new TreeSet<TopGoalieTableRow>();
+        TopGoalieTableRow row;
+        
+        List<GamePlayer> goalieAppearanceList = playerService.getAllGamePlayerGoalies();
+        Set<Player> goalieList = new TreeSet<Player>();
+        for (GamePlayer gamePlayer : goalieAppearanceList) {
+            goalieList.add(gamePlayer.getPlayer());
+        }
+        
+        List<GamePlayer> thisGoalieAppearanceList = new ArrayList<GamePlayer>();
+        int totalGoalsLetInCount;
+        int totalGamesPlayed;
+        for (Player goalie : goalieList) { // for each goalkeeper persisted
+            row = new TopGoalieTableRow();
+            totalGoalsLetInCount = 0;
+            totalGamesPlayed = 0;
+            thisGoalieAppearanceList = new ArrayList<GamePlayer>();
+            for (GamePlayer gamePlayer : goalieAppearanceList) {
+                if (gamePlayer.getPlayer().equals(goalie)) {
+                    thisGoalieAppearanceList.add(gamePlayer);
+                }
+            }
+            Set<Game> gameList = new HashSet<Game>();
+            for (GamePlayer gamePlayer: thisGoalieAppearanceList) {
+                gameList.add(gamePlayer.getGame());
+            }
+            totalGamesPlayed = gameList.size();
+            
+            Integer goalsLetInThisGameCount;
+            for (GamePlayer gamePlayer : thisGoalieAppearanceList) { // for each game this goalie played
+                goalsLetInThisGameCount = 0;
+                Set<Goal> goalList = gamePlayer.getGame().getGoalList();
+                Set<Goal> goalsThisGoaliesTeamLetInList = new TreeSet<Goal>();
+                for (Goal goal : goalList) { // for each goal in this game
+                    if (!goal.getAuthor().getTeam().equals(goalie.getTeam())) {
+                        goalsThisGoaliesTeamLetInList.add(goal);
+                    }
+                }
+                for (Goal goal : goalsThisGoaliesTeamLetInList) {
+                    if (goal.getTime() > gamePlayer.getTimeStart() && goal.getTime() < gamePlayer.getTimeEnd()) {
+                        goalsLetInThisGameCount++;
+                    }
+                }
+                totalGoalsLetInCount += goalsLetInThisGameCount;
+            }
+            row.setFirstName(goalie.getFirstName());
+            row.setLastName(goalie.getLastName());
+            row.setTeamName(goalie.getTeam().getTeamName());
+            row.setPercentile((double)totalGoalsLetInCount / (double)totalGamesPlayed);
+            row.setGamesPlayedCount(totalGamesPlayed);
+            row.setGoalsLetInCount(totalGoalsLetInCount);
+            rowList.add(row);
+        }
+        
+        System.out.println(Constants.SEPARATOR);
+        System.out.println("--- Top 5 goalies table ---");
+        System.out.println(Constants.SEPARATOR);
+        Object[] rowArray = rowList.toArray();
+        for (int i = 0; i < 5; i++) {
+            System.out.println(rowArray[i]);
+        }
+    }
+
     private void topUnsportsmanlike() {
         Set<TopUnsportsmanlikeTableRow> rowList = new TreeSet<TopUnsportsmanlikeTableRow>();
         TopUnsportsmanlikeTableRow row;
@@ -145,10 +214,10 @@ public class StatisticsProcessor {
                 }
             }
             row.setViolationCount(violationCount);
-            
+
             rowList.add(row);
         }
-        
+
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 10 unspotsmanlike player table ---");
         System.out.println(Constants.SEPARATOR);

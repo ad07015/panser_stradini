@@ -12,14 +12,15 @@ import modernipd2.interfaces.service.PlayerService;
 import modernipd2.interfaces.service.TeamService;
 import modernipd2.model.Assist;
 import modernipd2.model.Game;
-import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
 import modernipd2.model.Goal;
 import modernipd2.model.Player;
 import modernipd2.model.Team;
+import modernipd2.model.Violation;
 import modernipd2.persistance.CommonDAO;
 import modernipd2.statistics.TopPlayerTableRow;
 import modernipd2.statistics.TopTeamTableRow;
+import modernipd2.statistics.TopUnsportsmanlikeTableRow;
 
 /**
  *
@@ -34,6 +35,7 @@ public class StatisticsProcessor {
     void generateStatistics(List<Game> gameList) {
         topTeam();
         topPlayer();
+        topUnsportsmanlike();
     }
 
     private void topTeam() {
@@ -83,7 +85,6 @@ public class StatisticsProcessor {
         TopPlayerTableRow row;
 
         List<Team> teamList = getAllTeams();
-        List<GamePlayer> gamePlayerList = null;
         List<Goal> goalList = commonDAO.findAll(Goal.class);
         List<Assist> assistList = commonDAO.findAll(Assist.class);
 
@@ -117,7 +118,39 @@ public class StatisticsProcessor {
         }
 
         System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top player table ---");
+        System.out.println("--- Top 10 player table ---");
+        System.out.println(Constants.SEPARATOR);
+        Object[] rowArray = rowList.toArray();
+        for (int i = 0; i < 10; i++) {
+            System.out.println(rowArray[i]);
+        }
+    }
+
+    private void topUnsportsmanlike() {
+        Set<TopUnsportsmanlikeTableRow> rowList = new TreeSet<TopUnsportsmanlikeTableRow>();
+        TopUnsportsmanlikeTableRow row;
+
+        List<Violation> violationList = commonDAO.findAll(Violation.class);
+        List<Player> playerList = commonDAO.findAll(Player.class);
+        Integer violationCount;
+        for (Player player : playerList) {
+            row = new TopUnsportsmanlikeTableRow();
+            row.setTeamName(player.getTeam().getTeamName());
+            row.setFirstName(player.getFirstName());
+            row.setLastName(player.getLastName());
+            violationCount = 0;
+            for (Violation v : violationList) {
+                if (v.getPlayer().equals(player)) {
+                    violationCount += 1;
+                }
+            }
+            row.setViolationCount(violationCount);
+            
+            rowList.add(row);
+        }
+        
+        System.out.println(Constants.SEPARATOR);
+        System.out.println("--- Top 10 unspotsmanlike player table ---");
         System.out.println(Constants.SEPARATOR);
         Object[] rowArray = rowList.toArray();
         for (int i = 0; i < 10; i++) {

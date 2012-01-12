@@ -18,11 +18,13 @@ import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
 import modernipd2.model.Goal;
 import modernipd2.model.Player;
+import modernipd2.model.Referee;
 import modernipd2.model.Team;
 import modernipd2.model.Violation;
 import modernipd2.persistance.CommonDAO;
 import modernipd2.statistics.TopGoalieTableRow;
 import modernipd2.statistics.TopPlayerTableRow;
+import modernipd2.statistics.TopRefereeTableRow;
 import modernipd2.statistics.TopTeamTableRow;
 import modernipd2.statistics.TopUnsportsmanlikeTableRow;
 
@@ -37,10 +39,11 @@ public class StatisticsProcessor {
     protected CommonDAO commonDAO;
 
     void generateStatistics(List<Game> gameList) {
-        topTeam();
-        topPlayer();
-        topGoalie();
-        topUnsportsmanlike();
+//        topTeam();
+//        topPlayer();
+//        topGoalie();
+//        topUnsportsmanlike();
+        topReferee();
     }
 
     private void topTeam() {
@@ -126,7 +129,7 @@ public class StatisticsProcessor {
         System.out.println("--- Top 10 player table ---");
         System.out.println(Constants.SEPARATOR);
         Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10 && i < rowArray.length; i++) {
             System.out.println(rowArray[i]);
         }
     }
@@ -134,13 +137,13 @@ public class StatisticsProcessor {
     private void topGoalie() {
         Set<TopGoalieTableRow> rowList = new TreeSet<TopGoalieTableRow>();
         TopGoalieTableRow row;
-        
+
         List<GamePlayer> goalieAppearanceList = playerService.getAllGamePlayerGoalies();
         Set<Player> goalieList = new TreeSet<Player>();
         for (GamePlayer gamePlayer : goalieAppearanceList) {
             goalieList.add(gamePlayer.getPlayer());
         }
-        
+
         List<GamePlayer> thisGoalieAppearanceList = new ArrayList<GamePlayer>();
         int totalGoalsLetInCount;
         int totalGamesPlayed;
@@ -155,11 +158,11 @@ public class StatisticsProcessor {
                 }
             }
             Set<Game> gameList = new HashSet<Game>();
-            for (GamePlayer gamePlayer: thisGoalieAppearanceList) {
+            for (GamePlayer gamePlayer : thisGoalieAppearanceList) {
                 gameList.add(gamePlayer.getGame());
             }
             totalGamesPlayed = gameList.size();
-            
+
             Integer goalsLetInThisGameCount;
             for (GamePlayer gamePlayer : thisGoalieAppearanceList) { // for each game this goalie played
                 goalsLetInThisGameCount = 0;
@@ -180,17 +183,17 @@ public class StatisticsProcessor {
             row.setFirstName(goalie.getFirstName());
             row.setLastName(goalie.getLastName());
             row.setTeamName(goalie.getTeam().getTeamName());
-            row.setPercentile((double)totalGoalsLetInCount / (double)totalGamesPlayed);
+            row.setPercentile((double) totalGoalsLetInCount / (double) totalGamesPlayed);
             row.setGamesPlayedCount(totalGamesPlayed);
             row.setGoalsLetInCount(totalGoalsLetInCount);
             rowList.add(row);
         }
-        
+
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 5 goalies table ---");
         System.out.println(Constants.SEPARATOR);
         Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5 && i < rowArray.length; i++) {
             System.out.println(rowArray[i]);
         }
     }
@@ -222,7 +225,49 @@ public class StatisticsProcessor {
         System.out.println("--- Top 10 unspotsmanlike player table ---");
         System.out.println(Constants.SEPARATOR);
         Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10 && i < rowArray.length; i++) {
+            System.out.println(rowArray[i]);
+        }
+    }
+
+    private void topReferee() {
+        Set<TopRefereeTableRow> rowList = new TreeSet<TopRefereeTableRow>();
+        TopRefereeTableRow row;
+
+        List<Violation> violationList = commonDAO.findAll(Violation.class);
+        Set<Referee> refereeList = new HashSet<Referee>();
+        for (Violation violation : violationList) {
+            refereeList.add(violation.getGame().getMainReferee());
+        }
+        Set<Game> gameList = null;
+        int cardCount;
+        int gameCount;
+        for (Referee referee : refereeList) {
+            row = new TopRefereeTableRow();
+            cardCount = 0;
+            gameCount = 0;
+            gameList = new HashSet<Game>();
+            for (Violation violation : violationList) {
+                if (violation.getGame().getMainReferee().equals(referee)) {
+                    cardCount++;
+                    gameList.add(violation.getGame());
+                }
+            }
+            gameCount = gameList.size();
+            row.setFirstName(referee.getFirstName());
+            row.setLastName(referee.getLastName());
+            row.setGameCount(gameCount);
+            row.setCardCount(cardCount);
+            row.setPercentile((double)cardCount / (double)gameCount);
+            
+            rowList.add(row);
+        }
+        
+        System.out.println(Constants.SEPARATOR);
+        System.out.println("--- Top 5 strict referee table ---");
+        System.out.println(Constants.SEPARATOR);
+        Object[] rowArray = rowList.toArray();
+        for (int i = 0; i < rowArray.length; i++) {
             System.out.println(rowArray[i]);
         }
     }

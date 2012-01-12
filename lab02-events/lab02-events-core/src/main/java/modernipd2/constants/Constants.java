@@ -10,6 +10,8 @@ package modernipd2.constants;
  */
 public final class Constants {
 
+    public static String SEPARATOR = "-----------------------------";
+    
     public static String ATTR_SKATITAJI = "Skatitaji";
     public static String ATTR_VIETA = "Vieta";
     public static String ATTR_DATUMS = "Laiks";

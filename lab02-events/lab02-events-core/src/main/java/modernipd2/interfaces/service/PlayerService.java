@@ -7,6 +7,7 @@ package modernipd2.interfaces.service;
 import java.util.Date;
 import java.util.List;
 import modernipd2.model.Game;
+import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
 import modernipd2.model.Player;
 import modernipd2.model.Referee;
@@ -25,4 +26,6 @@ public interface PlayerService {
     public Game getGameByVenueAndTeams(Team team1, Team team2, String venue, Date date);
     
     public List<GameTeam> getAllGameTeamByTeam(Team team);
+
+    public List<GamePlayer> getAllGamePlayerGoalies();
 }

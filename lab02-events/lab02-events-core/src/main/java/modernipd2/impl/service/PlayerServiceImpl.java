@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import modernipd2.constants.Constants;
 import modernipd2.interfaces.service.PlayerService;
 import modernipd2.model.Game;
+import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
 import modernipd2.model.Player;
 import modernipd2.model.Referee;
@@ -108,6 +109,21 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
 //            nre.printStackTrace();
         } catch (NonUniqueResultException nure) {
 //            nure.printStackTrace();
+        }
+        return gameTeamSet;
+    }
+
+    @Override
+    public List<GamePlayer> getAllGamePlayerGoalies() {
+        List<GamePlayer> gameTeamSet = null;
+        try {
+            Query query = getEntityManager().createNamedQuery(Constants.GamePlayerJpq.QUERY_GET_ALL_GOALIES);
+            query.setParameter("role", "V");
+            gameTeamSet = (List<GamePlayer>) query.getResultList();
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+        } catch (NonUniqueResultException nure) {
+            nure.printStackTrace();
         }
         return gameTeamSet;
     }

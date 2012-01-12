@@ -88,6 +88,7 @@ public class FootballImportProcessor implements DataImportProcessor {
             gamePlayer = new GamePlayer();
             gamePlayer.setGame(game);
             gamePlayer.setPlayer(player);
+            gamePlayer.setPlayerRole(player.getPlayerRole());
             if (team1InitialPlayerList.contains(player)) {
                 gamePlayer.setTimeStart(0);
                 gamePlayer.setTimeEnd(game.getGameEndTime());// default end time, if not subbed

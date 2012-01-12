@@ -33,7 +33,7 @@ public class Team implements PersistentEntity, Serializable {
     private Long id;
     private String teamName;
     
-    private Set<Player> playerList = new TreeSet();
+    private Set<Player> playerList = new TreeSet<Player>();
 
     @Id
     @GeneratedValue

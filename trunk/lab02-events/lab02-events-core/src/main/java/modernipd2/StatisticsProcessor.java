@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import modernipd2.bean.CardBean;
+import modernipd2.bean.GamesPlayedBean;
 import modernipd2.constants.Constants;
 import modernipd2.interfaces.service.PlayerService;
 import modernipd2.interfaces.service.TeamService;
@@ -22,6 +24,7 @@ import modernipd2.model.Referee;
 import modernipd2.model.Team;
 import modernipd2.model.Violation;
 import modernipd2.persistance.CommonDAO;
+import modernipd2.statistics.PlayerTableRow;
 import modernipd2.statistics.TopGoalieTableRow;
 import modernipd2.statistics.TopPlayerTableRow;
 import modernipd2.statistics.TopRefereeTableRow;
@@ -34,7 +37,6 @@ import modernipd2.statistics.TopUnsportsmanlikeTableRow;
  */
 public class StatisticsProcessor {
 
-    private TeamService teamService;
     private PlayerService playerService;
     protected CommonDAO commonDAO;
 
@@ -44,6 +46,7 @@ public class StatisticsProcessor {
         topGoalie();
         topUnsportsmanlike();
         topReferee();
+        teamStatistics();
     }
 
     private void topTeam() {
@@ -93,8 +96,6 @@ public class StatisticsProcessor {
         TopPlayerTableRow row;
 
         List<Team> teamList = getAllTeams();
-        List<Goal> goalList = commonDAO.findAll(Goal.class);
-        List<Assist> assistList = commonDAO.findAll(Assist.class);
 
         Set<Player> playerList;
         Integer goalCount;
@@ -106,18 +107,10 @@ public class StatisticsProcessor {
                 row.setTeamName(team.getTeamName());
                 row.setFirstName(player.getFirstName());
                 row.setLastName(player.getLastName());
-                goalCount = 0;
-                assistCount = 0;
-                for (Goal goal : goalList) {
-                    if (goal.getAuthor().equals(player)) {
-                        goalCount += 1;
-                    }
-                }
-                for (Assist assist : assistList) {
-                    if (assist.getPlayer().equals(player)) {
-                        assistCount += 1;
-                    }
-                }
+
+                goalCount = getGoalCount(player);
+                assistCount = getAssistCount(player);
+
                 row.setGoalsScoredCount(goalCount);
                 row.setAssistCount(assistCount);
 
@@ -258,11 +251,11 @@ public class StatisticsProcessor {
             row.setLastName(referee.getLastName());
             row.setGameCount(gameCount);
             row.setCardCount(cardCount);
-            row.setPercentile((double)cardCount / (double)gameCount);
-            
+            row.setPercentile((double) cardCount / (double) gameCount);
+
             rowList.add(row);
         }
-        
+
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 5 strict referee table ---");
         System.out.println(Constants.SEPARATOR);
@@ -285,11 +278,138 @@ public class StatisticsProcessor {
         this.playerService = playerService;
     }
 
-    public void setTeamService(TeamService teamService) {
-        this.teamService = teamService;
-    }
-
     private boolean isOvertime(Game game) {
         return game.getGameEndTime() > 90 * 60;
+    }
+
+    private void teamStatistics() {
+        Set<PlayerTableRow> rowList;
+
+        System.out.println(Constants.SEPARATOR);
+        System.out.println("--- Team statistics tables ---");
+        System.out.println(Constants.SEPARATOR);
+
+        List<Team> teamList = getAllTeams();
+        for (Team team : teamList) {
+            System.out.println(Constants.SEPARATOR);
+            System.out.println("--- " + team.getTeamName() + " ---");
+            System.out.println(Constants.SEPARATOR);
+            rowList = teamStatistic(team);
+            for (PlayerTableRow ptr : rowList) {
+                System.out.println(ptr);
+            }
+        }
+    }
+
+    private Set<PlayerTableRow> teamStatistic(Team team) {
+        Set<PlayerTableRow> rowList = new TreeSet<PlayerTableRow>();
+        PlayerTableRow row;
+
+        Set<Player> playerList = team.getPlayerList();
+        CardBean cardBean;
+        GamesPlayedBean gamesPlayedBean;
+        Integer minutesPlayed;
+        for (Player player : playerList) {
+            row = new PlayerTableRow();
+            gamesPlayedBean = getGamesPlayedBean(player);
+            minutesPlayed = gamesPlayedBean.getMinutesPlayed();
+            
+            if (minutesPlayed > 0) {
+                cardBean = getCardBean(player);
+                row.setGamesPlayedCount(gamesPlayedBean.getGamesPlayedCount());
+                row.setGamesPlayedInStartingLineupCount(gamesPlayedBean.getGamesPlayedInStartingLineupCount());
+                row.setMinutesPlayed(minutesPlayed / 60 + ":" + minutesPlayed % 60);
+                row.setGoalsScoredCount(getGoalCount(player));
+                row.setAssistsCount(getAssistCount(player));
+                row.setYellowCardCount(cardBean.getYellowCardCount());
+                row.setRedCardCount(cardBean.getRedCardCount());
+                row.setPlayerNumber(player.getPlayerNumber());
+                row.setFirstName(player.getFirstName());
+                row.setLastName(player.getLastName());
+                rowList.add(row);
+            }
+        }
+        return rowList;
+    }
+
+    private int getGoalCount(Player player) {
+        int goalCount = 0;
+        List<Goal> goalList = playerService.getAllGoalByPlayer(player);
+        if (goalList != null) {
+            goalCount = goalList.size();
+        }
+        return goalCount;
+    }
+
+    private int getAssistCount(Player player) {
+        int assistCount = 0;
+        List<Assist> assistList = playerService.getAllAssistByPlayer(player);
+        if (assistList != null) {
+            assistCount = assistList.size();
+        }
+        return assistCount;
+    }
+
+    private int getGamesPlayedCount(Player player) {
+        List<GamePlayer> gamePlayerList = playerService.getAllGamePlayerByPlayer(player);
+        Set<Game> gameList = new HashSet();
+        for (GamePlayer gamePlayer : gamePlayerList) {
+            gameList.add(gamePlayer.getGame());
+        }
+        return gameList.size();
+    }
+
+    private int getGamesPlayedInStartingLineupCount(Player player) {
+        List<GamePlayer> gamePlayerList = playerService.getAllGamePlayerByPlayer(player);
+        Set<Game> gameList = new HashSet();
+        for (GamePlayer gamePlayer : gamePlayerList) {
+            if (gamePlayer.getTimeStart() == 0) {
+                gameList.add(gamePlayer.getGame());
+            }
+        }
+        return gameList.size();
+    }
+
+    private GamesPlayedBean getGamesPlayedBean(Player player) {
+        Integer gamesPlayedCount = new Integer(0);
+        Integer gamesPlayedInStartingLineupCount = new Integer(0);
+        Integer minutesPlayed = new Integer(0);
+        List<GamePlayer> gamePlayerList = playerService.getAllGamePlayerByPlayer(player);
+        
+        Set<Game> gameList = new HashSet<Game>();
+        Set<Game> gamesInStartingLineupList = new HashSet<Game>();
+        if (gamePlayerList != null) {
+            for (GamePlayer gamePlayer : gamePlayerList) {
+                minutesPlayed += (gamePlayer.getTimeEnd() - gamePlayer.getTimeStart());
+                gameList.add(gamePlayer.getGame());
+                if (gamePlayer.getTimeStart() == 0) {
+                    gamesInStartingLineupList.add(gamePlayer.getGame());
+                }
+            }
+            gamesPlayedCount = gameList.size();
+            gamesPlayedInStartingLineupCount = gamesInStartingLineupList.size();
+        }
+        GamesPlayedBean result = new GamesPlayedBean();
+        result.setGamesPlayedCount(gamesPlayedCount);
+        result.setGamesPlayedInStartingLineupCount(gamesPlayedInStartingLineupCount);
+        result.setMinutesPlayed(minutesPlayed);
+        return result;
+    }
+    
+    private CardBean getCardBean(Player player) {
+        Integer yellowCardCount = new Integer(0);
+        Integer redCardCount = new Integer(0);
+        List<Violation> violationList = playerService.getAllViolationByPlayer(player);
+        for (Violation violation : violationList) {
+            if (violation.getType().equals("Y")) {
+                yellowCardCount++;
+            } else {
+                redCardCount++;
+            }
+        }
+        CardBean result = new CardBean();
+        result.setYellowCardCount(yellowCardCount);
+        result.setRedCardCount(redCardCount);
+        return result;
     }
 }

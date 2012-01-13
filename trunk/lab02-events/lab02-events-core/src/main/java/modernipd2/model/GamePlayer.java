@@ -21,22 +21,22 @@ import modernipd2.constants.Constants;
 @SuppressWarnings("serial")
 @NamedQueries({
     @NamedQuery(name = Constants.GamePlayerJpq.QUERY_GET_ALL_GOALIES,
-    query = "SELECT gp FROM GamePlayer gp WHERE gp.playerRole = :role")
+    query = "SELECT gp FROM GamePlayer gp WHERE gp.playerRole = :role"),
+    @NamedQuery(name = Constants.GamePlayerJpq.QUERY_GET_ALL_BY_PLAYER,
+    query = "SELECT gp FROM GamePlayer gp WHERE gp.player = :player")
 })
 @Entity
 public class GamePlayer implements Serializable, PersistentEntity {
-      
+
     @Id
     @GeneratedValue
     private Long id;
-    
     @OneToOne
     @JoinColumn(name = "GAME_FK")
     private Game game;
     @OneToOne
     @JoinColumn(name = "PLAYER_FK")
     private Player player;
-    
     private Integer timeStart;
     private Integer timeEnd;
     private String playerRole;

@@ -6,12 +6,15 @@ package modernipd2.interfaces.service;
 
 import java.util.Date;
 import java.util.List;
+import modernipd2.model.Assist;
 import modernipd2.model.Game;
 import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
+import modernipd2.model.Goal;
 import modernipd2.model.Player;
 import modernipd2.model.Referee;
 import modernipd2.model.Team;
+import modernipd2.model.Violation;
 
 /**
  *
@@ -28,4 +31,12 @@ public interface PlayerService {
     public List<GameTeam> getAllGameTeamByTeam(Team team);
 
     public List<GamePlayer> getAllGamePlayerGoalies();
+
+    public List<GamePlayer> getAllGamePlayerByPlayer(Player player);
+
+    public List<Goal> getAllGoalByPlayer(Player player);
+
+    public List<Assist> getAllAssistByPlayer(Player player);
+
+    public List<Violation> getAllViolationByPlayer(Player player);
 }

@@ -10,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import modernipd2.constants.Constants;
 import modernipd2.constants.utils.Utils;
 
 /**
@@ -18,6 +21,11 @@ import modernipd2.constants.utils.Utils;
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
 @Entity
+@SuppressWarnings("serial")
+@NamedQueries({
+    @NamedQuery(name = Constants.ViolationJpg.QUERY_GET_ALL_BY_PLAYER,
+    query = "SELECT v FROM Violation v WHERE v.player = :player")
+})
 public class Violation implements PersistentEntity, Serializable, Comparable {
     
     @Id
@@ -30,6 +38,7 @@ public class Violation implements PersistentEntity, Serializable, Comparable {
     @OneToOne
     @JoinColumn(name="PLAYER_FK")
     private Player player;
+    private String type;
 
     public Long getId() {
         return id;
@@ -61,6 +70,14 @@ public class Violation implements PersistentEntity, Serializable, Comparable {
 
     public void setViolationTime(Integer violationTime) {
         this.violationTime = violationTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

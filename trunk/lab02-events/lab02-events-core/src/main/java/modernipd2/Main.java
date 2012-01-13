@@ -30,7 +30,7 @@ public class Main {
         dataImportProcessor.importData(folderPath);
         
         
-        List<Game> gameList = dataImportProcessor.getGameList();
+        List<Game> gameList = dataImportProcessor.commonDAO.findAll(Game.class);
         StatisticsProcessor stProc = (StatisticsProcessor) appCtxt.getBean(STATISTICS_BEAN_ID);
         stProc.generateStatistics(gameList);
         

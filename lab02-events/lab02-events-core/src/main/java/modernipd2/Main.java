@@ -27,7 +27,7 @@ public class Main {
         ApplicationContext appCtxt = new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE);
         
         FootballImportProcessor dataImportProcessor = (FootballImportProcessor) appCtxt.getBean(IMPORT_BEAN_ID);
-        dataImportProcessor.importData(folderPath);
+//        dataImportProcessor.importData(folderPath);
         
         
         List<Game> gameList = dataImportProcessor.commonDAO.findAll(Game.class);

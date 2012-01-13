@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) {
         String folderPath;
 //        folderPath = args[0];
-        folderPath = "c:/Users/root/Documents/NetBeansProjects/ModernProgTehPD2/";
+        folderPath = "C:/Users/andrejs.dasko/Documents/futbols/";
         
         ApplicationContext appCtxt = new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE);
         

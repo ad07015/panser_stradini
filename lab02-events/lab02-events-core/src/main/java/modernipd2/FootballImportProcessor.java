@@ -121,11 +121,13 @@ public class FootballImportProcessor implements DataImportProcessor {
         File folder = new File(folderPath);
         File[] listOfFiles = folder.listFiles();
         String filename;
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                filename = listOfFiles[i].getName();
-                if (filename.startsWith("futbols")) {
-                    pathList.add(folderPath + filename);
+        if (listOfFiles != null) {
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    filename = listOfFiles[i].getName();
+                    if (filename.startsWith("futbols")) {
+                        pathList.add(folderPath + filename);
+                    }
                 }
             }
         }

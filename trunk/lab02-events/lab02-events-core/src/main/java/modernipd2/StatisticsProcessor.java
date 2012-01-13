@@ -24,6 +24,7 @@ import modernipd2.model.Team;
 import modernipd2.model.Violation;
 import modernipd2.persistance.CommonDAO;
 import modernipd2.statistics.PlayerTableRow;
+import modernipd2.statistics.TopFastestScoringPlayersTableRow;
 import modernipd2.statistics.TopGoalieTableRow;
 import modernipd2.statistics.TopPlayerTableRow;
 import modernipd2.statistics.TopRefereeTableRow;
@@ -36,10 +37,10 @@ import modernipd2.statistics.TopUnsportsmanlikeTableRow;
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
 public class StatisticsProcessor {
-
+    
     private PlayerService playerService;
     protected CommonDAO commonDAO;
-
+    
     void generateStatistics(List<Game> gameList) {
 //        topTeam();
 //        topPlayer();
@@ -47,13 +48,14 @@ public class StatisticsProcessor {
 //        topUnsportsmanlike();
 //        topReferee();
 //        teamStatistics();
-        teamAttendance();
+//        teamAttendance();
+        topFastestScoringPlayers();
     }
-
+    
     private void topTeam() {
         Set<TopTeamTableRow> rowList = new TreeSet<TopTeamTableRow>();
         TopTeamTableRow row = new TopTeamTableRow();
-
+        
         List<Team> teamList = getAllTeams();
         List<GameTeam> gameTeamList = null;
         for (Team team : teamList) {
@@ -61,7 +63,7 @@ public class StatisticsProcessor {
             if (gameTeamList != null && gameTeamList.size() > 0) {
                 row = new TopTeamTableRow();
                 row.setTeamName(team.getTeamName());
-
+                
                 for (GameTeam gameTeam : gameTeamList) {
                     row.setGoalsScoredCount(row.getGoalsScoredCount() + gameTeam.getGoalsScoredCount());
                     row.setGoalsLetInCount(row.getGoalsLetInCount() + gameTeam.getGoalsLetInCount());
@@ -83,7 +85,7 @@ public class StatisticsProcessor {
                 rowList.add(row);
             }
         }
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top team table ---");
         System.out.println(Constants.SEPARATOR);
@@ -91,13 +93,13 @@ public class StatisticsProcessor {
             System.out.println(r);
         }
     }
-
+    
     private void topPlayer() {
         Set<TopPlayerTableRow> rowList = new TreeSet<TopPlayerTableRow>();
         TopPlayerTableRow row;
-
+        
         List<Team> teamList = getAllTeams();
-
+        
         Set<Player> playerList;
         Integer goalCount;
         Integer assistCount;
@@ -108,17 +110,17 @@ public class StatisticsProcessor {
                 row.setTeamName(team.getTeamName());
                 row.setFirstName(player.getFirstName());
                 row.setLastName(player.getLastName());
-
+                
                 goalCount = getGoalCount(player);
                 assistCount = getAssistCount(player);
-
+                
                 row.setGoalsScoredCount(goalCount);
                 row.setAssistCount(assistCount);
-
+                
                 rowList.add(row);
             }
         }
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 10 player table ---");
         System.out.println(Constants.SEPARATOR);
@@ -127,17 +129,17 @@ public class StatisticsProcessor {
             System.out.println(rowArray[i]);
         }
     }
-
+    
     private void topGoalie() {
         Set<TopGoalieTableRow> rowList = new TreeSet<TopGoalieTableRow>();
         TopGoalieTableRow row;
-
+        
         List<GamePlayer> goalieAppearanceList = playerService.getAllGamePlayerGoalies();
         Set<Player> goalieList = new TreeSet<Player>();
         for (GamePlayer gamePlayer : goalieAppearanceList) {
             goalieList.add(gamePlayer.getPlayer());
         }
-
+        
         List<GamePlayer> thisGoalieAppearanceList = new ArrayList<GamePlayer>();
         int totalGoalsLetInCount;
         int totalGamesPlayed;
@@ -156,7 +158,7 @@ public class StatisticsProcessor {
                 gameList.add(gamePlayer.getGame());
             }
             totalGamesPlayed = gameList.size();
-
+            
             Integer goalsLetInThisGameCount;
             for (GamePlayer gamePlayer : thisGoalieAppearanceList) { // for each game this goalie played
                 goalsLetInThisGameCount = 0;
@@ -182,7 +184,7 @@ public class StatisticsProcessor {
             row.setGoalsLetInCount(totalGoalsLetInCount);
             rowList.add(row);
         }
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 5 goalies table ---");
         System.out.println(Constants.SEPARATOR);
@@ -191,11 +193,11 @@ public class StatisticsProcessor {
             System.out.println(rowArray[i]);
         }
     }
-
+    
     private void topUnsportsmanlike() {
         Set<TopUnsportsmanlikeTableRow> rowList = new TreeSet<TopUnsportsmanlikeTableRow>();
         TopUnsportsmanlikeTableRow row;
-
+        
         List<Violation> violationList = commonDAO.findAll(Violation.class);
         List<Player> playerList = commonDAO.findAll(Player.class);
         Integer violationCount;
@@ -211,10 +213,10 @@ public class StatisticsProcessor {
                 }
             }
             row.setViolationCount(violationCount);
-
+            
             rowList.add(row);
         }
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 10 unspotsmanlike player table ---");
         System.out.println(Constants.SEPARATOR);
@@ -223,11 +225,11 @@ public class StatisticsProcessor {
             System.out.println(rowArray[i]);
         }
     }
-
+    
     private void topReferee() {
         Set<TopRefereeTableRow> rowList = new TreeSet<TopRefereeTableRow>();
         TopRefereeTableRow row;
-
+        
         List<Violation> violationList = commonDAO.findAll(Violation.class);
         Set<Referee> refereeList = new HashSet<Referee>();
         for (Violation violation : violationList) {
@@ -253,10 +255,10 @@ public class StatisticsProcessor {
             row.setGameCount(gameCount);
             row.setCardCount(cardCount);
             row.setPercentile((double) cardCount / (double) gameCount);
-
+            
             rowList.add(row);
         }
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top 5 strict referee table ---");
         System.out.println(Constants.SEPARATOR);
@@ -265,31 +267,31 @@ public class StatisticsProcessor {
             System.out.println(rowArray[i]);
         }
     }
-
+    
     private List<Team> getAllTeams() {
         List<Team> teamList = commonDAO.findAll(Team.class);
         return teamList;
     }
-
+    
     public void setCommonDAO(CommonDAO commonDAO) {
         this.commonDAO = commonDAO;
     }
-
+    
     public void setPlayerService(PlayerService playerService) {
         this.playerService = playerService;
     }
-
+    
     private boolean isOvertime(Game game) {
         return game.getGameEndTime() > 90 * 60;
     }
-
+    
     private void teamStatistics() {
         Set<PlayerTableRow> rowList;
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Team statistics tables ---");
         System.out.println(Constants.SEPARATOR);
-
+        
         List<Team> teamList = getAllTeams();
         for (Team team : teamList) {
             System.out.println(Constants.SEPARATOR);
@@ -301,11 +303,11 @@ public class StatisticsProcessor {
             }
         }
     }
-
+    
     private Set<PlayerTableRow> teamStatistic(Team team) {
         Set<PlayerTableRow> rowList = new TreeSet<PlayerTableRow>();
         PlayerTableRow row;
-
+        
         Set<Player> playerList = team.getPlayerList();
         CardBean cardBean;
         GamesPlayedBean gamesPlayedBean;
@@ -332,7 +334,7 @@ public class StatisticsProcessor {
         }
         return rowList;
     }
-
+    
     private int getGoalCount(Player player) {
         int goalCount = 0;
         List<Goal> goalList = playerService.getAllGoalByPlayer(player);
@@ -341,7 +343,7 @@ public class StatisticsProcessor {
         }
         return goalCount;
     }
-
+    
     private int getAssistCount(Player player) {
         int assistCount = 0;
         List<Assist> assistList = playerService.getAllAssistByPlayer(player);
@@ -350,7 +352,7 @@ public class StatisticsProcessor {
         }
         return assistCount;
     }
-
+    
     private int getGamesPlayedCount(Player player) {
         List<GamePlayer> gamePlayerList = playerService.getAllGamePlayerByPlayer(player);
         Set<Game> gameList = new HashSet();
@@ -359,7 +361,7 @@ public class StatisticsProcessor {
         }
         return gameList.size();
     }
-
+    
     private int getGamesPlayedInStartingLineupCount(Player player) {
         List<GamePlayer> gamePlayerList = playerService.getAllGamePlayerByPlayer(player);
         Set<Game> gameList = new HashSet();
@@ -370,7 +372,7 @@ public class StatisticsProcessor {
         }
         return gameList.size();
     }
-
+    
     private GamesPlayedBean getGamesPlayedBean(Player player) {
         Integer gamesPlayedCount = new Integer(0);
         Integer gamesPlayedInStartingLineupCount = new Integer(0);
@@ -413,7 +415,7 @@ public class StatisticsProcessor {
         result.setRedCardCount(redCardCount);
         return result;
     }
-
+    
     private void teamAttendance() {
         Set<TopTeamAttendanceTableRow> rowList = new TreeSet<TopTeamAttendanceTableRow>();
         TopTeamAttendanceTableRow row;
@@ -437,12 +439,61 @@ public class StatisticsProcessor {
             row.setPercentile(totalViewerCount / totalGameCount);
             rowList.add(row);
         }
-
+        
         System.out.println(Constants.SEPARATOR);
         System.out.println("--- Top team attendance table ---");
         System.out.println(Constants.SEPARATOR);
         Object[] rowArray = rowList.toArray();
         for (int i = 0; i < rowArray.length; i++) {
+            System.out.println(rowArray[i]);
+        }
+    }
+    
+    private void topFastestScoringPlayers() {
+        Set<TopFastestScoringPlayersTableRow> rowList = new TreeSet<TopFastestScoringPlayersTableRow>();
+        TopFastestScoringPlayersTableRow row;
+        
+        List<Player> playerList = commonDAO.findAll(Player.class);
+        GamesPlayedBean gamesPlayedBean;
+        int assistCount;
+        int goalCount;
+        int gamesPlayedCount;
+        int timePlayed;
+        for (Player player : playerList) {
+            timePlayed = 0;
+            gamesPlayedBean = getGamesPlayedBean(player);
+            timePlayed = gamesPlayedBean.getMinutesPlayed();
+            assistCount = getAssistCount(player);
+            goalCount = getGoalCount(player);
+            if (goalCount > 0) {
+                row = new TopFastestScoringPlayersTableRow();
+                gamesPlayedCount = gamesPlayedBean.getGamesPlayedCount();
+                
+                row.setFirstName(player.getFirstName());
+                row.setLastName(player.getLastName());
+                row.setTeamName(player.getTeam().getTeamName());
+                row.setTimePlayed(gamesPlayedBean.getMinutesPlayed());
+                row.setGoalScoredCount(goalCount);
+                row.setAssistCount(assistCount);
+                row.setGamesPlayedCount(gamesPlayedCount);
+                
+                if (assistCount > 0) {
+                    row.setTimeToAssist(timePlayed / assistCount);
+                }
+                if (goalCount > 0) {
+                    row.setTimeToScoreOneGoal(timePlayed / goalCount);
+                }
+                row.setGoalsScoredPerGame((double) goalCount / (double) gamesPlayedCount);
+                row.setAssistsPerGame((double) assistCount / (double) gamesPlayedCount);
+                rowList.add(row);
+            }
+        }
+        
+        System.out.println(Constants.SEPARATOR);
+        System.out.println("--- Top 10 fastest scoring players table ---");
+        System.out.println(Constants.SEPARATOR);
+        Object[] rowArray = rowList.toArray();
+        for (int i = 0; i < 10 && i < rowArray.length; i++) {
             System.out.println(rowArray[i]);
         }
     }

@@ -12,12 +12,15 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import modernipd2.constants.Constants;
 import modernipd2.interfaces.service.PlayerService;
+import modernipd2.model.Assist;
 import modernipd2.model.Game;
 import modernipd2.model.GamePlayer;
 import modernipd2.model.GameTeam;
+import modernipd2.model.Goal;
 import modernipd2.model.Player;
 import modernipd2.model.Referee;
 import modernipd2.model.Team;
+import modernipd2.model.Violation;
 import modernipd2.persistance.AbstractDAOImpl;
 
 /**
@@ -126,5 +129,65 @@ public class PlayerServiceImpl extends AbstractDAOImpl implements PlayerService 
             nure.printStackTrace();
         }
         return gameTeamSet;
+    }
+
+    @Override
+    public List<GamePlayer> getAllGamePlayerByPlayer(Player player) {
+        List<GamePlayer> gameTeamSet = null;
+        try {
+            Query query = getEntityManager().createNamedQuery(Constants.GamePlayerJpq.QUERY_GET_ALL_BY_PLAYER);
+            query.setParameter("player", player);
+            gameTeamSet = (List<GamePlayer>) query.getResultList();
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+        } catch (NonUniqueResultException nure) {
+            nure.printStackTrace();
+        }
+        return gameTeamSet;
+    }
+
+    @Override
+    public List<Goal> getAllGoalByPlayer(Player player) {
+        List<Goal> goalList = null;
+        try {
+            Query query = getEntityManager().createNamedQuery(Constants.GoalJpq.QUERY_GET_ALL_BY_PLAYER);
+            query.setParameter("player", player);
+            goalList = (List<Goal>) query.getResultList();
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+        } catch (NonUniqueResultException nure) {
+            nure.printStackTrace();
+        }
+        return goalList;
+    }
+
+    @Override
+    public List<Assist> getAllAssistByPlayer(Player player) {
+        List<Assist> assistList = null;
+        try {
+            Query query = getEntityManager().createNamedQuery(Constants.AssistJpq.QUERY_GET_ALL_BY_PLAYER);
+            query.setParameter("player", player);
+            assistList = (List<Assist>) query.getResultList();
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+        } catch (NonUniqueResultException nure) {
+            nure.printStackTrace();
+        }
+        return assistList;
+    }
+
+    @Override
+    public List<Violation> getAllViolationByPlayer(Player player) {
+        List<Violation> violationList = null;
+        try {
+            Query query = getEntityManager().createNamedQuery(Constants.ViolationJpg.QUERY_GET_ALL_BY_PLAYER);
+            query.setParameter("player", player);
+            violationList = (List<Violation>) query.getResultList();
+        } catch (NoResultException nre) {
+            nre.printStackTrace();
+        } catch (NonUniqueResultException nure) {
+            nure.printStackTrace();
+        }
+        return violationList;
     }
 }

@@ -24,5 +24,21 @@ public final class Constants {
     public final class GamePlayerJpq {
 
         public static final String QUERY_GET_ALL_GOALIES = "GamePlayer.getAllGoalies";
+        public static final String QUERY_GET_ALL_BY_PLAYER = "GamePlayer.getAllByPlayer";
+    }
+
+    public final class GoalJpq {
+
+        public static final String QUERY_GET_ALL_BY_PLAYER = "Goal.getAllByPlayer";
+    }
+
+    public final class AssistJpq {
+
+        public static final String QUERY_GET_ALL_BY_PLAYER = "Assist.getAllByPlayer";
+    }
+
+    public final class ViolationJpg {
+
+        public static final String QUERY_GET_ALL_BY_PLAYER = "Violation.getAllByPlayer";
     }
 }

@@ -12,14 +12,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import modernipd2.constants.Constants;
 import modernipd2.constants.utils.Utils;
 
 /**
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+@SuppressWarnings("serial")
+@NamedQueries({
+    @NamedQuery(name = Constants.GoalJpq.QUERY_GET_ALL_BY_PLAYER,
+    query = "SELECT g FROM Goal g WHERE g.author = :player")
+})
 @Entity
 public class Goal implements Comparable, PersistentEntity, Serializable {
 

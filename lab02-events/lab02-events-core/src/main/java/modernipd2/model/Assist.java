@@ -10,12 +10,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import modernipd2.constants.Constants;
 
 /**
  *
  * @author Andrejs Daško ad07015; Dmitrijs Ivanovs di07001
  */
+
+@SuppressWarnings("serial")
+@NamedQueries({
+    @NamedQuery(name = Constants.AssistJpq.QUERY_GET_ALL_BY_PLAYER,
+    query = "SELECT a FROM Assist a WHERE a.player = :player")
+})
 @Entity
 public class Assist implements PersistentEntity, Serializable {
     

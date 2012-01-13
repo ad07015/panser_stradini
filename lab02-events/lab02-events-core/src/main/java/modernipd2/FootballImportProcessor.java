@@ -67,7 +67,6 @@ public class FootballImportProcessor implements DataImportProcessor {
     @Override
     public void importData(String folderPath) {
         List<String> pathList = getFileList(folderPath);
-//        parseXmlFile(pathList.get(0));
         for (String path : pathList) {
             parseXmlFile(path);
         }
@@ -425,6 +424,18 @@ public class FootballImportProcessor implements DataImportProcessor {
                 for (int i = 0; i < violationNodeList.getLength(); i++) {
                     violationNode = violationNodeList.item(i);
                     violation = parseViolation(violationNode, team, game);
+                    for (Violation oldViolation : violationList) {
+                        if (oldViolation.getPlayer().equals(violation.getPlayer())
+                                && oldViolation.getGame().equals(violation.getGame())) {
+                            Violation redCard = new Violation();
+                            redCard.setGame(violation.getGame());
+                            redCard.setPlayer(violation.getPlayer());
+                            redCard.setViolationTime(violation.getViolationTime());
+                            redCard.setType("R");
+                            violationList.add(redCard);
+                            break;
+                        }
+                    }
                     violationList.add(violation);
                 }
             }
@@ -500,6 +511,7 @@ public class FootballImportProcessor implements DataImportProcessor {
         violation.setViolationTime(time);
         violation.setPlayer(player);
         violation.setGame(game);
+        violation.setType("Y");
         commonDAO.save(violation);
         return violation;
     }

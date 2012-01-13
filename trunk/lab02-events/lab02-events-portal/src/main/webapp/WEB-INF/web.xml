@@ -5,16 +5,16 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
-  <display-name>Lab02 Events Portal</display-name>
+    <display-name>Lab02 Events Portal</display-name>
 
-  	<servlet>
-		<servlet-name>events</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+    <servlet>
+        <servlet-name>events</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 	
-	<servlet-mapping>
-	    <servlet-name>events</servlet-name>
+    <servlet-mapping>
+        <servlet-name>events</servlet-name>
         <url-pattern>/events/*</url-pattern>
     </servlet-mapping>
 

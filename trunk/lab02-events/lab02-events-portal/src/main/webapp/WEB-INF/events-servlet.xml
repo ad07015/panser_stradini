@@ -18,26 +18,26 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
     <!-- Support for annotation-based Spring Web MVC controllers configuration -->
-    <context:component-scan base-package="lv.lu.events.portal.mvc.controller"/>
+    <context:component-scan base-package="modernipd2.portal.mvc.controller"/>
     
     <!-- Spring Web MVC controllers and mappings -->    
 	
 	<!-- The following controllers are configured using annotations -->
 	<!-- Listed here just for reference, see Java classes -->
-	<!-- bean name="loginLogoutController" class="lv.lu.events.portal.mvc.controller.LoginLogoutController" /-->
+	<!-- bean name="loginLogoutController" class="modernipd2.portal.mvc.controller.LoginLogoutController" /-->
 	
 	<!-- Validator for LoginLogoutController -->
-    <bean name="loginValidator" class="lv.lu.events.portal.mvc.validator.LoginValidator"></bean>
+    <bean name="loginValidator" class="modernipd2.portal.mvc.validator.LoginValidator"></bean>
 	
-    <bean name="eventValidator" class="lv.lu.events.portal.mvc.validator.EventValidator"></bean>
+    <bean name="eventValidator" class="modernipd2.portal.mvc.validator.EventValidator"></bean>
         
-    <bean name="registrationValidator" class="lv.lu.events.portal.mvc.validator.RegistrationValidator"></bean>
+    <bean name="registrationValidator" class="modernipd2.portal.mvc.validator.RegistrationValidator"></bean>
 	
 	<!-- After successful login user is navigated to Home page -->
 	<!-- Example of XML configuration based controller -->
-    <bean name="homePageController" class="lv.lu.events.portal.mvc.controller.HomePageController">
+<!--    <bean name="homePageController" class="modernipd2.portal.mvc.controller.HomePageController">
         <property name="viewName" value="home"/>
-    </bean>	
+    </bean>	-->
 
 	<!-- URL mappings to controllers -->
 
@@ -69,7 +69,7 @@
 	<!-- Interceptors -->
 
 	<!-- Handles unauthorized access attempts -->
-    <bean id="loginInterceptor" class="lv.lu.events.portal.mvc.interceptor.LoginInterceptor">
+    <bean id="loginInterceptor" class="modernipd2.portal.mvc.interceptor.LoginInterceptor">
         <property name="ignoreList">
             <list>
                 <value>/home</value>
@@ -99,11 +99,7 @@
     
     <!-- Application services -->
     
-    <bean id="commonDAO" class="lv.lu.events.impl.CommonDAOImpl" />
-    <bean id="userService" class="lv.lu.events.impl.service.UserServiceImpl"/>
-    <bean id="inviteService" class="lv.lu.events.impl.service.InviteServiceImpl"/>
-    <bean id="eventService" class="lv.lu.events.impl.service.EventServiceImpl"/>
-    <bean id="friendshipService" class="lv.lu.events.impl.service.FriendshipServiceImpl"/>
+    <bean id="commonDAO" class="modernipd2.persistance.CommonDAOImpl" />
 
    	<!-- Persistence configuration -->
 

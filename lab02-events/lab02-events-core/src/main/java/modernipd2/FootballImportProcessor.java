@@ -570,4 +570,8 @@ public class FootballImportProcessor implements DataImportProcessor {
         System.out.println("--------------------THIS PLACE SHOULD NEVER HAVE BEEN REACHED!!!");
         return result;
     }
+
+    public CommonDAO getCommonDAO() {
+        return commonDAO;
+    }
 }

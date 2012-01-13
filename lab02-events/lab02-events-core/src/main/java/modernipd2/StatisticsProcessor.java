@@ -42,13 +42,13 @@ public class StatisticsProcessor {
     protected CommonDAO commonDAO;
     
     void generateStatistics(List<Game> gameList) {
-//        topTeam();
-//        topPlayer();
-//        topGoalie();
-//        topUnsportsmanlike();
-//        topReferee();
-//        teamStatistics();
-//        teamAttendance();
+        topTeam();
+        topPlayer();
+        topGoalie();
+        topUnsportsmanlike();
+        topReferee();
+        teamStatistics();
+        teamAttendance();
         topFastestScoringPlayers();
     }
     
@@ -94,7 +94,7 @@ public class StatisticsProcessor {
         }
     }
     
-    private void topPlayer() {
+    public Set<TopPlayerTableRow> topPlayer() {
         Set<TopPlayerTableRow> rowList = new TreeSet<TopPlayerTableRow>();
         TopPlayerTableRow row;
         
@@ -128,6 +128,7 @@ public class StatisticsProcessor {
         for (int i = 0; i < 10 && i < rowArray.length; i++) {
             System.out.println(rowArray[i]);
         }
+        return rowList;
     }
     
     private void topGoalie() {

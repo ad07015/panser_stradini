@@ -22,18 +22,18 @@ public class Main {
     public static void main(String[] args) {
         String folderPath;
 //        folderPath = args[0];
-        folderPath = "C:/Users/andrejs.dasko/Documents/futbols/";
-        
+        folderPath = "C:/Users/root/Documents/NetBeansProjects/ModernProgTehPD2/";
+
         ApplicationContext appCtxt = new ClassPathXmlApplicationContext(SPRING_CONFIG_FILE);
-        
+
         FootballImportProcessor dataImportProcessor = (FootballImportProcessor) appCtxt.getBean(IMPORT_BEAN_ID);
-//        dataImportProcessor.importData(folderPath);
-        
-        
+        dataImportProcessor.importData(folderPath);
+
+
         List<Game> gameList = dataImportProcessor.commonDAO.findAll(Game.class);
         StatisticsProcessor stProc = (StatisticsProcessor) appCtxt.getBean(STATISTICS_BEAN_ID);
         stProc.generateStatistics(gameList);
-        
+
         System.out.println("Application execution successfully completed");
         System.exit(0);
     }

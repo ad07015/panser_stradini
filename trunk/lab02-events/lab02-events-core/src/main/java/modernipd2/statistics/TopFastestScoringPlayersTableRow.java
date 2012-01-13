@@ -17,10 +17,13 @@ public class TopFastestScoringPlayersTableRow implements Comparable {
     private String teamName;
     private Integer gamesPlayedCount;
     private Integer timePlayed;
+    private String sTimePlayed;
     private Integer goalScoredCount;
     private Integer assistCount;
     private Integer timeToScoreOneGoal;
+    private String sTimeToScoreOneGoal;
     private Integer timeToAssist;
+    private String sTimeToAssist;
     private Double goalsScoredPerGame;
     private Double assistsPerGame;
 
@@ -121,6 +124,18 @@ public class TopFastestScoringPlayersTableRow implements Comparable {
 
     public void setGamesPlayedCount(Integer gamesPlayedCount) {
         this.gamesPlayedCount = gamesPlayedCount;
+    }
+
+    public String getsTimePlayed() {
+        return timePlayed / 60 + ":" + timePlayed % 60;
+    }
+
+    public String getsTimeToAssist() {
+        return timeToAssist / 60 + ":" + timeToAssist % 60;
+    }
+
+    public String getsTimeToScoreOneGoal() {
+        return timeToScoreOneGoal / 60 + ":" + timeToScoreOneGoal % 60;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class StatisticsProcessor {
         topFastestScoringPlayers();
     }
     
-    private void topTeam() {
+    public Set<TopTeamTableRow> topTeam() {
         Set<TopTeamTableRow> rowList = new TreeSet<TopTeamTableRow>();
         TopTeamTableRow row = new TopTeamTableRow();
         
@@ -86,12 +86,13 @@ public class StatisticsProcessor {
             }
         }
         
-        System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top team table ---");
-        System.out.println(Constants.SEPARATOR);
-        for (TopTeamTableRow r : rowList) {
-            System.out.println(r);
-        }
+//        System.out.println(Constants.SEPARATOR);
+//        System.out.println("--- Top team table ---");
+//        System.out.println(Constants.SEPARATOR);
+//        for (TopTeamTableRow r : rowList) {
+//            System.out.println(r);
+//        }
+        return rowList;
     }
     
     public Set<TopPlayerTableRow> topPlayer() {
@@ -120,18 +121,18 @@ public class StatisticsProcessor {
                 rowList.add(row);
             }
         }
-        
-        System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top 10 player table ---");
-        System.out.println(Constants.SEPARATOR);
-        Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < 10 && i < rowArray.length; i++) {
-            System.out.println(rowArray[i]);
-        }
+//        
+//        System.out.println(Constants.SEPARATOR);
+//        System.out.println("--- Top 10 player table ---");
+//        System.out.println(Constants.SEPARATOR);
+//        Object[] rowArray = rowList.toArray();
+//        for (int i = 0; i < 10 && i < rowArray.length; i++) {
+//            System.out.println(rowArray[i]);
+//        }
         return rowList;
     }
     
-    private void topGoalie() {
+    public Set<TopGoalieTableRow> topGoalie() {
         Set<TopGoalieTableRow> rowList = new TreeSet<TopGoalieTableRow>();
         TopGoalieTableRow row;
         
@@ -186,16 +187,17 @@ public class StatisticsProcessor {
             rowList.add(row);
         }
         
-        System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top 5 goalies table ---");
-        System.out.println(Constants.SEPARATOR);
-        Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < 5 && i < rowArray.length; i++) {
-            System.out.println(rowArray[i]);
-        }
+//        System.out.println(Constants.SEPARATOR);
+//        System.out.println("--- Top 5 goalies table ---");
+//        System.out.println(Constants.SEPARATOR);
+//        Object[] rowArray = rowList.toArray();
+//        for (int i = 0; i < 5 && i < rowArray.length; i++) {
+//            System.out.println(rowArray[i]);
+//        }
+        return rowList;
     }
     
-    private void topUnsportsmanlike() {
+    public Set<TopUnsportsmanlikeTableRow> topUnsportsmanlike() {
         Set<TopUnsportsmanlikeTableRow> rowList = new TreeSet<TopUnsportsmanlikeTableRow>();
         TopUnsportsmanlikeTableRow row;
         
@@ -218,16 +220,17 @@ public class StatisticsProcessor {
             rowList.add(row);
         }
         
-        System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top 10 unspotsmanlike player table ---");
-        System.out.println(Constants.SEPARATOR);
-        Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < 10 && i < rowArray.length; i++) {
-            System.out.println(rowArray[i]);
-        }
+//        System.out.println(Constants.SEPARATOR);
+//        System.out.println("--- Top 10 unspotsmanlike player table ---");
+//        System.out.println(Constants.SEPARATOR);
+//        Object[] rowArray = rowList.toArray();
+//        for (int i = 0; i < 10 && i < rowArray.length; i++) {
+//            System.out.println(rowArray[i]);
+//        }
+        return rowList;
     }
     
-    private void topReferee() {
+    public Set<TopRefereeTableRow> topReferee() {
         Set<TopRefereeTableRow> rowList = new TreeSet<TopRefereeTableRow>();
         TopRefereeTableRow row;
         
@@ -260,13 +263,14 @@ public class StatisticsProcessor {
             rowList.add(row);
         }
         
-        System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top 5 strict referee table ---");
-        System.out.println(Constants.SEPARATOR);
-        Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < rowArray.length; i++) {
-            System.out.println(rowArray[i]);
-        }
+//        System.out.println(Constants.SEPARATOR);
+//        System.out.println("--- Top 5 strict referee table ---");
+//        System.out.println(Constants.SEPARATOR);
+//        Object[] rowArray = rowList.toArray();
+//        for (int i = 0; i < rowArray.length; i++) {
+//            System.out.println(rowArray[i]);
+//        }
+        return rowList;
     }
     
     private List<Team> getAllTeams() {
@@ -417,7 +421,7 @@ public class StatisticsProcessor {
         return result;
     }
     
-    private void teamAttendance() {
+    public Set<TopTeamAttendanceTableRow> teamAttendance() {
         Set<TopTeamAttendanceTableRow> rowList = new TreeSet<TopTeamAttendanceTableRow>();
         TopTeamAttendanceTableRow row;
         
@@ -440,17 +444,19 @@ public class StatisticsProcessor {
             row.setPercentile(totalViewerCount / totalGameCount);
             rowList.add(row);
         }
+//        
+//        System.out.println(Constants.SEPARATOR);
+//        System.out.println("--- Top team attendance table ---");
+//        System.out.println(Constants.SEPARATOR);
+//        Object[] rowArray = rowList.toArray();
+//        for (int i = 0; i < rowArray.length; i++) {
+//            System.out.println(rowArray[i]);
+//        }
         
-        System.out.println(Constants.SEPARATOR);
-        System.out.println("--- Top team attendance table ---");
-        System.out.println(Constants.SEPARATOR);
-        Object[] rowArray = rowList.toArray();
-        for (int i = 0; i < rowArray.length; i++) {
-            System.out.println(rowArray[i]);
-        }
+        return rowList;
     }
     
-    private void topFastestScoringPlayers() {
+    public Set<TopFastestScoringPlayersTableRow> topFastestScoringPlayers() {
         Set<TopFastestScoringPlayersTableRow> rowList = new TreeSet<TopFastestScoringPlayersTableRow>();
         TopFastestScoringPlayersTableRow row;
         
@@ -497,5 +503,6 @@ public class StatisticsProcessor {
         for (int i = 0; i < 10 && i < rowArray.length; i++) {
             System.out.println(rowArray[i]);
         }
+        return rowList;
     }
 }

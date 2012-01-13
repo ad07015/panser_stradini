@@ -4,7 +4,13 @@ import java.util.Set;
 import modernipd2.StatisticsProcessor;
 import modernipd2.interfaces.service.PlayerService;
 import modernipd2.persistance.CommonDAO;
+import modernipd2.statistics.TopFastestScoringPlayersTableRow;
+import modernipd2.statistics.TopGoalieTableRow;
 import modernipd2.statistics.TopPlayerTableRow;
+import modernipd2.statistics.TopRefereeTableRow;
+import modernipd2.statistics.TopTeamAttendanceTableRow;
+import modernipd2.statistics.TopTeamTableRow;
+import modernipd2.statistics.TopUnsportsmanlikeTableRow;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -56,6 +62,19 @@ public class HomePageController {
         ModelAndView mav = new ModelAndView();
         Set<TopPlayerTableRow> topPlayerTableRowList = statisticsProcessor.topPlayer();
         mav.addObject("topPlayerTableRowList", topPlayerTableRowList);
+        Set<TopTeamTableRow> topTeamTableRowList = statisticsProcessor.topTeam();
+        mav.addObject("topTeamTableRowList", topTeamTableRowList);
+        Set<TopGoalieTableRow> topGoalieTableRowList = statisticsProcessor.topGoalie();
+        mav.addObject("topGoalieTableRowList", topGoalieTableRowList);
+        Set<TopUnsportsmanlikeTableRow> topUnsportsmanlikeTableRowList = statisticsProcessor.topUnsportsmanlike();
+        mav.addObject("topUnsportsmanlikeTableRowList", topUnsportsmanlikeTableRowList);
+        Set<TopRefereeTableRow> topRefereeTableRowList = statisticsProcessor.topReferee();
+        mav.addObject("topRefereeTableRowList", topRefereeTableRowList);
+        Set<TopTeamAttendanceTableRow> topTeamAttendanceTableRowList = statisticsProcessor.teamAttendance();
+        mav.addObject("topTeamAttendanceTableRowList", topTeamAttendanceTableRowList);
+        Set<TopFastestScoringPlayersTableRow> topFastestScoringPlayersTableRow = statisticsProcessor.topFastestScoringPlayers();
+        mav.addObject("topFastestScoringPlayersTableRow", topFastestScoringPlayersTableRow);
+        
         mav.setViewName("home");
         return mav;
     }

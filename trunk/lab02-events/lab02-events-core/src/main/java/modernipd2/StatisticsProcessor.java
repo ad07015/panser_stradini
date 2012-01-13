@@ -13,7 +13,6 @@ import modernipd2.bean.CardBean;
 import modernipd2.bean.GamesPlayedBean;
 import modernipd2.constants.Constants;
 import modernipd2.interfaces.service.PlayerService;
-import modernipd2.interfaces.service.TeamService;
 import modernipd2.model.Assist;
 import modernipd2.model.Game;
 import modernipd2.model.GamePlayer;
@@ -28,6 +27,7 @@ import modernipd2.statistics.PlayerTableRow;
 import modernipd2.statistics.TopGoalieTableRow;
 import modernipd2.statistics.TopPlayerTableRow;
 import modernipd2.statistics.TopRefereeTableRow;
+import modernipd2.statistics.TopTeamAttendanceTableRow;
 import modernipd2.statistics.TopTeamTableRow;
 import modernipd2.statistics.TopUnsportsmanlikeTableRow;
 
@@ -41,12 +41,13 @@ public class StatisticsProcessor {
     protected CommonDAO commonDAO;
 
     void generateStatistics(List<Game> gameList) {
-        topTeam();
-        topPlayer();
-        topGoalie();
-        topUnsportsmanlike();
-        topReferee();
-        teamStatistics();
+//        topTeam();
+//        topPlayer();
+//        topGoalie();
+//        topUnsportsmanlike();
+//        topReferee();
+//        teamStatistics();
+        teamAttendance();
     }
 
     private void topTeam() {
@@ -411,5 +412,38 @@ public class StatisticsProcessor {
         result.setYellowCardCount(yellowCardCount);
         result.setRedCardCount(redCardCount);
         return result;
+    }
+
+    private void teamAttendance() {
+        Set<TopTeamAttendanceTableRow> rowList = new TreeSet<TopTeamAttendanceTableRow>();
+        TopTeamAttendanceTableRow row;
+        
+        List<Team> teamList = commonDAO.findAll(Team.class);
+        List<GameTeam> gameTeamList;
+        int totalGameCount;
+        int totalViewerCount;
+        for (Team team : teamList) {
+            row = new TopTeamAttendanceTableRow();
+            totalGameCount = new Integer(0);
+            totalViewerCount = new Integer(0);
+            gameTeamList = playerService.getAllGameTeamByTeam(team);
+            for (GameTeam gameTeam : gameTeamList) {
+                totalGameCount++;
+                totalViewerCount += gameTeam.getGame().getViewerCount();
+            }
+            row.setGamesPlayedCount(totalGameCount);
+            row.setTotalViewerCount(totalViewerCount);
+            row.setTeamName(team.getTeamName());
+            row.setPercentile(totalViewerCount / totalGameCount);
+            rowList.add(row);
+        }
+
+        System.out.println(Constants.SEPARATOR);
+        System.out.println("--- Top team attendance table ---");
+        System.out.println(Constants.SEPARATOR);
+        Object[] rowArray = rowList.toArray();
+        for (int i = 0; i < rowArray.length; i++) {
+            System.out.println(rowArray[i]);
+        }
     }
 }

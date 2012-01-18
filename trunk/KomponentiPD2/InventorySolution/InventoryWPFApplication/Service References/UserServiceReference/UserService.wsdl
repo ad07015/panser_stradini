@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:1830/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:1830/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:1830/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/InventoryDataAssembly" />
+      <xsd:import schemaLocation="http://localhost:1830/UserService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+      <xsd:import schemaLocation="http://localhost:1830/UserService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IUserService_logIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:logIn" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_logIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:logInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_addPart_InputMessage">
+    <wsdl:part name="parameters" element="tns:addPart" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_addPart_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addPartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_reservePart_InputMessage">
+    <wsdl:part name="parameters" element="tns:reservePart" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_reservePart_OutputMessage">
+    <wsdl:part name="parameters" element="tns:reservePartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_searchPartByDescription_InputMessage">
+    <wsdl:part name="parameters" element="tns:searchPartByDescription" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_searchPartByDescription_OutputMessage">
+    <wsdl:part name="parameters" element="tns:searchPartByDescriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getAllParts_InputMessage">
+    <wsdl:part name="parameters" element="tns:getAllParts" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getAllParts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getAllPartsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_calculateTotal_InputMessage">
+    <wsdl:part name="parameters" element="tns:calculateTotal" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_calculateTotal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:calculateTotalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_calculateReserved_InputMessage">
+    <wsdl:part name="parameters" element="tns:calculateReserved" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_calculateReserved_OutputMessage">
+    <wsdl:part name="parameters" element="tns:calculateReservedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_calculateBalance_InputMessage">
+    <wsdl:part name="parameters" element="tns:calculateBalance" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_calculateBalance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:calculateBalanceResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IUserService">
+    <wsdl:operation name="logIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/logIn" message="tns:IUserService_logIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/logInResponse" message="tns:IUserService_logIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addPart">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/addPart" message="tns:IUserService_addPart_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/addPartResponse" message="tns:IUserService_addPart_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="reservePart">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/reservePart" message="tns:IUserService_reservePart_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/reservePartResponse" message="tns:IUserService_reservePart_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="searchPartByDescription">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/searchPartByDescription" message="tns:IUserService_searchPartByDescription_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/searchPartByDescriptionResponse" message="tns:IUserService_searchPartByDescription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllParts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getAllParts" message="tns:IUserService_getAllParts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getAllPartsResponse" message="tns:IUserService_getAllParts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="calculateTotal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/calculateTotal" message="tns:IUserService_calculateTotal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/calculateTotalResponse" message="tns:IUserService_calculateTotal_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="calculateReserved">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/calculateReserved" message="tns:IUserService_calculateReserved_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/calculateReservedResponse" message="tns:IUserService_calculateReserved_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="calculateBalance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/calculateBalance" message="tns:IUserService_calculateBalance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/calculateBalanceResponse" message="tns:IUserService_calculateBalance_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="logIn">
+      <soap:operation soapAction="http://tempuri.org/IUserService/logIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPart">
+      <soap:operation soapAction="http://tempuri.org/IUserService/addPart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reservePart">
+      <soap:operation soapAction="http://tempuri.org/IUserService/reservePart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchPartByDescription">
+      <soap:operation soapAction="http://tempuri.org/IUserService/searchPartByDescription" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllParts">
+      <soap:operation soapAction="http://tempuri.org/IUserService/getAllParts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="calculateTotal">
+      <soap:operation soapAction="http://tempuri.org/IUserService/calculateTotal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="calculateReserved">
+      <soap:operation soapAction="http://tempuri.org/IUserService/calculateReserved" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="calculateBalance">
+      <soap:operation soapAction="http://tempuri.org/IUserService/calculateBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserService">
+    <wsdl:port name="BasicHttpBinding_IUserService" binding="tns:BasicHttpBinding_IUserService">
+      <soap:address location="http://localhost:1830/UserService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

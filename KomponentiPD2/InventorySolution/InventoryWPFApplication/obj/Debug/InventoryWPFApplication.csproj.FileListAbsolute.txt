@@ -1,0 +1,16 @@
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.exe
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryAppWindow.baml
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryAppWindow.g.cs
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\App.g.cs
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryWPFApplication_MarkupCompile.cache
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryWPFApplication.g.resources
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryWPFApplication.Properties.Resources.resources
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryWPFApplication.csproj.GenerateResource.Cache
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryWPFApplication.exe
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\obj\Debug\InventoryWPFApplication.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryIAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryIAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryAssembly.pdb

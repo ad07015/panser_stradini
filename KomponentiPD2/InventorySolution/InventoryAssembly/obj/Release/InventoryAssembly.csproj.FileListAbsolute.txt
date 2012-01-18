@@ -1,0 +1,16 @@
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Release\InventoryAssembly.dll.config
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Release\InventoryAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Release\InventoryAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Release\InventoryIAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Release\InventoryIAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\obj\Release\InventoryAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\obj\Release\InventoryAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\obj\Release\InventoryAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\bin\Release\InventoryAssembly.dll.config
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\bin\Release\InventoryAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\bin\Release\InventoryAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\bin\Release\InventoryIAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\bin\Release\InventoryIAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryAssembly\obj\Release\InventoryAssembly.pdb

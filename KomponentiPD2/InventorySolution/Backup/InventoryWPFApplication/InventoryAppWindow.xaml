@@ -1,0 +1,47 @@
+﻿<Window x:Class="InventoryWPFApplication.InventoryAppWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Inventory Application" Height="490.86" Width="570.852" ResizeMode="CanMinimize">
+    <Grid Margin="0" Width="539.946">
+        <Rectangle Margin="12,12,12,0" Name="rectangle1" Stroke="Black" Height="95.445" VerticalAlignment="Top" RadiusX="10" RadiusY="10" StrokeDashCap="Round" ClipToBounds="False" />
+        <Rectangle Margin="12,121.806,12,174.528" Name="rectangle2" Stroke="Black" RadiusX="10" RadiusY="10" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="49.086,28.179,0,0" Name="label1" VerticalAlignment="Top" Width="120">First Name:</Label>
+        <Label Height="28" HorizontalAlignment="Left" Margin="49.086,61.812,0,0" Name="label2" VerticalAlignment="Top" Width="120">Last Name:</Label>
+        <TextBox Height="23" Margin="129.078,32.724,168.165,0" Name="txtBoxFN" VerticalAlignment="Top" />
+        <TextBox Height="23" Margin="129.078,66.812,168.165,0" Name="txtBoxLN" VerticalAlignment="Top" />
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,29.659,42.723,0" Name="btnLogIn" VerticalAlignment="Top" Width="111.807" Click="btnLogIn_Click">LogIn</Button>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,66.812,42.723,0" Name="btnLogOut" VerticalAlignment="Top" Width="111.807" Click="btnLogOut_Click">LogOut</Button>
+        <Label Height="28" HorizontalAlignment="Left" Margin="27.27,121.806,0,0" Name="label3" VerticalAlignment="Top" Width="36.36">ID</Label>
+        <Label Height="28" Margin="96.354,121.806,0,0" Name="label4" VerticalAlignment="Top" HorizontalAlignment="Left" Width="72.732">Description</Label>
+        <Label Height="28" Margin="0,121.806,217.251,0" Name="label5" VerticalAlignment="Top" HorizontalAlignment="Right" Width="62.721">Price</Label>
+        <Label Height="28" Margin="0,121.806,167.979,0" Name="label6" VerticalAlignment="Top" HorizontalAlignment="Right" Width="49.086">Count</Label>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="27.27,143.102,0,0" Name="txtBoxIDCreate" VerticalAlignment="Top" Width="62.721" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="96.354,143.622,0,0" Name="txtBoxDescr" VerticalAlignment="Top" Width="158.166" />
+        <TextBox Height="23" Margin="260.883,143.622,219.978,0" Name="txtBoxPrice" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Right" Margin="0,143.622,168.165,0" Name="txtBoxCount" VerticalAlignment="Top" Width="45.45" />
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,143.102,42.723,0" Name="btnCreateAdd" VerticalAlignment="Top" Width="111.807" Click="btnCreateAdd_Click">Create/Add</Button>
+        <Label Margin="260.883,172.71,223.614,0" Name="label7" Height="26.361" VerticalAlignment="Top">ID</Label>
+        <Label Margin="0,172.71,149.076,0" Name="label8" HorizontalAlignment="Right" Width="68.175" Height="26.361" VerticalAlignment="Top">Res. Count</Label>
+        <TextBox Margin="260.883,195.907,223.614,0" Name="txtBoxIdRes" Height="24.98" VerticalAlignment="Top" />
+        <TextBox HorizontalAlignment="Right" Margin="0,195.907,168.165,0" Name="txtBoxResCount" Width="45.45" Height="24.98" VerticalAlignment="Top" />
+        <Button HorizontalAlignment="Right" Margin="0,195.435,42.723,0" Name="btnReserve" Width="111.807" Height="25.452" VerticalAlignment="Top" Click="btnReserve_Click">Reserve</Button>
+        <Label Height="28" HorizontalAlignment="Left" Margin="49.56,0,0,188.163" Name="label9" VerticalAlignment="Bottom" Width="133.623">Search Part by Descr.:</Label>
+        <TextBox Height="23" Margin="188.349,0,167.979,192.708" Name="textBoxSearchByDescr" VerticalAlignment="Bottom" />
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,42.537,192.708" Name="btnSearch" VerticalAlignment="Bottom" Width="111.807" Click="btnSearch_Click">Search</Button>
+        <ListView Height="113.625" Margin="12,0,12,44.541" Name="listViewInventoryData" VerticalAlignment="Bottom">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="60" DisplayMemberBinding="{Binding Path=ID}" Header="ID" />
+                    <GridViewColumn Width="260" DisplayMemberBinding="{Binding Path=Description}" Header="Description" />
+                    <GridViewColumn Width="70" DisplayMemberBinding="{Binding Path=Price}" Header="Price" />
+                    <GridViewColumn Width="60" DisplayMemberBinding="{Binding Path=Count}" Header="Count" />
+                    <GridViewColumn Width="60" DisplayMemberBinding="{Binding Path=Reserved}" Header="Reserved" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Height="23" HorizontalAlignment="Left" Margin="49.086,0,0,12" Name="btnGetAllParts" VerticalAlignment="Bottom" Width="89.082" Click="btnGetAllParts_Click">GetAllParts</Button>
+        <Button Height="23" HorizontalAlignment="Left" Margin="159.984,0,0,12" Name="btnGetTotal" VerticalAlignment="Bottom" Width="94.536" Click="btnGetTotal_Click">GetTotal</Button>
+        <Button Height="23" Margin="271.791,0,0,12" Name="btnGetBalance" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="91.809" Click="btnGetBalance_Click">GetBalance</Button>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,62.721,12" Name="btnGetReserved" VerticalAlignment="Bottom" Width="91.809" Click="btnGetReserved_Click">GetReserved</Button>
+    </Grid>
+</Window>

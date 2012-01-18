@@ -1,0 +1,8 @@
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\obj\Debug\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Debug\InventoryAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Debug\InventoryAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Debug\InventoryIAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Debug\InventoryIAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\obj\Debug\InventoryAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\obj\Debug\InventoryAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryAssembly\bin\Debug\InventoryAssembly.dll.config

@@ -1,0 +1,10 @@
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryIAssembly\bin\Release\InventoryIAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryIAssembly\bin\Release\InventoryIAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryIAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryIAssembly\obj\Release\InventoryIAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2008\InventorySolution\InventoryIAssembly\obj\Release\InventoryIAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryIAssembly\bin\Release\InventoryIAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryIAssembly\bin\Release\InventoryIAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryIAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryIAssembly\obj\Release\InventoryIAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\InventorySolution\InventoryIAssembly\obj\Release\InventoryIAssembly.pdb

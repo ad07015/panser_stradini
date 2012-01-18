@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="Inventory" Class="InventoryDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=C:\Darps\LU_Kursi\BusComp\2008\InventorySolutionDB\Inventory.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True" SettingsObjectName="InventoryAssembly.Properties.Settings" SettingsPropertyName="InventoryConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.INVENTORY_TABLE" Member="Inventories">
+    <Type Name="Inventory">
+      <Column Name="ID" Type="System.String" DbType="Char(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PRICE" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="INSTOCK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RESERVED" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.USERS_TABLE" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FIRST_NAME" Type="System.String" DbType="Char(40)" CanBeNull="true" />
+      <Column Name="LAST_NAME" Type="System.String" DbType="Char(40)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

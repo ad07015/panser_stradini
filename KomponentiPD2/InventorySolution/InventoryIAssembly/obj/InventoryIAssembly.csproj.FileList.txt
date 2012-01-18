@@ -1,5 +1,0 @@
-bin\Debug\InventoryIAssembly.dll
-bin\Debug\InventoryIAssembly.pdb
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\InventoryIAssembly.dll
-obj\Debug\InventoryIAssembly.pdb

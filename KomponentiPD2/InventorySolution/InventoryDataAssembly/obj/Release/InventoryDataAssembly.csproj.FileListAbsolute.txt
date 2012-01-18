@@ -1,0 +1,18 @@
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll.config
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.pdb
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\obj\Release\ResolveAssemblyReference.cache
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.dll
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll.config
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll.config
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.pdb
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryDataAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.dll
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.pdb

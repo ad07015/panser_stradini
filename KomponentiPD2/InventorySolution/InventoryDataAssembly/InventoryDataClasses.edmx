@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InventoryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="InventoryModelStoreContainer">
+          <EntitySet Name="INVENTORY_TABLE" EntityType="InventoryModel.Store.INVENTORY_TABLE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="InventoryModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="USERS_TABLE" EntityType="InventoryModel.Store.USERS_TABLE" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="INVENTORY_TABLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="char" Nullable="false" MaxLength="20" />
+          <Property Name="PRICE" Type="float" />
+          <Property Name="DESCRIPTION" Type="nchar" MaxLength="40" />
+          <Property Name="INSTOCK" Type="int" />
+          <Property Name="RESERVED" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="USERS_TABLE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FIRST_NAME" Type="char" MaxLength="40" />
+          <Property Name="LAST_NAME" Type="char" MaxLength="40" />
+          <Property Name="AGE" Type="int" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InventoryModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="InventoryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Inventories" EntityType="InventoryModel.Inventory" />
+          <EntitySet Name="Users" EntityType="InventoryModel.User" />
+          <EntitySet Name="sysdiagrams" EntityType="InventoryModel.sysdiagram" />
+        </EntityContainer>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="true" />
+          <Property Name="PRICE" Type="Double" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="40" Unicode="true" FixedLength="true" />
+          <Property Name="INSTOCK" Type="Int32" />
+          <Property Name="RESERVED" Type="Int32" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="40" Unicode="false" FixedLength="true" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="40" Unicode="false" FixedLength="true" />
+          <Property Type="Int32" Name="AGE" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="principal_id" Nullable="false" />
+          <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="version" />
+          <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InventoryModelStoreContainer" CdmEntityContainer="InventoryEntities">
+          <EntitySetMapping Name="Inventories"><EntityTypeMapping TypeName="InventoryModel.Inventory"><MappingFragment StoreEntitySet="INVENTORY_TABLE">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+            <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+            <ScalarProperty Name="INSTOCK" ColumnName="INSTOCK" />
+            <ScalarProperty Name="RESERVED" ColumnName="RESERVED" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="InventoryModel.User"><MappingFragment StoreEntitySet="USERS_TABLE">
+            <ScalarProperty Name="AGE" ColumnName="AGE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+            <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="InventoryModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="InventoryDataClasses">
+        <EntityTypeShape EntityType="InventoryModel.Inventory" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333331" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.User" Width="1.5" PointX="2.875" PointY="0.75" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" Height="1.9802864583333322" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

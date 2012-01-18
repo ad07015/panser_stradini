@@ -1,0 +1,14 @@
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\obj\Debug\ResolveAssemblyReference.cache
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.dll
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.pdb
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.dll
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.pdb
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.dll
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\obj\Debug\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.dll
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.pdb

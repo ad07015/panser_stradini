@@ -19,3 +19,10 @@ C:\tmp\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.pdb
 C:\tmp\InventorySolution\InventoryWCFAssembly\obj\Release\ResolveAssemblyReference.cache
 C:\tmp\InventorySolution\InventoryWCFAssembly\obj\Release\InventoryWCFAssembly.dll
 C:\tmp\InventorySolution\InventoryWCFAssembly\obj\Release\InventoryWCFAssembly.pdb
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.dll
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.pdb
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.dll
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.pdb
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\obj\Release\InventoryWCFAssembly.dll
+C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWCFAssembly\obj\Release\InventoryWCFAssembly.pdb

@@ -1,0 +1,31 @@
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.exe
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.pdb
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\App.g.cs
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication_MarkupCompile.cache
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.g.resources
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.Properties.Resources.resources
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.exe
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.pdb
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryAppWindow.baml
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryAppWindow.g.cs
+D:\Darps\LUMII\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.exe.config
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.exe.config
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.exe
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.exe
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.pdb
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryAppWindow.baml
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryAppWindow.g.cs
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\App.g.cs
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication_MarkupCompile.cache
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.g.resources
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.Properties.Resources.resources
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Darps\LU_Kursi\BusComp\2010\VS_Projects\InventorySolution\InventoryWPFApplication\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryWPFApplication\bin\Debug\InventoryWPFApplication.exe.config
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.exe
+C:\Users\andrejs.dasko\Documents\Visual Studio 2010\Projects\KomponentiPD2_Data\InventorySolution\InventoryWPFApplication\obj\x86\Debug\InventoryWPFApplication.pdb

@@ -32,8 +32,18 @@ namespace InventoryWPFApplication
 
         private void EnableDisableVisualControls(bool mode)
         {
+            if (mode)
+            {
+                populateShoppingCart();
+            }
+            else
+            {
+                clearShoppingCart();
+            }
             btnLogIn.IsEnabled = !mode;
             btnLogOut.IsEnabled = mode;
+            shuttleToCart.IsEnabled = mode;
+            removeFromCart.IsEnabled = mode;
             btnSearch.IsEnabled = mode;
             textBoxSearchByDescr.IsEnabled = mode;
             btnReserve.IsEnabled = mode;
@@ -49,6 +59,8 @@ namespace InventoryWPFApplication
             btnGetBalance.IsEnabled = mode;
             btnGetReserved.IsEnabled = mode;
             listViewInventoryData.IsEnabled = mode;
+            allItemsListView.IsEnabled = mode;
+            shoppingCartListView.IsEnabled = mode;
         }
 
         private void btnGetAllParts_Click(object sender, RoutedEventArgs e)
@@ -133,11 +145,33 @@ namespace InventoryWPFApplication
         {
             bool tmpBool = proxy.logIn(txtBoxFN.Text, txtBoxLN.Text);
             if (tmpBool)
+            {
                 EnableDisableVisualControls(true);
+            }
             else
             {
                 EnableDisableVisualControls(false);
             }
+        }
+
+        private void populateShoppingCart()
+        {
+            List<Inventory> results = proxy.getAllParts();
+            allItemsListView.ItemsSource = results;
+        }
+
+        private void clearShoppingCart()
+        {
+            allItemsListView.ItemsSource = new List<Inventory>();
+        }
+
+        private void shuttleToCart_Click(object sender, RoutedEventArgs e)
+        {
+            Inventory selected = (Inventory)allItemsListView.SelectedItem;
+            Console.WriteLine(selected.DESCRIPTION);
+            OrderItem orderItem = new OrderItem();
+            orderItem.INVENTORY_FK = selected.ID;
+            
         }
     }
 }

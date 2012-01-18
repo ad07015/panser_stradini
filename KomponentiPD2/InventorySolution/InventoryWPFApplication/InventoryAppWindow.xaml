@@ -1,9 +1,9 @@
 ﻿<Window x:Class="InventoryWPFApplication.InventoryAppWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Inventory Application" Height="523" Width="602">
+        Title="Inventory Application" Height="523" Width="1163">
     <Grid>
-        <Grid Margin="0" Width="539.946">
+        <Grid Margin="0,0,602,0" Width="539.946">
             <Rectangle Margin="12,12,12,0" Name="rectangle1" Stroke="Black" Height="95.445" VerticalAlignment="Top" RadiusX="10" RadiusY="10" StrokeDashCap="Round" ClipToBounds="False" />
             <Rectangle Margin="12,121.806,12,0" Name="rectangle2" Stroke="Black" RadiusX="10" RadiusY="10" Height="166" VerticalAlignment="Top" />
             <Label Height="28" HorizontalAlignment="Left" Margin="49.086,28.179,0,0" Name="label1" VerticalAlignment="Top" Width="120">First Name:</Label>
@@ -44,6 +44,29 @@
             <Button Height="23" HorizontalAlignment="Right" Margin="0,0,285.426,12" Name="btnGetTotal" VerticalAlignment="Bottom" Width="94.536" Click="btnGetTotal_Click">GetTotal</Button>
             <Button Height="23" Margin="271.791,0,0,12" Name="btnGetBalance" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="91.809" Click="btnGetBalance_Click">GetBalance</Button>
             <Button Height="23" HorizontalAlignment="Right" Margin="0,0,62.721,12" Name="btnGetReserved" VerticalAlignment="Bottom" Width="91.809" Click="btnGetReserved_Click">GetReserved</Button>
+        </Grid>
+        <Grid Height="484" HorizontalAlignment="Left" Margin="546,0,0,0" Name="grid1" VerticalAlignment="Top" Width="595">
+            <Rectangle Height="276" HorizontalAlignment="Left" Margin="6,12,0,0" Name="rectangle3" Stroke="Black" VerticalAlignment="Top" Width="583" RadiusX="10" RadiusY="10" />
+            <Label Content="All items" Height="28" HorizontalAlignment="Left" Margin="14,62,0,0" Name="label10" VerticalAlignment="Top" Width="110" />
+            <Label Content="Shopping cart" Height="28" HorizontalAlignment="Left" Margin="332,62,0,0" Name="label11" VerticalAlignment="Top" Width="110" />
+            <Button Content="&gt;" Height="26" HorizontalAlignment="Left" Margin="283,152,0,0" Name="shuttleToCart" VerticalAlignment="Top" Width="28" Click="shuttleToCart_Click" />
+            <Button Content="&lt;" Height="26" HorizontalAlignment="Left" Margin="283,196,0,0" Name="removeFromCart" VerticalAlignment="Top" Width="28" />
+            <ListView Height="179" HorizontalAlignment="Left" Margin="14,89,0,0" Name="allItemsListView" VerticalAlignment="Top" Width="248">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="190" DisplayMemberBinding="{Binding Path=DESCRIPTION}" Header="Description" />
+                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=INSTOCK}" Header="Count" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Height="179" HorizontalAlignment="Left" Margin="332,89,0,0" Name="shoppingCartListView" VerticalAlignment="Top" Width="248">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=DESCRIPTION}" Header="Description" />
+                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=INSTOCK}" Header="Count" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
     </Grid>
 </Window>

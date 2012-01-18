@@ -14,6 +14,7 @@
           <xs:element minOccurs="0" name="DESCRIPTION" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ID" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="INSTOCK" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ORDER_ITEM_TABLE" nillable="true" type="tns:ArrayOfOrderItem" />
           <xs:element minOccurs="0" name="PRICE" nillable="true" type="xs:double" />
           <xs:element minOccurs="0" name="RESERVED" nillable="true" type="xs:int" />
         </xs:sequence>
@@ -21,4 +22,40 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Inventory" nillable="true" type="tns:Inventory" />
+  <xs:complexType name="ArrayOfOrderItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderItem" nillable="true" type="tns:OrderItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderItem" nillable="true" type="tns:ArrayOfOrderItem" />
+  <xs:complexType name="OrderItem">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="COUNT" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="INVENTORY_FK" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="INVENTORY_TABLE" nillable="true" type="tns:Inventory" />
+          <xs:element minOccurs="0" name="INVENTORY_TABLEReference" nillable="true" type="q2:EntityReferenceOfInventoryLWV6NzjB" />
+          <xs:element minOccurs="0" name="USERS_TABLE" nillable="true" type="tns:User" />
+          <xs:element minOccurs="0" name="USERS_TABLEReference" nillable="true" type="q2:EntityReferenceOfUserLWV6NzjB" />
+          <xs:element minOccurs="0" name="USER_FK" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="OrderItem" nillable="true" type="tns:OrderItem" />
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ID" type="xs:int" />
+          <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ORDER_ITEM_TABLE" nillable="true" type="tns:ArrayOfOrderItem" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
 </xs:schema>

@@ -34,5 +34,10 @@ namespace InventoryWCFAssembly
         {
             return calculateTotal() - calculateReserved();
         }
+
+        public Inventory findOrderItemById(String id)
+        {
+            return new Inventory();
+        }
     }
 }

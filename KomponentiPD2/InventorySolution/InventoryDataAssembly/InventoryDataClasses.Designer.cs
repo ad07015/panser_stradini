@@ -16,6 +16,12 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("InventoryModel", "FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "Inventory", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(InventoryDataAssembly.Inventory), "OrderItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(InventoryDataAssembly.OrderItem), true)]
+[assembly: EdmRelationshipAttribute("InventoryModel", "FK_ORDER_ITEM_TABLE_USERS_TABLE", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(InventoryDataAssembly.User), "OrderItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(InventoryDataAssembly.OrderItem), true)]
+
+#endregion
 
 namespace InventoryDataAssembly
 {
@@ -96,6 +102,22 @@ namespace InventoryDataAssembly
             }
         }
         private ObjectSet<User> _Users;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<OrderItem> OrderItems
+        {
+            get
+            {
+                if ((_OrderItems == null))
+                {
+                    _OrderItems = base.CreateObjectSet<OrderItem>("OrderItems");
+                }
+                return _OrderItems;
+            }
+        }
+        private ObjectSet<OrderItem> _OrderItems;
 
         #endregion
         #region AddTo Methods
@@ -114,6 +136,14 @@ namespace InventoryDataAssembly
         public void AddToUsers(User user)
         {
             base.AddObject("Users", user);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the OrderItems EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToOrderItems(OrderItem orderItem)
+        {
+            base.AddObject("OrderItems", orderItem);
         }
 
         #endregion
@@ -273,6 +303,237 @@ namespace InventoryDataAssembly
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("InventoryModel", "FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "OrderItem")]
+        public EntityCollection<OrderItem> ORDER_ITEM_TABLE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<OrderItem>("InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "OrderItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<OrderItem>("InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "OrderItem", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="InventoryModel", Name="OrderItem")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class OrderItem : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new OrderItem object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        public static OrderItem CreateOrderItem(global::System.Int32 id)
+        {
+            OrderItem orderItem = new OrderItem();
+            orderItem.ID = id;
+            return orderItem;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> USER_FK
+        {
+            get
+            {
+                return _USER_FK;
+            }
+            set
+            {
+                OnUSER_FKChanging(value);
+                ReportPropertyChanging("USER_FK");
+                _USER_FK = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("USER_FK");
+                OnUSER_FKChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _USER_FK;
+        partial void OnUSER_FKChanging(Nullable<global::System.Int32> value);
+        partial void OnUSER_FKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String INVENTORY_FK
+        {
+            get
+            {
+                return _INVENTORY_FK;
+            }
+            set
+            {
+                OnINVENTORY_FKChanging(value);
+                ReportPropertyChanging("INVENTORY_FK");
+                _INVENTORY_FK = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("INVENTORY_FK");
+                OnINVENTORY_FKChanged();
+            }
+        }
+        private global::System.String _INVENTORY_FK;
+        partial void OnINVENTORY_FKChanging(global::System.String value);
+        partial void OnINVENTORY_FKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> COUNT
+        {
+            get
+            {
+                return _COUNT;
+            }
+            set
+            {
+                OnCOUNTChanging(value);
+                ReportPropertyChanging("COUNT");
+                _COUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COUNT");
+                OnCOUNTChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _COUNT;
+        partial void OnCOUNTChanging(Nullable<global::System.Int32> value);
+        partial void OnCOUNTChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("InventoryModel", "FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "Inventory")]
+        public Inventory INVENTORY_TABLE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Inventory>("InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "Inventory").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Inventory>("InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "Inventory").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Inventory> INVENTORY_TABLEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Inventory>("InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "Inventory");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Inventory>("InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE", "Inventory", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("InventoryModel", "FK_ORDER_ITEM_TABLE_USERS_TABLE", "User")]
+        public User USERS_TABLE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> USERS_TABLEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE", "User", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
@@ -376,6 +637,31 @@ namespace InventoryDataAssembly
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("InventoryModel", "FK_ORDER_ITEM_TABLE_USERS_TABLE", "OrderItem")]
+        public EntityCollection<OrderItem> ORDER_ITEM_TABLE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<OrderItem>("InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE", "OrderItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<OrderItem>("InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE", "OrderItem", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion

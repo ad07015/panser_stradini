@@ -21,6 +21,7 @@ namespace InventoryWPFApplication
     public partial class InventoryAppWindow : Window
     {
         private UserServiceClient proxy = null;
+        private User currentUser;
 
         public InventoryAppWindow()
         {
@@ -34,7 +35,8 @@ namespace InventoryWPFApplication
         {
             if (mode)
             {
-                populateShoppingCart();
+                populateAllPartsListBox();
+                populateShoppingCartListBox();
             }
             else
             {
@@ -143,8 +145,8 @@ namespace InventoryWPFApplication
 
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
-            bool tmpBool = proxy.logIn(txtBoxFN.Text, txtBoxLN.Text);
-            if (tmpBool)
+            currentUser = proxy.logIn(txtBoxFN.Text, txtBoxLN.Text);
+            if (currentUser != null)
             {
                 EnableDisableVisualControls(true);
             }
@@ -154,24 +156,32 @@ namespace InventoryWPFApplication
             }
         }
 
-        private void populateShoppingCart()
+        private void populateAllPartsListBox()
         {
             List<Inventory> results = proxy.getAllParts();
             allItemsListView.ItemsSource = results;
+            
+        }
+
+        private void populateShoppingCartListBox()
+        {
+            List<OrderItem> shoppingCartList = proxy.getShoppingCart(currentUser.ID);
+            shoppingCartListView.ItemsSource = shoppingCartList;
         }
 
         private void clearShoppingCart()
         {
             allItemsListView.ItemsSource = new List<Inventory>();
+            shoppingCartListView.ItemsSource = new List<Inventory>();
         }
 
         private void shuttleToCart_Click(object sender, RoutedEventArgs e)
         {
             Inventory selected = (Inventory)allItemsListView.SelectedItem;
             Console.WriteLine(selected.DESCRIPTION);
+            proxy.addOrderItem(selected, currentUser, 1);
+            populateShoppingCartListBox();
             OrderItem orderItem = new OrderItem();
-            orderItem.INVENTORY_FK = selected.ID;
-            
         }
     }
 }

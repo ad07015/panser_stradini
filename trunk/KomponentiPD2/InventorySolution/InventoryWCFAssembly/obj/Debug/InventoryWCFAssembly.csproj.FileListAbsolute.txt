@@ -19,3 +19,10 @@ C:\tmp\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.pdb
 C:\tmp\InventorySolution\InventoryWCFAssembly\obj\Debug\ResolveAssemblyReference.cache
 C:\tmp\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.dll
 C:\tmp\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.dll
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\bin\InventoryWCFAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.dll
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\bin\InventoryDataAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\obj\Debug\ResolveAssemblyReference.cache
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.dll
+C:\Komponenti\InventorySolution\InventoryWCFAssembly\obj\Debug\InventoryWCFAssembly.pdb

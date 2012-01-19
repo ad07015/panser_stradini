@@ -7,14 +7,7 @@
     <Schema Namespace="InventoryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="InventoryModelStoreContainer">
           <EntitySet Name="INVENTORY_TABLE" EntityType="InventoryModel.Store.INVENTORY_TABLE" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ORDER_ITEM_TABLE" EntityType="InventoryModel.Store.ORDER_ITEM_TABLE" store:Type="Tables" store:Schema="dbo" store:Name="ORDER_ITEM_TABLE">
-            <DefiningQuery>SELECT 
-      [ORDER_ITEM_TABLE].[ID] AS [ID], 
-      [ORDER_ITEM_TABLE].[USER_FK] AS [USER_FK], 
-      [ORDER_ITEM_TABLE].[INVENTORY_FK] AS [INVENTORY_FK], 
-      [ORDER_ITEM_TABLE].[COUNT] AS [COUNT]
-      FROM [dbo].[ORDER_ITEM_TABLE] AS [ORDER_ITEM_TABLE]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="ORDER_ITEM_TABLE" EntityType="InventoryModel.Store.ORDER_ITEM_TABLE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="USERS_TABLE" EntityType="InventoryModel.Store.USERS_TABLE" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_ORDER_ITEM_TABLE_INVENTORY_TABLE" Association="InventoryModel.Store.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE">
             <End Role="INVENTORY_TABLE" EntitySet="INVENTORY_TABLE" />
@@ -35,9 +28,6 @@
           <Property Name="INSTOCK" Type="int" />
           <Property Name="RESERVED" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'C:\KOMPONENTI\PD2\KOMPONENTIPD2\INVENTORYSOLUTIONDB\INVENTORY.MDF.dbo.ORDER_ITEM_TABLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="ORDER_ITEM_TABLE">
           <Key>
             <PropertyRef Name="ID" />
@@ -202,7 +192,7 @@
       <Diagram Name="InventoryDataClasses">
         <EntityTypeShape EntityType="InventoryModel.Inventory" Width="1.75" PointX="1.875" PointY="0.875" Height="2.172587890625" IsExpanded="true" />
         <EntityTypeShape EntityType="InventoryModel.User" Width="1.625" PointX="5" PointY="3.875" Height="1.787985026041667" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryModel.OrderItem" Width="1.625" PointX="1.875" PointY="3.875" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="InventoryModel.OrderItem" Width="1.625" PointX="1.875" PointY="3.875" Height="2.1725878906249996" IsExpanded="true" />
         <AssociationConnector Association="InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE" >
           <ConnectorPoint PointX="2.6875" PointY="3.047587890625" />
           <ConnectorPoint PointX="2.6875" PointY="3.875" />

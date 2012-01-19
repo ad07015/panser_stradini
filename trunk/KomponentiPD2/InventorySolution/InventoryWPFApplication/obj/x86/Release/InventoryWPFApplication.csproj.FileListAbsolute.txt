@@ -54,3 +54,17 @@ C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWPFApplication\obj\x8
 C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryWPFApplication.Properties.Resources.resources
 C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWPFApplication\obj\x86\Release\GenerateResource.read.1.tlog
 C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryWPFApplication\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Komponenti\InventorySolution\InventoryWPFApplication\bin\Release\InventoryWPFApplication.exe.config
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryWPFApplication.exe
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryWPFApplication.pdb
+C:\Komponenti\InventorySolution\InventoryWPFApplication\bin\Release\InventoryWPFApplication.exe
+C:\Komponenti\InventorySolution\InventoryWPFApplication\bin\Release\InventoryWPFApplication.pdb
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryAppWindow.baml
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryAppWindow.g.cs
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\App.g.cs
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryWPFApplication_MarkupCompile.cache
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryWPFApplication.g.resources
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\InventoryWPFApplication.Properties.Resources.resources
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Komponenti\InventorySolution\InventoryWPFApplication\obj\x86\Release\GenerateResource.write.1.tlog

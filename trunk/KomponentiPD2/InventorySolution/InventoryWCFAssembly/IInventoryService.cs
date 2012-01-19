@@ -20,9 +20,6 @@ namespace InventoryWCFAssembly
 
         [OperationContract]
         double calculateBalance();
-
-        [OperationContract]
-        Inventory findOrderItemById(String id);
     }
 }
 

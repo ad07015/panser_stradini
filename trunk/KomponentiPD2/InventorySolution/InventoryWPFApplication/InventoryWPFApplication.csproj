@@ -104,6 +104,12 @@
     <None Include="Service References\UserServiceReference\InventoryWPFApplication.UserServiceReference.Inventory.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\UserServiceReference\InventoryWPFApplication.UserServiceReference.OrderItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\UserServiceReference\InventoryWPFApplication.UserServiceReference.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\UserServiceReference\UserService.wsdl" />
     <None Include="Service References\UserServiceReference\UserService.xsd">
       <SubType>Designer</SubType>

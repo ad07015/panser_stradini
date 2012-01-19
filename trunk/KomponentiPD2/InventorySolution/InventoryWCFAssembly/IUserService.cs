@@ -13,7 +13,7 @@ namespace InventoryWCFAssembly
     public interface IUserService
     {
         [OperationContract]
-        bool logIn(String fname, String lname);
+        User logIn(String fname, String lname);
 
         [OperationContract]
         bool addPart(String id, String descr, double price, int count);
@@ -37,5 +37,17 @@ namespace InventoryWCFAssembly
         [OperationContract]
         [TransactionFlow(TransactionFlowOption.Allowed)]
         double calculateBalance();
+
+        [OperationContract]
+        OrderItem findOrderItemById(string id);
+
+        [OperationContract]
+        bool addOrderItem(Inventory inventory, User user, int count);
+
+        [OperationContract]
+        User getCurrentUser(string firstName, string lastName);
+
+        [OperationContract]
+        List<OrderItem> getShoppingCart(int currentUserId);
     }
 }

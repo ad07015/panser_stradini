@@ -62,8 +62,8 @@
             <ListView Height="179" HorizontalAlignment="Left" Margin="332,89,0,0" Name="shoppingCartListView" VerticalAlignment="Top" Width="248">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=DESCRIPTION}" Header="Description" />
-                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=INSTOCK}" Header="Count" />
+                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=INVENTORY_TABLE.DESCRIPTION}" Header="Description" />
+                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=COUNT}" Header="Count" />
                     </GridView>
                 </ListView.View>
             </ListView>

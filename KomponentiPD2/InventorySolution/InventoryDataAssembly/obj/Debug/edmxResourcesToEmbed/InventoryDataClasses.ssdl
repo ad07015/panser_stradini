@@ -2,7 +2,16 @@
 <Schema Namespace="InventoryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="InventoryModelStoreContainer">
     <EntitySet Name="INVENTORY_TABLE" EntityType="InventoryModel.Store.INVENTORY_TABLE" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ORDER_ITEM_TABLE" EntityType="InventoryModel.Store.ORDER_ITEM_TABLE" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="USERS_TABLE" EntityType="InventoryModel.Store.USERS_TABLE" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ORDER_ITEM_TABLE_INVENTORY_TABLE" Association="InventoryModel.Store.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE">
+      <End Role="INVENTORY_TABLE" EntitySet="INVENTORY_TABLE" />
+      <End Role="ORDER_ITEM_TABLE" EntitySet="ORDER_ITEM_TABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDER_ITEM_TABLE_USERS_TABLE" Association="InventoryModel.Store.FK_ORDER_ITEM_TABLE_USERS_TABLE">
+      <End Role="USERS_TABLE" EntitySet="USERS_TABLE" />
+      <End Role="ORDER_ITEM_TABLE" EntitySet="ORDER_ITEM_TABLE" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="INVENTORY_TABLE">
     <Key>
@@ -14,6 +23,15 @@
     <Property Name="INSTOCK" Type="int" />
     <Property Name="RESERVED" Type="int" />
   </EntityType>
+  <EntityType Name="ORDER_ITEM_TABLE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="USER_FK" Type="int" />
+    <Property Name="INVENTORY_FK" Type="char" MaxLength="20" />
+    <Property Name="COUNT" Type="int" />
+  </EntityType>
   <EntityType Name="USERS_TABLE">
     <Key>
       <PropertyRef Name="ID" />
@@ -22,4 +40,28 @@
     <Property Name="FIRST_NAME" Type="char" MaxLength="40" />
     <Property Name="LAST_NAME" Type="char" MaxLength="40" />
   </EntityType>
+  <Association Name="FK_ORDER_ITEM_TABLE_INVENTORY_TABLE">
+    <End Role="INVENTORY_TABLE" Type="InventoryModel.Store.INVENTORY_TABLE" Multiplicity="0..1" />
+    <End Role="ORDER_ITEM_TABLE" Type="InventoryModel.Store.ORDER_ITEM_TABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INVENTORY_TABLE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDER_ITEM_TABLE">
+        <PropertyRef Name="INVENTORY_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDER_ITEM_TABLE_USERS_TABLE">
+    <End Role="USERS_TABLE" Type="InventoryModel.Store.USERS_TABLE" Multiplicity="0..1" />
+    <End Role="ORDER_ITEM_TABLE" Type="InventoryModel.Store.ORDER_ITEM_TABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS_TABLE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ORDER_ITEM_TABLE">
+        <PropertyRef Name="USER_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

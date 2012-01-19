@@ -16,3 +16,9 @@ C:\tmp\InventorySolution\InventoryDataAssembly\bin\Debug\InventoryDataAssembly.p
 C:\tmp\InventorySolution\InventoryDataAssembly\obj\Debug\ResolveAssemblyReference.cache
 C:\tmp\InventorySolution\InventoryDataAssembly\obj\Debug\InventoryDataAssembly.dll
 C:\tmp\InventorySolution\InventoryDataAssembly\obj\Debug\InventoryDataAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryDataAssembly\bin\Debug\InventoryDataAssembly.dll.config
+C:\Komponenti\InventorySolution\InventoryDataAssembly\bin\Debug\InventoryDataAssembly.dll
+C:\Komponenti\InventorySolution\InventoryDataAssembly\bin\Debug\InventoryDataAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryDataAssembly\obj\Debug\ResolveAssemblyReference.cache
+C:\Komponenti\InventorySolution\InventoryDataAssembly\obj\Debug\InventoryDataAssembly.dll
+C:\Komponenti\InventorySolution\InventoryDataAssembly\obj\Debug\InventoryDataAssembly.pdb

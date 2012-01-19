@@ -57,6 +57,30 @@
   <wsdl:message name="IUserService_calculateBalance_OutputMessage">
     <wsdl:part name="parameters" element="tns:calculateBalanceResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_findOrderItemById_InputMessage">
+    <wsdl:part name="parameters" element="tns:findOrderItemById" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_findOrderItemById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:findOrderItemByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_addOrderItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:addOrderItem" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_addOrderItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addOrderItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getCurrentUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCurrentUser" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getCurrentUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCurrentUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getShoppingCart_InputMessage">
+    <wsdl:part name="parameters" element="tns:getShoppingCart" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getShoppingCart_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getShoppingCartResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="logIn">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/logIn" message="tns:IUserService_logIn_InputMessage" />
@@ -89,6 +113,22 @@
     <wsdl:operation name="calculateBalance">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/calculateBalance" message="tns:IUserService_calculateBalance_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/calculateBalanceResponse" message="tns:IUserService_calculateBalance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="findOrderItemById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/findOrderItemById" message="tns:IUserService_findOrderItemById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/findOrderItemByIdResponse" message="tns:IUserService_findOrderItemById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addOrderItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/addOrderItem" message="tns:IUserService_addOrderItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/addOrderItemResponse" message="tns:IUserService_addOrderItem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getCurrentUser" message="tns:IUserService_getCurrentUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getCurrentUserResponse" message="tns:IUserService_getCurrentUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getShoppingCart">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getShoppingCart" message="tns:IUserService_getShoppingCart_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getShoppingCartResponse" message="tns:IUserService_getShoppingCart_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -158,6 +198,42 @@
     </wsdl:operation>
     <wsdl:operation name="calculateBalance">
       <soap:operation soapAction="http://tempuri.org/IUserService/calculateBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findOrderItemById">
+      <soap:operation soapAction="http://tempuri.org/IUserService/findOrderItemById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrderItem">
+      <soap:operation soapAction="http://tempuri.org/IUserService/addOrderItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/getCurrentUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getShoppingCart">
+      <soap:operation soapAction="http://tempuri.org/IUserService/getShoppingCart" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

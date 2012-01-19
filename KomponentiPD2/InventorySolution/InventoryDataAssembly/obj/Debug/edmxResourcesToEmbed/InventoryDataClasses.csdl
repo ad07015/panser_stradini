@@ -3,6 +3,15 @@
   <EntityContainer Name="InventoryEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Inventories" EntityType="InventoryModel.Inventory" />
     <EntitySet Name="Users" EntityType="InventoryModel.User" />
+    <EntitySet Name="OrderItems" EntityType="InventoryModel.OrderItem" />
+    <AssociationSet Name="FK_ORDER_ITEM_TABLE_INVENTORY_TABLE" Association="InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE">
+      <End Role="Inventory" EntitySet="Inventories" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDER_ITEM_TABLE_USERS_TABLE" Association="InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE">
+      <End Role="User" EntitySet="Users" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Inventory">
     <Key>
@@ -13,6 +22,7 @@
     <Property Name="DESCRIPTION" Type="String" MaxLength="40" Unicode="true" FixedLength="true" />
     <Property Name="INSTOCK" Type="Int32" />
     <Property Name="RESERVED" Type="Int32" />
+    <NavigationProperty Name="ORDER_ITEM_TABLE" Relationship="InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE" FromRole="Inventory" ToRole="OrderItem" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -21,5 +31,41 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FIRST_NAME" Type="String" MaxLength="40" Unicode="false" FixedLength="true" />
     <Property Name="LAST_NAME" Type="String" MaxLength="40" Unicode="false" FixedLength="true" />
+    <NavigationProperty Name="ORDER_ITEM_TABLE" Relationship="InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE" FromRole="User" ToRole="OrderItem" />
   </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="USER_FK" />
+    <Property Type="String" Name="INVENTORY_FK" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="COUNT" />
+    <NavigationProperty Name="INVENTORY_TABLE" Relationship="InventoryModel.FK_ORDER_ITEM_TABLE_INVENTORY_TABLE" FromRole="OrderItem" ToRole="Inventory" />
+    <NavigationProperty Name="USERS_TABLE" Relationship="InventoryModel.FK_ORDER_ITEM_TABLE_USERS_TABLE" FromRole="OrderItem" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_ORDER_ITEM_TABLE_INVENTORY_TABLE">
+    <End Type="InventoryModel.Inventory" Role="Inventory" Multiplicity="0..1" />
+    <End Type="InventoryModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="INVENTORY_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDER_ITEM_TABLE_USERS_TABLE">
+    <End Type="InventoryModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="InventoryModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="USER_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

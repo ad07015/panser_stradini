@@ -22,3 +22,9 @@ C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryDataAssembly\bin\Rele
 C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryDataAssembly\obj\Release\ResolveAssemblyReference.cache
 C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.dll
 C:\Komponenti\PD2\KomponentiPD2\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll.config
+C:\Komponenti\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.dll
+C:\Komponenti\InventorySolution\InventoryDataAssembly\bin\Release\InventoryDataAssembly.pdb
+C:\Komponenti\InventorySolution\InventoryDataAssembly\obj\Release\ResolveAssemblyReference.cache
+C:\Komponenti\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.dll
+C:\Komponenti\InventorySolution\InventoryDataAssembly\obj\Release\InventoryDataAssembly.pdb

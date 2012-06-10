@@ -14,14 +14,14 @@ public class AddResidentFormValidator extends ResidentFormValidator {
 	public void validate(Object obj, Errors errors) {
 		super.validate(obj, errors);
 		Resident resident = (Resident) obj;
-		if (resident.getPersonasKods() == null || resident.getPersonasKods().equals("")) {
-			errors.rejectValue("personasKods", "error.emptyField");			
-		} else if (!resident.getPersonasKods().matches("[0-9]{6}-[0-9]{5}")) {
-			errors.rejectValue("personasKods", "error.personasKods.invalid");
-		} else  {
-			int personCountWithNewPersonasKods = residentService.getPersonCountByPersonasKods(resident.getPersonasKods());
-			if (personCountWithNewPersonasKods > 0) {
-				errors.rejectValue("personasKods", "error.personasKods.exists");
+		if (resident.getPersonasKods() != null && !resident.getPersonasKods().equals("")) {
+			if (!resident.getPersonasKods().matches("[0-9]{6}-[0-9]{5}")) {
+				errors.rejectValue("personasKods", "error.personasKods.invalid");
+			} else  {
+				int personCountWithNewPersonasKods = residentService.getPersonCountByPersonasKods(resident.getPersonasKods());
+				if (personCountWithNewPersonasKods > 0) {
+					errors.rejectValue("personasKods", "error.personasKods.exists");
+				}
 			}
 		}
 	}

@@ -26,13 +26,13 @@ public abstract class ResidentFormValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "vards", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "uzvards", "error.emptyField");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "darbaLigums", "error.emptyField");
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "darbaLigums", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "universitate", "error.emptyField");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "specialitate", "error.emptyField");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studijuGads", "error.emptyField");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adrese", "error.emptyField");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "talrunaNumurs", "error.emptyField");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epasts", "error.emptyField");
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studijuGads", "error.emptyField");
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adrese", "error.emptyField");
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "talrunaNumurs", "error.emptyField");
+//		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epasts", "error.emptyField");
 	}
 
 	public void setResidentService(ResidentService residentService) {

@@ -26,6 +26,9 @@ public class Products extends Controller {
 
 	public static Result show(Long ean) {
 		Product product = Product.findByEad(ean);
+		if (product == null) {
+			return notFound(String.format("Product with %s does not exist.", ean));
+		} 
 		return ok(show.render(productForm.fill(product)));
 	}
 

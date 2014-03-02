@@ -13,7 +13,7 @@ import models.Product;
 
 public class Products extends Controller {
 
-	private static final Form<Product> productForm = form(Product.class, Product.All.class);
+	private static final Form<Product> productForm = form(Product.class);
 
 	public static Result list() {
 		Set<Product> products = Product.findAll();

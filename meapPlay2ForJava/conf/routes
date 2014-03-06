@@ -9,15 +9,8 @@
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-# Products
-# GET		/products					controllers.Products.list()
-# GET		/products/new				controllers.Products.showBlank()
-# GET		/products/:ean				controllers.Products.show(ean: Long)
-# POST	/products					controllers.Products.save()
-# GET		/:warehouseId/items			controllers.Products.listByWarehouseId(warehouseId: Long)
-
 # Home page
-GET 	/ 							controller.Product.index()
+GET 	/ 							controllers.Product.index()
 
 # This would have worked as well
 # GET 	/ 							controllers.Product.list(page: Int = 1)
@@ -29,6 +22,13 @@ GET 	/product/:ean 				controllers.Product.details(ean: Long)
 
 # Example
 # http://localhost/products/2
-GET		/products/:page				controllers.Products.list(page: Int)
+# GET		/products/:page				controllers.Products.list(page: Int)
 # http://localhost/products?page=2
-GET		/products/					controllers.Products.list(page: Int) 
+# GET		/products/					controllers.Products.list(page: Int) 
+
+# Products
+# GET		/products					controllers.Products.list()
+# GET		/products/new				controllers.Products.showBlank()
+# GET		/products/:ean				controllers.Products.show(ean: Long)
+# POST	/products					controllers.Products.save()
+# GET		/:warehouseId/items			controllers.Products.listByWarehouseId(warehouseId: Long)

@@ -4,12 +4,15 @@ package controllers;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
-
 import views.html.products.*;
+import views.html.*;
 
 import java.util.*;
 
+import org.apache.commons.lang3.StringUtils;
+
 import models.Product;
+import models.StockItem;
 
 public class Products extends Controller {
 
@@ -18,6 +21,21 @@ public class Products extends Controller {
 	public static Result list() {
 		Set<Product> products = Product.findAll();
 		return ok(productList.render(products));
+	}
+
+	public static Result listByWarehouseId(long warehouseId) {
+//		List<StockItem> stockItems = StockItem.findByWarehouseId(warehouseId);
+		List<StockItem> stockItems = StockItem.find()
+			.where()
+				.eq("warehouse.id", warehouseId)
+			.findList();
+		if (stockItems == null || stockItems.size() == 0) {
+			return notFound(String.format("Warehouse with id %d not found", warehouseId));
+		}
+		if (request().accept("text/plain")) {
+			return ok(StringUtils.join(stockItems, "\n"));
+		}
+		return ok(product.render(stockItems));
 	}
 
 	public static Result showBlank() {

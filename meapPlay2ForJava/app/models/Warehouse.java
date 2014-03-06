@@ -29,6 +29,6 @@ public class Warehouse extends Model{
 	public List<Employee> employees = new ArrayList<Employee>();
 	
 	public String toString() {
-		return name;
+		return String.format("Warehouse | id: %d, name: %s", id, name);
 	}
 }

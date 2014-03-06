@@ -1,0 +1,14 @@
+@* product Template File *@
+@(stockItems: List[models.StockItem])
+
+<!DOCTYPE html>
+<html>
+	<body>
+		<!-- Lots of pictures somewhere here -->
+		<ul>
+			@for(stockItem <- stockItems) {
+				<li>@stockItem.product.name (@stockItem.quantity)</li>
+			}
+		</ul>
+	</body>
+</html>

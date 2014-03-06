@@ -25,7 +25,7 @@ public class StockItem extends Model {
 	}
 
 	public String toString() {
-		return String.format("StockItem %d - %dx product %s", id, quantity,
-				product == null ? null : product);
+		return String.format("StockItem %d - %dx; product %s; warehouse %s", id, quantity,
+				product == null ? null : product, warehouse);
 	}
 }

@@ -32,9 +32,9 @@ public class Products extends Controller {
 		if (stockItems == null || stockItems.size() == 0) {
 			return notFound(String.format("Warehouse with id %d not found", warehouseId));
 		}
-		if (request().accept("text/plain")) {
-			return ok(StringUtils.join(stockItems, "\n"));
-		}
+		// if (request().accept("text/plain")) {
+		// 	return ok(StringUtils.join(stockItems, "\n"));
+		// }
 		return ok(product.render(stockItems));
 	}
 

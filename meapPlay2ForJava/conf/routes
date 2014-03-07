@@ -10,15 +10,15 @@
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Home page
-GET 	/ 							controllers.Product.index()
+GET 	/ 							controllers.ProductController.index()
 
 # This would have worked as well
-# GET 	/ 							controllers.Product.list(page: Int = 1)
+# GET 	/ 							controllers.ProductController.list(page: Int = 1)
 # Product pages
-GET 	/products 					controllers.Product.list(page: Int ?= 1)
-PUT 	/product/:ean 				controllers.Product.save(ean: Long)
-GET 	/product/:ean/edit 			controllers.Product.edit(ean: Long)
-GET 	/product/:ean 				controllers.Product.details(ean: Long)
+GET 	/products 					controllers.ProductController.list(page: Int ?= 1)
+PUT 	/product/:ean 				controllers.ProductController.save(ean: Long)
+GET 	/product/:ean/edit 			controllers.ProductController.edit(ean: Long)
+GET 	/product/:ean 				controllers.ProductController.details(ean: Long)
 
 # Example
 # http://localhost/products/2
@@ -27,8 +27,8 @@ GET 	/product/:ean 				controllers.Product.details(ean: Long)
 # GET		/products/					controllers.Products.list(page: Int) 
 
 # Products
-# GET		/products					controllers.Products.list()
-# GET		/products/new				controllers.Products.showBlank()
-# GET		/products/:ean				controllers.Products.show(ean: Long)
-# POST	/products					controllers.Products.save()
-# GET		/:warehouseId/items			controllers.Products.listByWarehouseId(warehouseId: Long)
+GET		/products					controllers.Products.list()
+GET		/products/new				controllers.Products.showBlank()
+GET		/products/:ean				controllers.Products.show(ean: Long)
+POST	/products					controllers.Products.save()
+GET		/:warehouseId/items			controllers.Products.listByWarehouseId(warehouseId: Long)

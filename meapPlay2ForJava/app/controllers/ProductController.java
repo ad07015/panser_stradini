@@ -4,10 +4,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
-public class Product extends Controller {
+public class ProductController extends Controller {
 
 	public static Result index() {
-		return redirect(routes.Product.list(1));
+		return redirect(routes.ProductController.list(1));
 	}
 
 	public static Result list(Long page) {
